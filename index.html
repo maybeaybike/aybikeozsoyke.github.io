@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aybike Özsöyke</title>
+<meta name="description" content="Ses Tasarımcısı, Müzik Prodüktörü ve Creative Technologist — İzmir, Türkiye">
+<meta property="og:title" content="Aybike Özsöyke">
+<meta property="og:description" content="Ses Tasarımcısı · Müzik Prodüktörü · Creative Technologist">
+<meta property="og:image" content="https://aybikeozsoyke.com/logo.png">
+<meta property="og:url" content="https://aybikeozsoyke.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aybike Özsöyke">
+<meta name="twitter:description" content="Ses Tasarımcısı · Müzik Prodüktörü · Creative Technologist">
+<meta name="twitter:image" content="https://aybikeozsoyke.com/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -62,7 +72,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .about-text strong{font-weight:500;color:var(--accent)}
 .about-text em{font-style:italic;color:var(--text-muted)}
 .about-right{display:flex;flex-direction:column;gap:0}
-.about-photo{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;display:block}
+.about-photo{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;display:block;order:0}
+.about-meta{order:1}
 .about-meta{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border)}
 .meta-item{background:var(--bg);padding:24px 28px}
 .meta-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:10px;text-transform:uppercase}
@@ -169,7 +180,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
   /* Hakkımda: tek sütun */
   .about-layout{grid-template-columns:1fr;gap:36px}
-  .about-photo{aspect-ratio:4/3}
+  .about-photo{aspect-ratio:unset;object-fit:contain;order:2}
+  .about-meta{order:1}
   .about-text{font-size:17px}
 
   /* İşler */
@@ -291,19 +303,7 @@ const MUSIC_ITEMS = [
     yt:"https://www.youtube.com/watch?v=Lalgh-CCgII",
     spotify:"https://open.spotify.com/track/0r8oIZWy4yo0CgNKBBugJW",
     apple:"https://music.apple.com/tr/album/d%C3%BC%C5%9Ft%C3%BCm-d%C3%BCnyaya/1768036108?i=1768036110" },
-  { title:"Mergen", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
-    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
-    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
-    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
-  { title:"Zamansızlık", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
-    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
-    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
-    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
-  { title:"Ağaçlar Yakıldı", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
-    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
-    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
-    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
-  { title:"Hipnogojik", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+  { title:"Mergen EP", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
     yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
     spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
     apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
