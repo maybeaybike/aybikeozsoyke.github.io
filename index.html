@@ -95,7 +95,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
 /* ─── HAKKIMDA: masaüstünde iki sütun ─── */
 .about-layout{display:grid;grid-template-columns:1fr 360px;gap:72px;align-items:start;max-width:1100px}
-.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8}
+.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8;text-align:justify}
 .about-text strong{font-weight:500;color:var(--accent)}
 .about-text em{font-style:italic;color:var(--text-muted)}
 .about-right{display:flex;flex-direction:column;gap:0}
@@ -118,20 +118,27 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
 /* ─── MÜZİK ─── */
 .music-filters{max-width:860px;margin-bottom:0}
-/* Desktop dropdown */
+/* Desktop dropdown — hover ile açılır, nav gibi */
 .music-dd-wrap{position:relative;display:inline-block}
-.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between}
-.music-dd-trigger:hover{border-color:var(--accent-dim);color:var(--text)}
-.music-dd-arrow{font-size:9px;transition:transform .2s;color:var(--text-dim)}
-.music-dd-trigger.open .music-dd-arrow{transform:rotate(180deg)}
+.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:default;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between}
+.music-dd-wrap:hover .music-dd-trigger{border-color:var(--accent-dim);color:var(--text)}
+.music-dd-arrow{font-size:9px;color:var(--text-dim);transition:transform .2s}
+.music-dd-wrap:hover .music-dd-arrow{transform:rotate(180deg)}
 .music-dd-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-top:none;z-index:50}
-.music-dd-menu.open{display:block}
+.music-dd-wrap:hover .music-dd-menu{display:block}
 .music-dd-item{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-muted);background:none;border:none;width:100%;padding:12px 20px;text-align:left;cursor:pointer;transition:all .2s}
 .music-dd-item:hover{color:var(--text);background:var(--border)}
 .music-dd-item.active{color:var(--accent)}
-/* Mobile toggle */
-.music-toggle-wrap{display:none;gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none}
-.music-mode-btn{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-dim);background:var(--bg);border:none;padding:13px 20px;cursor:pointer;flex:1;transition:all .2s}
+/* Mobile toggle — nav gibi accordion */
+.music-toggle-wrap{display:none;border:1px solid var(--border)}
+.music-toggle-header{display:flex;align-items:center;width:100%;background:var(--bg)}
+.music-toggle-label{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);padding:13px 20px;flex:1}
+.music-toggle-plus{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;background:none;border:none;border-left:1px solid var(--border);color:var(--text-dim);font-size:14px;cursor:pointer;transition:all .2s;font-family:var(--font-m);line-height:1}
+.music-toggle-plus:hover{color:var(--accent)}
+.music-toggle-opts{display:none;flex-direction:column;border-top:1px solid var(--border)}
+.music-toggle-opts.open{display:flex}
+.music-mode-btn{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-dim);background:var(--bg);border:none;border-bottom:1px solid var(--border);padding:13px 20px;cursor:pointer;text-align:left;width:100%;transition:all .2s}
+.music-mode-btn:last-child{border-bottom:none}
 .music-mode-btn:hover{color:var(--text);background:var(--surface)}
 .music-mode-btn.active{color:var(--accent);background:var(--surface)}
 .music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
@@ -176,11 +183,11 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .contact-email-block{display:flex;align-items:center;justify-content:space-between;max-width:900px;border:1px solid var(--border);padding:28px 40px;margin-bottom:1px;text-decoration:none;background:var(--bg);transition:background .2s;cursor:pointer}
 .contact-email-block:hover{background:var(--surface)}
 .contact-email-block:hover .contact-email-arrow{color:var(--accent)}
-.contact-email-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
-.contact-email-addr{font-family:var(--font-d);font-size:clamp(20px,2.5vw,30px);font-weight:400;color:var(--text);letter-spacing:.01em}
-.contact-email-arrow{font-family:var(--font-m);font-size:22px;color:var(--text-dim);transition:color .2s;flex-shrink:0;margin-left:24px}
-.contact-email-icon{width:28px;height:28px;fill:var(--text-dim);flex-shrink:0;margin-right:20px;transition:fill .2s}
-.contact-email-block:hover .contact-email-icon{fill:var(--accent)}
+.contact-email-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.contact-email-addr{font-family:var(--font-d);font-size:clamp(18px,2vw,26px);font-weight:400;color:var(--text);letter-spacing:.01em}
+.contact-email-arrow{font-family:var(--font-m);font-size:18px;color:var(--text-dim);transition:color .2s;flex-shrink:0;margin-left:24px}
+.contact-email-icon{width:36px;height:36px;fill:var(--text-dim);flex-shrink:0;margin-right:24px;transition:fill .2s;opacity:.7}
+.contact-email-block:hover .contact-email-icon{fill:var(--accent);opacity:1}
 .contact-lower{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
 .contact-group{background:var(--bg);padding:32px 40px}
 .contact-group-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border);text-transform:uppercase}
@@ -270,7 +277,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .music-year{display:none}
   .music-title{font-size:17px}
   .music-dd-wrap{display:none}
-  .music-toggle-wrap{display:flex}
+  .music-toggle-wrap{display:block}
 
   /* Sergiler */
   .exh-item{grid-template-columns:1fr;gap:8px}
@@ -482,6 +489,8 @@ const LANGS = [
   {code:'zh',flag:'🇨🇳',name:'中文'},
   {code:'uz',flag:'🇺🇿',name:"Oʻzbekcha"},
   {code:'mn',flag:'🇲🇳',name:'Монгол'},
+  {code:'el',flag:'🇬🇷',name:'Ελληνικά'},
+  {code:'kk',flag:'🇰🇿',name:'Қазақша'},
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -1679,6 +1688,116 @@ const SITE = {
         ]}
       ]
     }
+  },
+
+  el: {
+    nav: ["Αρχική","Σχετικά","Έργα","Μουσική","Ιστολόγιο","Επικοινωνία"],
+    home: {
+      location: "Ιζμίρ, Τουρκία",
+      roles: ["Creative Technologist","Audiovisual Artist","Σχεδιαστής Ήχου","Παραγωγός Μουσικής"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (γ. 1999, Ιζμίρ) είναι σχεδιαστής ήχου, παραγωγός μουσικής και creative technologist. Σπούδασε <em>Σχεδιασμό Κινηματογράφου</em> (Πτυχίο) και <em>Τεχνολογία Μουσικής</em> (Μεταπτυχιακό) στο Πανεπιστήμιο Dokuz Eylül. Μέσω της <strong>Aybike Özsöyke Sound Production</strong> αναλαμβάνει ολοκληρωμένες παραγωγές ήχου, από τον σχεδιασμό ήχου έως τη μουσική σύνθεση. Έχει δημιουργήσει μουσική και σχεδιασμό ήχου για το βιντεοπαιχνίδι <em>Kuroba: Oghuz</em> και τη θεατρική παράσταση <em>Wittgenstein's Fly</em>, ενώ συμμετείχε ως επιμελήτρια, παραγωγός και σχεδιάστρια ήχου στην έκθεση <em>Arkhe</em>. Έχει επιλεγεί για το πρόγραμμα <strong>Sounding Off 2023</strong> (Πανεπιστήμιο Bilkent) και εμφανίζεται σε live coding performances σε εκδηλώσεις Algorave.`,
+      metaLabels: ["Εκπαίδευση"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"Έκθεση", game:"Βιντεοπαιχνίδι", film:"Ταινία", theatre:"Θέατρο", book:"Βιβλίο"},
+    worksFilterAll: "Όλα",
+    works: [
+      { cat:"film", type:"Ταινία", title:"Destan", role:"Σκηνοθέτης Ήχου", desc:"Ολοκληρωμένη διαδικασία από τον σχεδιασμό ήχου έως τη μουσική σύνθεση.", badge:"" },
+      { cat:"game", type:"Βιντεοπαιχνίδι", title:"Kuroba: Oghuz", role:"Μουσική & Σχεδιασμός Ήχου", desc:"Ήχος και μουσική σύνθεση για βιντεοπαιχνίδι.", badge:"" },
+      { cat:"theatre", type:"Θέατρο", title:"Wittgenstein's Fly", role:"Μουσική & Σχεδιασμός Ήχου", desc:"Σχεδιασμός ήχου σκηνής και πρωτότυπη μουσική.", badge:"" },
+      { cat:"book", type:"Βιβλίο · 2026", title:"Ses Veren Hikayeler", role:"Συγγραφέας", desc:"Έντυπη συλλογή ιστοριών του συλλόγου Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Βιβλίο · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Συγγραφέας", desc:"Ποιητική συλλογή που τιμά τις γυναικείες φωνές στο πλαίσιο του Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Βιβλίο · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Συγγραφέας", desc:"Συζήτηση για την τεχνητή νοημοσύνη και τη μουσική.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"Όλα",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Συμμετοχή σε άλμπουμ",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"Single",ep:"EP",album:"Συμμετοχή σε άλμπουμ",live:"Ζωντανή Εμφάνιση"},
+      playLabel:"αναπαράγεται"
+    },
+    exhLabel: "Εκθέσεις",
+    exhibitions: [
+      { year:"Ιούλιος 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmet Adnan Saygun Sanat Merkezi, İzmir", roles:["Επιμελήτρια","Σχεδιάστρια Ήχου","Παραγωγός"], desc:"Διεπιστημονική έκθεση για την τεχνητή νοημοσύνη και τα δεδομένα." },
+      { year:"Φεβρουάριος 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Σχεδιάστρια Ήχου"], desc:"Σχεδιασμός ήχου για διεθνή ιστορική έκθεση." }
+    ],
+    pressLabel: "Τύπος",
+    certificationsLabel: "Πιστοποιήσεις",
+    blog: "Σύντομα — άρθρα θα δημοσιευτούν εδώ.",
+    contact: {
+      intro: "Για έργα, συνεργασίες και <em>όλα όσα αφορούν τον ήχο</em>.",
+      email: { label:"Ηλεκτρονικό Ταχυδρομείο", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"Μουσική", links:[
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify", sub:"Σελίδα καλλιτέχνη", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"Κοινωνικά", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
+  },
+
+  kk: {
+    nav: ["Басты бет","Туралы","Жобалар","Музыка","Блог","Байланыс"],
+    home: {
+      location: "Измир, Түркия",
+      roles: ["Creative Technologist","Audiovisual Artist","Дыбыс дизайнері","Музыка продюсері"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (1999 ж., Измир) — дыбыс дизайнері, музыка продюсері және creative technologist. Dokuz Eylül университетінде <em>Кино дизайны</em> мамандығы бойынша бакалавр, <em>Музыка технологиясы</em> бойынша магистр дәрежесін алған. <strong>Aybike Özsöyke Sound Production</strong> арқылы дыбыс дизайнынан музыка композициясына дейінгі толық процесті жүргізеді. <em>Kuroba: Oghuz</em> бейне ойыны мен <em>Wittgenstein's Fly</em> театр қойылымына музыка мен дыбыс дизайнын жасаған. Жасанды интеллект пен музыка туралы әңгімесі <em>Yapay Zeka ve Sanat: Araç mı Amaç mı?</em> кітабында жарияланған. <strong>Sounding Off 2023</strong> (Bilkent университеті) бағдарламасына іріктеліп, Algorave іс-шараларында live coding перформанстарымен сахнаға шығады.`,
+      metaLabels: ["Білім"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"Көрме", game:"Бейне ойын", film:"Фильм", theatre:"Театр", book:"Кітап"},
+    worksFilterAll: "Барлығы",
+    works: [
+      { cat:"film", type:"Фильм", title:"Destan", role:"Дыбыс режиссері", desc:"Дыбыс дизайнынан музыка композициясына дейінгі толық процесс.", badge:"" },
+      { cat:"game", type:"Бейне ойын", title:"Kuroba: Oghuz", role:"Музыка & Дыбыс дизайны", desc:"Ойын аудиосы мен музыка композициясы.", badge:"" },
+      { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Музыка & Дыбыс дизайны", desc:"Сахна дыбыс дизайны және түпнұсқа музыка.", badge:"" },
+      { cat:"book", type:"Кітап · 2026", title:"Ses Veren Hikayeler", role:"Автор", desc:"Sisters Music Chain ұжымының баспа әңгімелер жинағы.", badge:"" },
+      { cat:"book", type:"Кітап · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Автор", desc:"Sisters Music Chain аясында әйелдер дауыстарын дәріптейтін поэзия жинағы.", badge:"" },
+      { cat:"book", type:"Кітап · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Автор", desc:"Жасанды интеллект пен музыка туралы әңгіме.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"Барлығы",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Альбомға қатысу",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"Single",ep:"EP",album:"Альбомға қатысу",live:"Тікелей эфир"},
+      playLabel:"ойнатылуда"
+    },
+    exhLabel: "Көрмелер",
+    exhibitions: [
+      { year:"2023 жылы шілде", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmet Adnan Saygun Sanat Merkezi, İzmir", roles:["Куратор","Дыбыс дизайнері","Продюсер"], desc:"Жасанды интеллект пен деректер туралы пәнаралық көрме." },
+      { year:"2024 жылы ақпан", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Дыбыс дизайнері"], desc:"Халықаралық тарихи көрмеге арналған дыбыс дизайны." }
+    ],
+    pressLabel: "Баспасөз",
+    certificationsLabel: "Сертификаттар",
+    blog: "Жақында — мақалалар осында жарияланады.",
+    contact: {
+      intro: "Жобалар, ынтымақтастық және <em>дыбысқа қатысты барлық мәселелер</em> бойынша.",
+      email: { label:"Электрондық пошта", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"Музыка", links:[
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify", sub:"Орындаушы беті", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"Әлеуметтік", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
   }
 };
 
@@ -1753,13 +1872,13 @@ function typeTerminal() {
   if (!el) return;
   clearTimeout(_termTimer);
   const sn = LIVECODE_SNIPPETS[_termIdx];
+  playTermTone(_termIdx); // sesi hemen başlat, yazma bitimini bekleme
   function tick() {
     if (_termChar <= sn.code.length) {
       el.innerHTML = formatLiveCode(sn.code.slice(0, _termChar), sn.lang);
       _termChar++;
       _termTimer = setTimeout(tick, 24 + Math.random() * 32);
     } else {
-      playTermTone(_termIdx);
       _termTimer = setTimeout(() => {
         _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
         _termChar = 0;
@@ -2032,21 +2151,28 @@ function setMusicFilter(cat) {
 function setMusicMode(mode) {
   musicMode = mode;
   closePlayer();
+  const label = mode === 'live' ? 'Live Performans' : 'Streaming';
   document.querySelectorAll('.music-mode-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.mode === mode));
+  // Desktop label
   const lbl = document.getElementById('musicModeLabel');
-  if (lbl) lbl.textContent = mode === 'live' ? 'Live Performans' : 'Streaming';
-  const menu = document.getElementById('musicDdMenu');
-  if (menu) { menu.classList.remove('open'); const tr = document.querySelector('.music-dd-trigger'); if(tr) tr.classList.remove('open'); }
+  if (lbl) lbl.textContent = label;
+  // Mobile label + kapat accordion
+  const mLbl = document.getElementById('musicMobileLbl');
+  if (mLbl) mLbl.textContent = label;
+  const opts = document.getElementById('musicToggleOpts');
+  const plus = document.querySelector('.music-toggle-plus');
+  if (opts) opts.classList.remove('open');
+  if (plus) plus.textContent = '+';
   renderMusicList();
 }
 
-function toggleMusicDd() {
-  const menu = document.getElementById('musicDdMenu');
-  const tr   = document.querySelector('.music-dd-trigger');
-  if (!menu) return;
-  menu.classList.toggle('open');
-  tr.classList.toggle('open');
+function toggleMusicAccordion() {
+  const opts = document.getElementById('musicToggleOpts');
+  const plus = document.querySelector('.music-toggle-plus');
+  if (!opts) return;
+  const isOpen = opts.classList.toggle('open');
+  if (plus) plus.textContent = isOpen ? '×' : '+';
 }
 
 function renderMusicList() {
@@ -2209,20 +2335,27 @@ function render() {
   // İşler
   renderWorks();
   // Müzik
+  const _mLbl = musicMode === 'live' ? 'Live Performans' : 'Streaming';
   document.querySelector('.music-filters').innerHTML = `
     <div class="music-dd-wrap">
-      <button class="music-dd-trigger" onclick="toggleMusicDd()">
-        <span id="musicModeLabel">${musicMode === 'live' ? 'Live Performans' : 'Streaming'}</span>
+      <div class="music-dd-trigger">
+        <span id="musicModeLabel">${_mLbl}</span>
         <span class="music-dd-arrow">▾</span>
-      </button>
+      </div>
       <div class="music-dd-menu" id="musicDdMenu">
         <button class="music-dd-item${musicMode==='streaming'?' active':''}" onclick="setMusicMode('streaming')">Streaming</button>
         <button class="music-dd-item${musicMode==='live'?' active':''}" onclick="setMusicMode('live')">Live Performans</button>
       </div>
     </div>
     <div class="music-toggle-wrap">
-      <button class="music-mode-btn${musicMode==='streaming'?' active':''}" data-mode="streaming" onclick="setMusicMode('streaming')">Streaming</button>
-      <button class="music-mode-btn${musicMode==='live'?' active':''}" data-mode="live" onclick="setMusicMode('live')">Live Performans</button>
+      <div class="music-toggle-header">
+        <span class="music-toggle-label" id="musicMobileLbl">${_mLbl}</span>
+        <button class="music-toggle-plus" onclick="toggleMusicAccordion()">+</button>
+      </div>
+      <div class="music-toggle-opts" id="musicToggleOpts">
+        <button class="music-mode-btn${musicMode==='streaming'?' active':''}" data-mode="streaming" onclick="setMusicMode('streaming')">Streaming</button>
+        <button class="music-mode-btn${musicMode==='live'?' active':''}" data-mode="live" onclick="setMusicMode('live')">Live Performans</button>
+      </div>
     </div>`;
   renderMusicList();
   // Blog
