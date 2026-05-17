@@ -392,10 +392,13 @@ const SITE = {
       metaLabels: ["Eğitim"],
       meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
     },
+    worksCategories: {exh:"Sergi", game:"Video Oyunu", film:"Film", theatre:"Tiyatro", book:"Kitap"},
+    worksFilterAll: "Tümü",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
-      { type:"Video Oyunu", title:"Kuroba: Oghuz", role:"Müzik & Ses Tasarımı", desc:"Oyun ses tasarımı ve müzik kompozisyonu.", badge:"" },
-      { type:"Tiyatro", title:"Wittgenstein'ın Sineği", role:"Müzik & Ses Tasarımı", desc:"Sahne ses tasarımı ve özgün müzik.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
+      { cat:"game", type:"Video Oyunu", title:"Kuroba: Oghuz", role:"Müzik & Ses Tasarımı", desc:"Oyun ses tasarımı ve müzik kompozisyonu.", badge:"" },
+      { cat:"theatre", type:"Tiyatro", title:"Wittgenstein'ın Sineği", role:"Müzik & Ses Tasarımı", desc:"Sahne ses tasarımı ve özgün müzik.", badge:"" },
+      { cat:"book", type:"Kitap · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Katkıda Bulunan", desc:"Yapay zeka ve müzik üzerine söyleşi.", badge:"" }
     ],
     music: {
       filters:[
@@ -422,8 +425,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Sosyal", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -440,10 +444,13 @@ const SITE = {
       metaLabels: ["Education"],
       meta: ["Film Design, BA — DEU\nMusic Technology, MA — DEU"]
     },
+    worksCategories: {exh:"Exhibition", game:"Video Game", film:"Film", theatre:"Theatre", book:"Book"},
+    worksFilterAll: "All",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
-      { type:"Video Game", title:"Kuroba: Oghuz", role:"Music & Sound Design", desc:"Game audio and music composition.", badge:"" },
-      { type:"Theatre", title:"Wittgenstein's Fly", role:"Music & Sound Design", desc:"Stage sound design and original music.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
+      { cat:"game", type:"Video Game", title:"Kuroba: Oghuz", role:"Music & Sound Design", desc:"Game audio and music composition.", badge:"" },
+      { cat:"theatre", type:"Theatre", title:"Wittgenstein's Fly", role:"Music & Sound Design", desc:"Stage sound design and original music.", badge:"" },
+      { cat:"book", type:"Book · 2024", title:"Artificial Intelligence and Art: Tool or Goal?", role:"Contributor", desc:"Conversation on artificial intelligence and music.", badge:"" }
     ],
     music: {
       filters:[
@@ -470,8 +477,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Social", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -488,10 +496,13 @@ const SITE = {
       metaLabels: ["Ausbildung"],
       meta: ["Filmgestaltung, Bachelor — DEÜ\nMusiktechnologie, Master — DEÜ"]
     },
+    worksCategories: {exh:"Ausstellung", game:"Videospiel", film:"Film", theatre:"Theater", book:"Buch"},
+    worksFilterAll: "Alle",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
-      { type:"Videospiel", title:"Kuroba: Oghuz", role:"Musik & Klanggestaltung", desc:"Spielaudio und Musikkomposition.", badge:"" },
-      { type:"Theater", title:"Wittgensteins Fliege", role:"Musik & Klanggestaltung", desc:"Bühnenklang und Originalmusik.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
+      { cat:"game", type:"Videospiel", title:"Kuroba: Oghuz", role:"Musik & Klanggestaltung", desc:"Spielaudio und Musikkomposition.", badge:"" },
+      { cat:"theatre", type:"Theater", title:"Wittgensteins Fliege", role:"Musik & Klanggestaltung", desc:"Bühnenklang und Originalmusik.", badge:"" },
+      { cat:"book", type:"Buch · 2024", title:"Künstliche Intelligenz und Kunst: Werkzeug oder Ziel?", role:"Mitwirkende", desc:"Gespräch über künstliche Intelligenz und Musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -518,8 +529,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Sozial", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -536,10 +548,13 @@ const SITE = {
       metaLabels: ["Formation"],
       meta: ["Design cinématographique, Licence — DEÜ\nTechnologie musicale, Master — DEÜ"]
     },
+    worksCategories: {exh:"Exposition", game:"Jeu vidéo", film:"Film", theatre:"Théâtre", book:"Livre"},
+    worksFilterAll: "Tout",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Directrice sonore", desc:"Processus sonore complet — de la conception sonore à la composition musicale.", badge:"" },
-      { type:"Jeu vidéo", title:"Kuroba: Oghuz", role:"Musique & Conception sonore", desc:"Conception sonore et composition musicale pour le jeu.", badge:"" },
-      { type:"Théâtre", title:"Wittgenstein's Fly", role:"Musique & Conception sonore", desc:"Conception sonore scénique et musique originale.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Directrice sonore", desc:"Processus sonore complet — de la conception sonore à la composition musicale.", badge:"" },
+      { cat:"game", type:"Jeu vidéo", title:"Kuroba: Oghuz", role:"Musique & Conception sonore", desc:"Conception sonore et composition musicale pour le jeu.", badge:"" },
+      { cat:"theatre", type:"Théâtre", title:"Wittgenstein's Fly", role:"Musique & Conception sonore", desc:"Conception sonore scénique et musique originale.", badge:"" },
+      { cat:"book", type:"Livre · 2024", title:"Intelligence Artificielle et Art: Outil ou But?", role:"Contributrice", desc:"Conversation sur l'intelligence artificielle et la musique.", badge:"" }
     ],
     music: {
       filters:[
@@ -566,8 +581,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Réseaux", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -584,10 +600,13 @@ const SITE = {
       metaLabels: ["Formazione"],
       meta: ["Film Design, Laurea triennale — DEÜ\nTecnologia musicale, Laurea magistrale — DEÜ"]
     },
+    worksCategories: {exh:"Mostra", game:"Videogioco", film:"Film", theatre:"Teatro", book:"Libro"},
+    worksFilterAll: "Tutto",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Intero processo sonoro — dalla progettazione del suono alla composizione musicale.", badge:"" },
-      { type:"Videogioco", title:"Kuroba: Oghuz", role:"Musica & Sound Design", desc:"Audio di gioco e composizione musicale.", badge:"" },
-      { type:"Teatro", title:"Wittgenstein's Fly", role:"Musica & Sound Design", desc:"Sound design scenico e musica originale.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Intero processo sonoro — dalla progettazione del suono alla composizione musicale.", badge:"" },
+      { cat:"game", type:"Videogioco", title:"Kuroba: Oghuz", role:"Musica & Sound Design", desc:"Audio di gioco e composizione musicale.", badge:"" },
+      { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Musica & Sound Design", desc:"Sound design scenico e musica originale.", badge:"" },
+      { cat:"book", type:"Libro · 2024", title:"Intelligenza Artificiale e Arte: Strumento o Fine?", role:"Contributrice", desc:"Conversazione sull'intelligenza artificiale e la musica.", badge:"" }
     ],
     music: {
       filters:[
@@ -614,8 +633,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Social", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -632,10 +652,13 @@ const SITE = {
       metaLabels: ["学歴"],
       meta: ["映画デザイン、学士 — DEÜ\n音楽技術、修士 — DEÜ"]
     },
+    worksCategories: {exh:"展示", game:"ビデオゲーム", film:"映画", theatre:"演劇", book:"書籍"},
+    worksFilterAll: "すべて",
     works: [
-      { type:"映画 · 2025", title:"Destan", role:"サウンドディレクター", desc:"サウンドデザインから音楽作曲まで全ての音声プロセスを管理。", badge:"" },
-      { type:"ビデオゲーム", title:"Kuroba: Oghuz", role:"音楽 & サウンドデザイン", desc:"ゲームオーディオと音楽作曲。", badge:"" },
-      { type:"演劇", title:"Wittgenstein's Fly", role:"音楽 & サウンドデザイン", desc:"舞台音響デザインとオリジナル音楽。", badge:"" }
+      { cat:"film", type:"映画 · 2025", title:"Destan", role:"サウンドディレクター", desc:"サウンドデザインから音楽作曲まで全ての音声プロセスを管理。", badge:"" },
+      { cat:"game", type:"ビデオゲーム", title:"Kuroba: Oghuz", role:"音楽 & サウンドデザイン", desc:"ゲームオーディオと音楽作曲。", badge:"" },
+      { cat:"theatre", type:"演劇", title:"Wittgenstein's Fly", role:"音楽 & サウンドデザイン", desc:"舞台音響デザインとオリジナル音楽。", badge:"" },
+      { cat:"book", type:"書籍 · 2024", title:"人工知能と芸術：ツールか目的か？", role:"寄稿者", desc:"人工知能と音楽に関する対談。", badge:"" }
     ],
     music: {
       filters:[
@@ -662,8 +685,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"SNS", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -680,10 +704,13 @@ const SITE = {
       metaLabels: ["Образование"],
       meta: ["Кинодизайн, бакалавр — DEÜ\nМузыкальные технологии, магистр — DEÜ"]
     },
+    worksCategories: {exh:"Выставка", game:"Видеоигра", film:"Фильм", theatre:"Театр", book:"Книга"},
+    worksFilterAll: "Все",
     works: [
-      { type:"Фильм · 2025", title:"Destan", role:"Звуковой директор", desc:"Полный звуковой процесс — от звукового дизайна до музыкальной композиции.", badge:"" },
-      { type:"Видеоигра", title:"Kuroba: Oghuz", role:"Музыка & Звуковой дизайн", desc:"Игровое аудио и музыкальная композиция.", badge:"" },
-      { type:"Театр", title:"Wittgenstein's Fly", role:"Музыка & Звуковой дизайн", desc:"Сценический звук и оригинальная музыка.", badge:"" }
+      { cat:"film", type:"Фильм · 2025", title:"Destan", role:"Звуковой директор", desc:"Полный звуковой процесс — от звукового дизайна до музыкальной композиции.", badge:"" },
+      { cat:"game", type:"Видеоигра", title:"Kuroba: Oghuz", role:"Музыка & Звуковой дизайн", desc:"Игровое аудио и музыкальная композиция.", badge:"" },
+      { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Музыка & Звуковой дизайн", desc:"Сценический звук и оригинальная музыка.", badge:"" },
+      { cat:"book", type:"Книга · 2024", title:"Искусственный интеллект и искусство: инструмент или цель?", role:"Участник", desc:"Разговор об искусственном интеллекте и музыке.", badge:"" }
     ],
     music: {
       filters:[
@@ -710,8 +737,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Соцсети", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -728,10 +756,13 @@ const SITE = {
       metaLabels: ["학력"],
       meta: ["영화 디자인, 학사 — DEÜ\n음악 기술, 석사 — DEÜ"]
     },
+    worksCategories: {exh:"전시", game:"비디오 게임", film:"영화", theatre:"연극", book:"도서"},
+    worksFilterAll: "전체",
     works: [
-      { type:"영화 · 2025", title:"Destan", role:"사운드 디렉터", desc:"사운드 디자인부터 음악 작곡까지 전체 음향 과정 관리.", badge:"" },
-      { type:"비디오 게임", title:"Kuroba: Oghuz", role:"음악 & 사운드 디자인", desc:"게임 오디오 및 음악 작곡.", badge:"" },
-      { type:"연극", title:"Wittgenstein's Fly", role:"음악 & 사운드 디자인", desc:"무대 사운드 디자인과 오리지널 음악.", badge:"" }
+      { cat:"film", type:"영화 · 2025", title:"Destan", role:"사운드 디렉터", desc:"사운드 디자인부터 음악 작곡까지 전체 음향 과정 관리.", badge:"" },
+      { cat:"game", type:"비디오 게임", title:"Kuroba: Oghuz", role:"음악 & 사운드 디자인", desc:"게임 오디오 및 음악 작곡.", badge:"" },
+      { cat:"theatre", type:"연극", title:"Wittgenstein's Fly", role:"음악 & 사운드 디자인", desc:"무대 사운드 디자인과 오리지널 음악.", badge:"" },
+      { cat:"book", type:"도서 · 2024", title:"인공 지능과 예술: 도구인가 목적인가?", role:"기여자", desc:"인공 지능과 음악에 관한 대담.", badge:"" }
     ],
     music: {
       filters:[
@@ -758,8 +789,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"소셜", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -776,10 +808,13 @@ const SITE = {
       metaLabels: ["Formación"],
       meta: ["Diseño cinematográfico, Grado — DEÜ\nTecnología musical, Máster — DEÜ"]
     },
+    worksCategories: {exh:"Exposición", game:"Videojuego", film:"Película", theatre:"Teatro", book:"Libro"},
+    worksFilterAll: "Todo",
     works: [
-      { type:"Película · 2025", title:"Destan", role:"Directora de sonido", desc:"Proceso sonoro completo — del diseño de sonido a la composición musical.", badge:"" },
-      { type:"Videojuego", title:"Kuroba: Oghuz", role:"Música & Diseño de sonido", desc:"Audio de juego y composición musical.", badge:"" },
-      { type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Diseño de sonido", desc:"Diseño de sonido escénico y música original.", badge:"" }
+      { cat:"film", type:"Película · 2025", title:"Destan", role:"Directora de sonido", desc:"Proceso sonoro completo — del diseño de sonido a la composición musical.", badge:"" },
+      { cat:"game", type:"Videojuego", title:"Kuroba: Oghuz", role:"Música & Diseño de sonido", desc:"Audio de juego y composición musical.", badge:"" },
+      { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Diseño de sonido", desc:"Diseño de sonido escénico y música original.", badge:"" },
+      { cat:"book", type:"Libro · 2024", title:"Inteligencia Artificial y Arte: ¿Herramienta o Fin?", role:"Colaboradora", desc:"Conversación sobre inteligencia artificial y música.", badge:"" }
     ],
     music: {
       filters:[
@@ -806,8 +841,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Redes", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -824,10 +860,13 @@ const SITE = {
       metaLabels: ["Təhsil"],
       meta: ["Film Dizaynı, Bakalavr — DEÜ\nMusiqi Texnologiyası, Magistr — DEÜ"]
     },
+    worksCategories: {exh:"Sərgi", game:"Video oyunu", film:"Film", theatre:"Teatr", book:"Kitab"},
+    worksFilterAll: "Hamısı",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Səs rejissoru", desc:"Səs dizaynından musiqi kompozisiyasına qədər tam səs prosesi.", badge:"" },
-      { type:"Video oyunu", title:"Kuroba: Oghuz", role:"Musiqi & Səs dizaynı", desc:"Oyun audio və musiqi kompozisiyası.", badge:"" },
-      { type:"Teatr", title:"Wittgenstein's Fly", role:"Musiqi & Səs dizaynı", desc:"Səhnə səs dizaynı və orijinal musiqi.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Səs rejissoru", desc:"Səs dizaynından musiqi kompozisiyasına qədər tam səs prosesi.", badge:"" },
+      { cat:"game", type:"Video oyunu", title:"Kuroba: Oghuz", role:"Musiqi & Səs dizaynı", desc:"Oyun audio və musiqi kompozisiyası.", badge:"" },
+      { cat:"theatre", type:"Teatr", title:"Wittgenstein's Fly", role:"Musiqi & Səs dizaynı", desc:"Səhnə səs dizaynı və orijinal musiqi.", badge:"" },
+      { cat:"book", type:"Kitab · 2024", title:"Süni İntellekt və İncəsənət: Vasitə mi, Məqsəd mi?", role:"İştirakçı", desc:"Süni intellekt və musiqi haqqında söhbət.", badge:"" }
     ],
     music: {
       filters:[
@@ -854,8 +893,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Sosial", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -872,10 +912,13 @@ const SITE = {
       metaLabels: ["Utbildning"],
       meta: ["Filmdesign, kandidat — DEÜ\nMusikteknologi, master — DEÜ"]
     },
+    worksCategories: {exh:"Utställning", game:"Videospel", film:"Film", theatre:"Teater", book:"Bok"},
+    worksFilterAll: "Alla",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Ljudregissör", desc:"Hela ljudprocessen — från ljuddesign till musikkomposition.", badge:"" },
-      { type:"Videospel", title:"Kuroba: Oghuz", role:"Musik & Ljuddesign", desc:"Spelljud och musikkomposition.", badge:"" },
-      { type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Ljuddesign", desc:"Scenljuddesign och originalmusik.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Ljudregissör", desc:"Hela ljudprocessen — från ljuddesign till musikkomposition.", badge:"" },
+      { cat:"game", type:"Videospel", title:"Kuroba: Oghuz", role:"Musik & Ljuddesign", desc:"Spelljud och musikkomposition.", badge:"" },
+      { cat:"theatre", type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Ljuddesign", desc:"Scenljuddesign och originalmusik.", badge:"" },
+      { cat:"book", type:"Bok · 2024", title:"Artificiell intelligens och konst: Verktyg eller mål?", role:"Medverkande", desc:"Samtal om artificiell intelligens och musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -902,8 +945,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Socialt", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -920,10 +964,13 @@ const SITE = {
       metaLabels: ["Formação"],
       meta: ["Design cinematográfico, Licenciatura — DEÜ\nTecnologia musical, Mestrado — DEÜ"]
     },
+    worksCategories: {exh:"Exposição", game:"Videojogo", film:"Filme", theatre:"Teatro", book:"Livro"},
+    worksFilterAll: "Tudo",
     works: [
-      { type:"Filme · 2025", title:"Destan", role:"Directora de som", desc:"Processo sonoro completo — do design de som à composição musical.", badge:"" },
-      { type:"Videojogo", title:"Kuroba: Oghuz", role:"Música & Design de som", desc:"Áudio de jogo e composição musical.", badge:"" },
-      { type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Design de som", desc:"Design sonoro cénico e música original.", badge:"" }
+      { cat:"film", type:"Filme · 2025", title:"Destan", role:"Directora de som", desc:"Processo sonoro completo — do design de som à composição musical.", badge:"" },
+      { cat:"game", type:"Videojogo", title:"Kuroba: Oghuz", role:"Música & Design de som", desc:"Áudio de jogo e composição musical.", badge:"" },
+      { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Design de som", desc:"Design sonoro cénico e música original.", badge:"" },
+      { cat:"book", type:"Livro · 2024", title:"Inteligência Artificial e Arte: Ferramenta ou Fim?", role:"Colaboradora", desc:"Conversa sobre inteligência artificial e música.", badge:"" }
     ],
     music: {
       filters:[
@@ -950,8 +997,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Social", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -968,10 +1016,13 @@ const SITE = {
       metaLabels: ["Uddannelse"],
       meta: ["Filmdesign, bachelor — DEÜ\nMusikteknologi, kandidat — DEÜ"]
     },
+    worksCategories: {exh:"Udstilling", game:"Videospil", film:"Film", theatre:"Teater", book:"Bog"},
+    worksFilterAll: "Alle",
     works: [
-      { type:"Film · 2025", title:"Destan", role:"Lydinstruktør", desc:"Hele lydprocessen — fra lyddesign til musikkomposition.", badge:"" },
-      { type:"Videospil", title:"Kuroba: Oghuz", role:"Musik & Lyddesign", desc:"Spilaud og musikkomposition.", badge:"" },
-      { type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Lyddesign", desc:"Scenelydsdesign og originalmusik.", badge:"" }
+      { cat:"film", type:"Film · 2025", title:"Destan", role:"Lydinstruktør", desc:"Hele lydprocessen — fra lyddesign til musikkomposition.", badge:"" },
+      { cat:"game", type:"Videospil", title:"Kuroba: Oghuz", role:"Musik & Lyddesign", desc:"Spilaud og musikkomposition.", badge:"" },
+      { cat:"theatre", type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Lyddesign", desc:"Scenelydsdesign og originalmusik.", badge:"" },
+      { cat:"book", type:"Bog · 2024", title:"Kunstig intelligens og kunst: Redskab eller mål?", role:"Bidragyder", desc:"Samtale om kunstig intelligens og musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -998,8 +1049,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Sociale medier", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -1016,10 +1068,13 @@ const SITE = {
       metaLabels: ["Освіта"],
       meta: ["Кінодизайн, бакалавр — DEÜ\nМузичні технології, магістр — DEÜ"]
     },
+    worksCategories: {exh:"Виставка", game:"Відеогра", film:"Фільм", theatre:"Театр", book:"Книга"},
+    worksFilterAll: "Усі",
     works: [
-      { type:"Фільм · 2025", title:"Destan", role:"Звуковий директор", desc:"Повний звуковий процес — від звукового дизайну до музичної композиції.", badge:"" },
-      { type:"Відеогра", title:"Kuroba: Oghuz", role:"Музика & Звуковий дизайн", desc:"Ігрове аудіо та музична композиція.", badge:"" },
-      { type:"Театр", title:"Wittgenstein's Fly", role:"Музика & Звуковий дизайн", desc:"Сценічний звуковий дизайн та оригінальна музика.", badge:"" }
+      { cat:"film", type:"Фільм · 2025", title:"Destan", role:"Звуковий директор", desc:"Повний звуковий процес — від звукового дизайну до музичної композиції.", badge:"" },
+      { cat:"game", type:"Відеогра", title:"Kuroba: Oghuz", role:"Музика & Звуковий дизайн", desc:"Ігрове аудіо та музична композиція.", badge:"" },
+      { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Музика & Звуковий дизайн", desc:"Сценічний звуковий дизайн та оригінальна музика.", badge:"" },
+      { cat:"book", type:"Книга · 2024", title:"Штучний інтелект і мистецтво: інструмент чи мета?", role:"Учасник", desc:"Розмова про штучний інтелект та музику.", badge:"" }
     ],
     music: {
       filters:[
@@ -1046,8 +1101,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"Соцмережі", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -1064,10 +1120,13 @@ const SITE = {
       metaLabels: ["التعليم"],
       meta: ["تصميم السينما، بكالوريوس — DEÜ\nتكنولوجيا الموسيقى، ماجستير — DEÜ"]
     },
+    worksCategories: {exh:"معرض", game:"لعبة فيديو", film:"فيلم", theatre:"مسرح", book:"كتاب"},
+    worksFilterAll: "الكل",
     works: [
-      { type:"فيلم · 2025", title:"Destan", role:"مديرة الصوت", desc:"عملية صوتية متكاملة — من تصميم الصوت إلى التأليف الموسيقي.", badge:"" },
-      { type:"لعبة فيديو", title:"Kuroba: Oghuz", role:"موسيقى وتصميم صوت", desc:"صوتيات اللعبة والتأليف الموسيقي.", badge:"" },
-      { type:"مسرح", title:"Wittgenstein's Fly", role:"موسيقى وتصميم صوت", desc:"تصميم الصوت المسرحي والموسيقى الأصلية.", badge:"" }
+      { cat:"film", type:"فيلم · 2025", title:"Destan", role:"مديرة الصوت", desc:"عملية صوتية متكاملة — من تصميم الصوت إلى التأليف الموسيقي.", badge:"" },
+      { cat:"game", type:"لعبة فيديو", title:"Kuroba: Oghuz", role:"موسيقى وتصميم صوت", desc:"صوتيات اللعبة والتأليف الموسيقي.", badge:"" },
+      { cat:"theatre", type:"مسرح", title:"Wittgenstein's Fly", role:"موسيقى وتصميم صوت", desc:"تصميم الصوت المسرحي والموسيقى الأصلية.", badge:"" },
+      { cat:"book", type:"كتاب · 2024", title:"الذكاء الاصطناعي والفن: أداةٌ أم غاية؟", role:"مساهمة", desc:"حوار حول الذكاء الاصطناعي والموسيقى.", badge:"" }
     ],
     music: {
       filters:[
@@ -1094,8 +1153,9 @@ const SITE = {
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
         { label:"اجتماعي", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
           { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
-          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" }
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
         ]}
       ]
     }
@@ -1109,10 +1169,13 @@ const SITE = {
       metaLabels:["Opleiding"],
       meta:["Filmontwerp, bachelor — DEÜ\nMuziektechnologie, master — DEÜ"]
     },
+    worksCategories: {exh:"Tentoonstelling", game:"Videospel", film:"Film", theatre:"Theater", book:"Boek"},
+    worksFilterAll: "Alles",
     works:[
-      {type:"Film · 2025",title:"Destan",role:"Geluidsregisseur",desc:"Volledig geluidsproces — van geluidsontwerp tot muziekcompositie.",badge:""},
-      {type:"Videospel",title:"Kuroba: Oghuz",role:"Muziek & Geluidsontwerp",desc:"Spelgeluid en muziekcompositie.",badge:""},
-      {type:"Theater",title:"Wittgenstein's Fly",role:"Muziek & Geluidsontwerp",desc:"Scenisch geluidsontwerp en originele muziek.",badge:""}
+      {cat:"film",type:"Film · 2025",title:"Destan",role:"Geluidsregisseur",desc:"Volledig geluidsproces — van geluidsontwerp tot muziekcompositie.",badge:""},
+      {cat:"game",type:"Videospel",title:"Kuroba: Oghuz",role:"Muziek & Geluidsontwerp",desc:"Spelgeluid en muziekcompositie.",badge:""},
+      {cat:"theatre",type:"Theater",title:"Wittgenstein's Fly",role:"Muziek & Geluidsontwerp",desc:"Scenisch geluidsontwerp en originele muziek.",badge:""},
+      {cat:"book",type:"Boek · 2024",title:"Kunstmatige intelligentie en kunst: hulpmiddel of doel?",role:"Bijdrager",desc:"Gesprek over kunstmatige intelligentie en muziek.",badge:""}
     ],
     music:{
       filters:[{label:"Alles",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Verschijnt op",cat:"album"},{label:"Live",cat:"live"}],
@@ -1136,8 +1199,9 @@ const SITE = {
           {text:"Apple Music",sub:"Aybike Özsöyke",href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
         ]},
         {label:"Sociaal",links:[
+          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"},
           {text:"Instagram",sub:"@maybeaybike",href:"https://www.instagram.com/maybeaybike/"},
-          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"}
+          {text:"Facebook",sub:"Aybike Özsöyke",href:"https://www.facebook.com/aybikeozsoyke"}
         ]}
       ]
     }
@@ -1151,10 +1215,13 @@ const SITE = {
       metaLabels:["Obrazovanje"],
       meta:["Filmski dizajn, prvostupnik — DEÜ\nGlazbena tehnologija, magistar — DEÜ"]
     },
+    worksCategories: {exh:"Izložba", game:"Videoigra", film:"Film", theatre:"Kazalište", book:"Knjiga"},
+    worksFilterAll: "Sve",
     works:[
-      {type:"Film · 2025",title:"Destan",role:"Direktor zvuka",desc:"Cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije.",badge:""},
-      {type:"Videoigra",title:"Kuroba: Oghuz",role:"Glazba & Dizajn zvuka",desc:"Zvuk igre i glazbena kompozicija.",badge:""},
-      {type:"Kazalište",title:"Wittgenstein's Fly",role:"Glazba & Dizajn zvuka",desc:"Scenski dizajn zvuka i originalna glazba.",badge:""}
+      {cat:"film",type:"Film · 2025",title:"Destan",role:"Direktor zvuka",desc:"Cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije.",badge:""},
+      {cat:"game",type:"Videoigra",title:"Kuroba: Oghuz",role:"Glazba & Dizajn zvuka",desc:"Zvuk igre i glazbena kompozicija.",badge:""},
+      {cat:"theatre",type:"Kazalište",title:"Wittgenstein's Fly",role:"Glazba & Dizajn zvuka",desc:"Scenski dizajn zvuka i originalna glazba.",badge:""},
+      {cat:"book",type:"Knjiga · 2024",title:"Umjetna inteligencija i umjetnost: alat ili cilj?",role:"Suradnica",desc:"Razgovor o umjetnoj inteligenciji i glazbi.",badge:""}
     ],
     music:{
       filters:[{label:"Sve",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Pojavljuje se na",cat:"album"},{label:"Uživo",cat:"live"}],
@@ -1178,8 +1245,9 @@ const SITE = {
           {text:"Apple Music",sub:"Aybike Özsöyke",href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
         ]},
         {label:"Društveno",links:[
+          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"},
           {text:"Instagram",sub:"@maybeaybike",href:"https://www.instagram.com/maybeaybike/"},
-          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"}
+          {text:"Facebook",sub:"Aybike Özsöyke",href:"https://www.facebook.com/aybikeozsoyke"}
         ]}
       ]
     }
@@ -1187,7 +1255,7 @@ const SITE = {
 };
 
 // ── Durum ──────────────────────────────────────────────────────────────
-let lang = 'tr', page = 'home', musicFilter = 'all';
+let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all';
 const t = () => SITE[lang];
 const pages = ['home','about','works','music','blog','contact','press'];
 
@@ -1216,6 +1284,7 @@ function showPage(id) {
 
 function setLang(l) {
   lang = l;
+  worksFilter = 'all';
   document.documentElement.lang = l;
   document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
   const cur = LANGS.find(x => x.code === l);
@@ -1324,6 +1393,54 @@ function renderMusicList() {
   }).join('');
 }
 
+// ── Works filter ───────────────────────────────────────────────────────
+function showWorksFilter(cat) {
+  worksFilter = cat;
+  showPage('works');
+  renderWorks();
+}
+
+function renderWorks() {
+  const d = t();
+  // Filter works grid (exclude 'exh' items from grid — exhibitions are their own section)
+  const filteredWorks = worksFilter === 'all'
+    ? d.works.filter(w => w.cat !== 'exh')
+    : worksFilter === 'exh'
+      ? []
+      : d.works.filter(w => w.cat === worksFilter);
+
+  document.querySelector('.works-grid').innerHTML = filteredWorks.map(w => `
+    <div class="work-item">
+      <div class="work-type">${w.type}</div>
+      <div class="work-title">${w.title}</div>
+      <div class="work-role">${w.role}</div>
+      <div class="work-desc">${w.desc}</div>
+      ${w.badge ? `<div class="work-badge">${w.badge}</div>` : ''}
+    </div>`).join('');
+
+  // Exhibitions section: render content and toggle visibility
+  const showExh = worksFilter === 'all' || worksFilter === 'exh';
+  const exhLblEl = document.getElementById('lbl-works-exh');
+  const exhListEl = document.querySelector('.exh-list');
+  if (exhLblEl) {
+    exhLblEl.textContent = upper(d.exhLabel, lang);
+    exhLblEl.style.display = showExh ? '' : 'none';
+  }
+  if (exhListEl) {
+    exhListEl.innerHTML = d.exhibitions.map(e=>`
+      <div class="exh-item">
+        <div class="exh-year">${e.year}</div>
+        <div>
+          <div class="exh-title">${e.title}</div>
+          <div class="exh-venue">${e.venue}</div>
+          <div class="exh-roles">${e.roles.map(r=>`<span class="exh-role">${upper(r,lang)}</span>`).join('')}</div>
+          <div class="exh-desc">${e.desc}</div>
+        </div>
+      </div>`).join('');
+    exhListEl.style.display = showExh ? '' : 'none';
+  }
+}
+
 // ── Render ─────────────────────────────────────────────────────────────
 function render() {
   const d = t();
@@ -1339,8 +1456,9 @@ function render() {
       </li>`;
     }
     if (p === 'works') {
-      const subs = d.works.map(w =>
-        `<a onclick="showPage('works')">${w.title}</a>`
+      const cats = ['exh','game','film','theatre','book'];
+      const subs = cats.map(cat =>
+        `<a onclick="showWorksFilter('${cat}')">${d.worksCategories[cat]}</a>`
       ).join('');
       return `<li class="nav-item-wrap">
         <a onclick="showPage('works')" data-page="works">${d.nav[i]}</a>
@@ -1374,32 +1492,12 @@ function render() {
       <div class="meta-value">${d.about.meta[i].replace(/\n/g,'<br>')}</div>
     </div>`).join('');
   // İşler
-  document.querySelector('.works-grid').innerHTML = d.works.map(w=>`
-    <div class="work-item">
-      <div class="work-type">${w.type}</div>
-      <div class="work-title">${w.title}</div>
-      <div class="work-role">${w.role}</div>
-      <div class="work-desc">${w.desc}</div>
-      ${w.badge?`<div class="work-badge">${w.badge}</div>`:''}
-    </div>`).join('');
+  renderWorks();
   // Müzik
   document.querySelector('.music-filters').innerHTML = d.music.filters.map(f =>
     `<button class="music-filter${f.cat===musicFilter?' active':''}" data-cat="${f.cat}" onclick="setMusicFilter('${f.cat}')">${f.label}</button>`
   ).join('');
   renderMusicList();
-  // Sergiler (Projeler içinde)
-  const exhLblEl = document.getElementById('lbl-works-exh');
-  if (exhLblEl) exhLblEl.textContent = upper(d.exhLabel, lang);
-  document.querySelector('.exh-list').innerHTML = d.exhibitions.map(e=>`
-    <div class="exh-item">
-      <div class="exh-year">${e.year}</div>
-      <div>
-        <div class="exh-title">${e.title}</div>
-        <div class="exh-venue">${e.venue}</div>
-        <div class="exh-roles">${e.roles.map(r=>`<span class="exh-role">${upper(r,lang)}</span>`).join('')}</div>
-        <div class="exh-desc">${e.desc}</div>
-      </div>
-    </div>`).join('');
   // Blog
   document.querySelector('.blog-soon').textContent = d.blog;
   // İletişim
