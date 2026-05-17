@@ -20,9 +20,9 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0b0b0b;--surface:#131313;--border:#242424;--border2:#2e2e2e;
-  --text:#e2ddd6;--text-muted:#706b64;--text-dim:#4a4540;
-  --accent:#c4956a;--accent-dim:#7a5c3f;
+  --bg:#04040c;--surface:#08081a;--border:#0e1430;--border2:#162040;
+  --text:#cce6ff;--text-muted:#3d6080;--text-dim:#1a3050;
+  --accent:#00aaff;--accent-dim:#00335a;
   --font-d:'Cormorant Garamond',Georgia,serif;
   --font-m:'IBM Plex Mono',monospace;
   --nav-h:64px;
@@ -86,6 +86,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .home-terminal-cursor{display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:text-bottom;margin-left:1px;animation:tcblink .7s step-end infinite}
 @keyframes tcblink{0%,100%{opacity:1}50%{opacity:0}}
 .home-terminal-hint{font-size:9px;letter-spacing:.1em;color:var(--text-dim);padding:5px 22px 10px;opacity:.45}
+.term-viz{width:100%;height:54px;display:block;border-top:1px solid var(--border)}
+.t-kw{color:#00aaff}.t-fn{color:#66d9ff}.t-str{color:#44eeaa}.t-num{color:#ffcc44}.t-cm{color:var(--text-dim)}
 
 .section-label{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:48px;display:flex;align-items:center;gap:16px}
 .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--border2)}
@@ -189,7 +191,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .nav-dropdown a:hover{color:var(--accent)}
 
 /* ─── BASIN / PRESS ─── */
-.press-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
+.press-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
 .press-item{background:var(--bg);padding:28px 36px;transition:background .2s}
 .press-item:hover{background:var(--surface)}
 .press-year{font-family:var(--font-m);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:10px}
@@ -247,6 +249,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
   /* İşler */
   .works-grid{grid-template-columns:1fr}
+  .press-list{grid-template-columns:1fr}
 
   /* Müzik */
   .music-item{grid-template-columns:32px 1fr;gap:12px;padding:16px 16px}
@@ -334,6 +337,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
         <span class="home-terminal-label">live.code</span>
       </div>
       <div class="home-terminal-body"><span id="termCode"></span><span class="home-terminal-cursor"></span></div>
+      <canvas class="term-viz" id="termViz"></canvas>
       <div class="home-terminal-hint">↵ click to next snippet</div>
     </div>
   </section>
@@ -1738,6 +1742,7 @@ function typeTerminal() {
       _termChar++;
       _termTimer = setTimeout(tick, 24 + Math.random() * 32);
     } else {
+      playTermTone(_termIdx);
       _termTimer = setTimeout(() => {
         _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
         _termChar = 0;
@@ -1749,9 +1754,91 @@ function typeTerminal() {
 }
 
 function advanceTerminal() {
+  initTermAudio();
   _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
   _termChar = 0;
   typeTerminal();
+}
+
+// ── Term-viz mini oscilloscope ─────────────────────────────────────────
+function initTermViz() {
+  const c = document.getElementById('termViz');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  function resize() {
+    c.width = c.offsetWidth * dpr;
+    c.height = c.offsetHeight * dpr;
+    ctx.scale(dpr, dpr);
+  }
+  let _t = 0;
+  const patterns = [
+    {f1:2,f2:5,  a1:.35,a2:.15},
+    {f1:3,f2:7,  a1:.3, a2:.2},
+    {f1:4,f2:9,  a1:.25,a2:.25},
+    {f1:1.5,f2:4,a1:.4, a2:.1},
+    {f1:5,f2:12, a1:.2, a2:.3},
+  ];
+  function drawViz() {
+    requestAnimationFrame(drawViz);
+    if (!c.offsetWidth) return;
+    if (c.width !== c.offsetWidth * dpr) { c.width = c.offsetWidth * dpr; c.height = c.offsetHeight * dpr; }
+    const W = c.offsetWidth, H = c.offsetHeight;
+    ctx.clearRect(0, 0, W, H);
+    const p = patterns[_termIdx % patterns.length];
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(0,170,255,0.7)';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = '#00aaff';
+    ctx.shadowBlur = 6;
+    for (let x = 0; x < W; x++) {
+      const t = _t * 0.016;
+      const y = H/2 + Math.sin((x/W)*Math.PI*p.f1*2 + t)*H*p.a1
+                     + Math.sin((x/W)*Math.PI*p.f2*2 + t*1.3)*H*p.a2;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    _t++;
+  }
+  drawViz();
+}
+
+// ── Web Audio sentez ──────────────────────────────────────────────────
+let _audioCtx = null, _audioSrc = null;
+
+function initTermAudio() {
+  if (_audioCtx) return;
+  try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+}
+
+function playTermTone(snippetIdx) {
+  if (!_audioCtx) return;
+  if (_audioSrc) { try { _audioSrc.stop(); } catch(e){} }
+  const sn = LIVECODE_SNIPPETS[snippetIdx];
+  // Her snippet için farklı nota dizisi
+  const sequences = [
+    [220, 277, 330, 440],
+    [196, 247, 294, 392],
+    [261, 329, 392, 523],
+    [174, 220, 261, 349],
+    [233, 293, 349, 466],
+  ];
+  const notes = sequences[snippetIdx % sequences.length];
+  const now = _audioCtx.currentTime;
+  notes.forEach((freq, i) => {
+    const osc = _audioCtx.createOscillator();
+    const gain = _audioCtx.createGain();
+    osc.type = sn.lang === 'sc' ? 'sine' : 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, now + i*0.18);
+    gain.gain.linearRampToValueAtTime(0.07, now + i*0.18 + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + i*0.18 + 0.28);
+    osc.connect(gain);
+    gain.connect(_audioCtx.destination);
+    osc.start(now + i*0.18);
+    osc.stop(now + i*0.18 + 0.3);
+  });
 }
 
 // ── Canvas dalga animasyonu ────────────────────────────────────────────
@@ -1769,10 +1856,10 @@ function initHomeCanvas() {
     _my = e.clientY / window.innerHeight;
   });
   const waves = [
-    {f:2.2,  a:0.055, sp:0.5,  r:196,g:149,b:106},
-    {f:3.5,  a:0.035, sp:0.85, r:157,g:133,b:196},
-    {f:5.1,  a:0.022, sp:1.4,  r:126,g:184,b:156},
-    {f:7.0,  a:0.012, sp:2.1,  r:196,g:149,b:106},
+    {f:2.2,  a:0.07,  sp:0.5,  r:0,  g:170,b:255},
+    {f:3.5,  a:0.045, sp:0.85, r:0,  g:210,b:255},
+    {f:5.1,  a:0.028, sp:1.4,  r:100,g:240,b:255},
+    {f:7.0,  a:0.016, sp:2.1,  r:0,  g:130,b:200},
   ];
   let t = 0;
   (function draw() {
@@ -1939,12 +2026,19 @@ function showWorksFilter(cat) {
 
 function renderWorks() {
   const d = t();
-  // Filter works grid (exclude 'exh' items from grid — exhibitions are their own section)
+  // Exhibitions → work-item formatına çevir
+  const exhAsWorks = d.exhibitions.map(e => ({
+    cat: 'exh',
+    type: e.year,
+    title: e.title,
+    role: e.roles.join(' · '),
+    desc: `${e.venue} — ${e.desc}`,
+    badge: ''
+  }));
+  const allItems = [...d.works, ...exhAsWorks];
   const filteredWorks = worksFilter === 'all'
-    ? d.works.filter(w => w.cat !== 'exh')
-    : worksFilter === 'exh'
-      ? []
-      : d.works.filter(w => w.cat === worksFilter);
+    ? allItems
+    : allItems.filter(w => w.cat === worksFilter);
 
   let _bookIdx = 0;
   document.querySelector('.works-grid').innerHTML = filteredWorks.map(w => {
@@ -1962,27 +2056,11 @@ function renderWorks() {
     </div>`;
   }).join('');
 
-  // Exhibitions section: render content and toggle visibility
-  const showExh = worksFilter === 'all' || worksFilter === 'exh';
+  // Eski ayrı sergiler bölümünü gizle
   const exhLblEl = document.getElementById('lbl-works-exh');
   const exhListEl = document.querySelector('.exh-list');
-  if (exhLblEl) {
-    exhLblEl.textContent = upper(d.exhLabel, lang);
-    exhLblEl.style.display = showExh ? '' : 'none';
-  }
-  if (exhListEl) {
-    exhListEl.innerHTML = d.exhibitions.map(e=>`
-      <div class="exh-item">
-        <div class="exh-year">${e.year}</div>
-        <div>
-          <div class="exh-title">${e.title}</div>
-          <div class="exh-venue">${e.venue}</div>
-          <div class="exh-roles">${e.roles.map(r=>`<span class="exh-role">${upper(r,lang)}</span>`).join('')}</div>
-          <div class="exh-desc">${e.desc}</div>
-        </div>
-      </div>`).join('');
-    exhListEl.style.display = showExh ? '' : 'none';
-  }
+  if (exhLblEl) exhLblEl.style.display = 'none';
+  if (exhListEl) exhListEl.style.display = 'none';
 }
 
 // ── Platform icons ─────────────────────────────────────────────────────
@@ -2112,6 +2190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('navToggle').addEventListener('click', openNav);
   document.getElementById('navOverlay').addEventListener('click', closeNav);
   initHomeCanvas();
+  initTermViz();
   render();
   showPage('home');
 });
