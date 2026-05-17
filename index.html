@@ -162,6 +162,9 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .contact-link-sub{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.08em;transition:color .2s}
 .contact-link:hover .contact-link-sub{color:var(--accent-dim)}
 
+.nav-toggle{display:none}
+.nav-item-header{display:contents}
+
 /* ─── NAV DROPDOWN ─── */
 .nav-item-wrap{position:relative}
 .nav-dropdown{position:absolute;top:100%;left:0;min-width:180px;background:var(--bg);border:1px solid var(--border);display:none;z-index:200;flex-direction:column}
@@ -180,6 +183,15 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .press-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
 .press-link{display:inline-block;margin-top:10px;font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s}
 .press-link:hover{background:var(--accent);color:var(--bg)}
+
+/* ─── SERTİFİKALAR ─── */
+.cert-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
+.cert-item{background:var(--bg);padding:28px 32px;transition:background .2s}
+.cert-item:hover{background:var(--surface)}
+.cert-date{font-family:var(--font-m);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:8px}
+.cert-title{font-family:var(--font-d);font-size:20px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:6px;line-height:1.3}
+.cert-org{font-family:var(--font-m);font-size:10px;color:var(--text-muted);margin-bottom:8px}
+.cert-skills{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.08em}
 
 /* ─── MOBİL: hamburger + sol sidebar ─── */
 @media(max-width:860px){
@@ -236,6 +248,39 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .contact-email-addr{font-size:18px}
   .contact-lower{grid-template-columns:1fr}
   .contact-group{padding:24px 24px}
+
+  /* Cancel hover dropdown on mobile */
+  .nav-item-wrap{position:static}
+  .nav-item-wrap:hover .nav-dropdown{display:none}
+  /* Header row: nav link + toggle button side by side */
+  .nav-item-header{display:flex;align-items:center;width:100%}
+  .nav-item-header>a{flex:1}
+  .nav-toggle{
+    display:flex;align-items:center;justify-content:center;
+    width:20px;height:20px;flex-shrink:0;
+    background:none;border:1px solid var(--border2);
+    color:var(--text-dim);font-size:13px;cursor:pointer;
+    transition:all .2s;font-family:var(--font-m);line-height:1;
+  }
+  .nav-toggle:hover{color:var(--accent);border-color:var(--accent-dim)}
+  /* Mobile dropdown: inline, not absolute */
+  .nav-dropdown{
+    position:static!important;display:none!important;
+    flex-direction:column;background:none;border:none;
+    border-left:1px solid var(--border);
+    padding:4px 0 4px 16px;margin-top:4px;min-width:0;
+  }
+  .nav-item-wrap.open .nav-dropdown{display:flex!important}
+  .nav-dropdown a{
+    padding:7px 0!important;font-size:10px!important;
+    color:var(--text-dim)!important;border-bottom:none!important;
+    white-space:normal!important;letter-spacing:.05em!important;
+  }
+  .nav-dropdown a::before{display:none!important}
+  .nav-dropdown a:hover{color:var(--accent)!important}
+
+  /* Sertifikalar */
+  .cert-list{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -317,6 +362,11 @@ main{padding-top:var(--nav-h);min-height:100vh}
   <section class="page" id="press">
     <div class="section-label" id="lbl-press"></div>
     <div class="press-list" id="pressList"></div>
+  </section>
+
+  <section class="page" id="certifications">
+    <div class="section-label" id="lbl-certifications"></div>
+    <div class="cert-list" id="certList"></div>
   </section>
 </main>
 
@@ -422,6 +472,7 @@ const SITE = {
       { year:"Şub 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Ses Tasarımcısı"], desc:"Uluslararası tarihsel sergi için ses tasarımı." }
     ],
     pressLabel: "Basın",
+    certificationsLabel: "Sertifikalar",
     blog: "Yakında — yazılar yayında olacak.",
     contact: {
       intro: "Projeler, kolaborasyonlar ve <em>her türlü ses meselesi</em> için.",
@@ -476,6 +527,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Sound Designer"], desc:"Sound design for an international historical exhibition." }
     ],
     pressLabel: "Press",
+    certificationsLabel: "Certifications",
     blog: "Coming soon — articles will be published here.",
     contact: {
       intro: "For projects, collaborations and <em>all things sound</em>.",
@@ -530,6 +582,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Klangdesignerin"], desc:"Klanggestaltung für eine internationale Historienausstellung." }
     ],
     pressLabel: "Presse",
+    certificationsLabel: "Zertifikate",
     blog: "Demnächst — Artikel werden hier veröffentlicht.",
     contact: {
       intro: "Für Projekte, Kollaborationen und <em>alles rund um Klang</em>.",
@@ -584,6 +637,7 @@ const SITE = {
       { year:"Févr. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Designer sonore"], desc:"Conception sonore pour une exposition historique internationale." }
     ],
     pressLabel: "Presse",
+    certificationsLabel: "Certifications",
     blog: "Bientôt — des articles seront publiés ici.",
     contact: {
       intro: "Pour les projets, collaborations et <em>tout ce qui touche au son</em>.",
@@ -638,6 +692,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Sound Designer"], desc:"Progettazione sonora per una mostra storica internazionale." }
     ],
     pressLabel: "Stampa",
+    certificationsLabel: "Certificazioni",
     blog: "Prossimamente — gli articoli saranno pubblicati qui.",
     contact: {
       intro: "Per progetti, collaborazioni e <em>tutto ciò che riguarda il suono</em>.",
@@ -692,6 +747,7 @@ const SITE = {
       { year:"2024年2月", title:"American Traces in Ankara 1950–69", venue:"サーモダーン、アンカラ", roles:["サウンドデザイナー"], desc:"国際的な歴史展のためのサウンドデザイン。" }
     ],
     pressLabel: "プレス",
+    certificationsLabel: "資格・認定",
     blog: "近日公開 — 記事を掲載予定です。",
     contact: {
       intro: "プロジェクト、コラボレーション、<em>音に関するすべて</em>のお問い合わせはこちら。",
@@ -746,6 +802,7 @@ const SITE = {
       { year:"Февр. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Анкара", roles:["Звуковой дизайнер"], desc:"Звуковое оформление международной исторической выставки." }
     ],
     pressLabel: "Пресса",
+    certificationsLabel: "Сертификаты",
     blog: "Скоро — здесь будут опубликованы статьи.",
     contact: {
       intro: "По вопросам проектов, коллабораций и <em>всего, что связано со звуком</em>.",
@@ -800,6 +857,7 @@ const SITE = {
       { year:"2024년 2월", title:"American Traces in Ankara 1950–69", venue:"서모던, 앙카라", roles:["사운드 디자이너"], desc:"국제 역사 전시를 위한 사운드 디자인." }
     ],
     pressLabel: "언론",
+    certificationsLabel: "자격증",
     blog: "곧 공개 예정 — 글이 게재될 예정입니다.",
     contact: {
       intro: "프로젝트, 협업, <em>음악 관련 모든 것</em>에 대해 문의하세요.",
@@ -854,6 +912,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Diseñadora de sonido"], desc:"Diseño de sonido para una exposición histórica internacional." }
     ],
     pressLabel: "Prensa",
+    certificationsLabel: "Certificaciones",
     blog: "Próximamente — los artículos se publicarán aquí.",
     contact: {
       intro: "Para proyectos, colaboraciones y <em>todo lo relacionado con el sonido</em>.",
@@ -908,6 +967,7 @@ const SITE = {
       { year:"Fevr. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Səs dizayneri"], desc:"Beynəlxalq tarixi sərgi üçün səs dizaynı." }
     ],
     pressLabel: "Mətbuat",
+    certificationsLabel: "Sertifikatlar",
     blog: "Tezliklə — məqalələr burada dərc olunacaq.",
     contact: {
       intro: "Layihələr, əməkdaşlıq və <em>hər cür səs məsələsi</em> üçün.",
@@ -962,6 +1022,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Ljuddesigner"], desc:"Ljuddesign för en internationell historisk utställning." }
     ],
     pressLabel: "Press",
+    certificationsLabel: "Certifieringar",
     blog: "Kommer snart — artiklar kommer att publiceras här.",
     contact: {
       intro: "För projekt, samarbeten och <em>allt som rör ljud</em>.",
@@ -1016,6 +1077,7 @@ const SITE = {
       { year:"Fev 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Designer de som"], desc:"Design sonoro para uma exposição histórica internacional." }
     ],
     pressLabel: "Imprensa",
+    certificationsLabel: "Certificações",
     blog: "Em breve — os artigos serão publicados aqui.",
     contact: {
       intro: "Para projetos, colaborações e <em>tudo sobre som</em>.",
@@ -1070,6 +1132,7 @@ const SITE = {
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Lyddesigner"], desc:"Lyddesign til en international historisk udstilling." }
     ],
     pressLabel: "Presse",
+    certificationsLabel: "Certifikater",
     blog: "Kommer snart — artikler vil blive offentliggjort her.",
     contact: {
       intro: "Til projekter, samarbejder og <em>alt inden for lyd</em>.",
@@ -1124,6 +1187,7 @@ const SITE = {
       { year:"Лют. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Анкара", roles:["Звуковий дизайнер"], desc:"Звуковий дизайн для міжнародної історичної виставки." }
     ],
     pressLabel: "Преса",
+    certificationsLabel: "Сертифікати",
     blog: "Незабаром — статті будуть опубліковані тут.",
     contact: {
       intro: "Для проєктів, колаборацій і <em>всього, що пов'язано зі звуком</em>.",
@@ -1178,6 +1242,7 @@ const SITE = {
       { year:"فبراير 2024", title:"American Traces in Ankara 1950–69", venue:"سيرموديرن، أنقرة", roles:["مصممة صوت"], desc:"تصميم الصوت لمعرض تاريخي دولي." }
     ],
     pressLabel: "الصحافة",
+    certificationsLabel: "الشهادات",
     blog: "قريباً — ستُنشر المقالات هنا.",
     contact: {
       intro: "للمشاريع والتعاون و<em>كل ما يتعلق بالصوت</em>.",
@@ -1221,6 +1286,7 @@ const SITE = {
       playLabel:"wordt afgespeeld"
     },
     pressLabel: "Pers",
+    certificationsLabel: "Certificaten",
     exhLabel:"Tentoonstellingen",
     exhibitions:[
       {year:"Jul 2023",title:"Arkhe: Een tentoonstelling over AI-data",venue:"Ahmed Adnan Saygun Kunstcentrum, Izmir",roles:["Curator","Geluidsontwerper","Producent"],desc:"Multidisciplinaire tentoonstelling over kunstmatige intelligentie en data."},
@@ -1269,6 +1335,7 @@ const SITE = {
       playLabel:"reproducira se"
     },
     pressLabel: "Mediji",
+    certificationsLabel: "Certifikati",
     exhLabel:"Izložbe",
     exhibitions:[
       {year:"Srp 2023",title:"Arkhe: Izložba o AI podacima",venue:"Umjetnički centar Ahmed Adnan Saygun, Izmir",roles:["Kustosica","Dizajner zvuka","Producentica"],desc:"Multidisciplinarna izložba o umjetnoj inteligenciji i podacima."},
@@ -1304,6 +1371,7 @@ const SITE = {
     meta: ["Projektowanie filmowe, licencjat — DEÜ\nTechnologia muzyczna, magister — DEÜ"]
   },
   pressLabel: "Prasa",
+  certificationsLabel: "Certyfikaty",
   worksFilterAll: "Wszystkie",
   worksCategories: {exh:"Wystawa",game:"Gra wideo",film:"Film",theatre:"Teatr",book:"Książka"},
   works: [
@@ -1357,6 +1425,7 @@ const SITE = {
     meta: ["फिल्म डिज़ाइन, स्नातक — DEÜ\nसंगीत प्रौद्योगिकी, स्नातकोत्तर — DEÜ"]
   },
   pressLabel: "प्रेस",
+  certificationsLabel: "प्रमाणपत्र",
   worksFilterAll: "सभी",
   worksCategories: {exh:"प्रदर्शनी",game:"वीडियो गेम",film:"फिल्म",theatre:"रंगमंच",book:"पुस्तक"},
   works: [
@@ -1410,6 +1479,7 @@ const SITE = {
     meta: ["电影设计，学士 — DEÜ\n音乐技术，硕士 — DEÜ"]
   },
   pressLabel: "媒体报道",
+  certificationsLabel: "证书",
   worksFilterAll: "全部",
   worksCategories: {exh:"展览",game:"视频游戏",film:"电影",theatre:"戏剧",book:"书籍"},
   works: [
@@ -1456,7 +1526,7 @@ const SITE = {
 // ── Durum ──────────────────────────────────────────────────────────────
 let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all';
 const t = () => SITE[lang];
-const pages = ['home','about','works','music','blog','contact','press'];
+const pages = ['home','about','works','music','blog','contact','press','certifications'];
 
 // ── Basın öğeleri ──────────────────────────────────────────────────────
 const PRESS_ITEMS = [
@@ -1464,6 +1534,18 @@ const PRESS_ITEMS = [
   { year:"2023–2025", source:"Milliyet Sanat", title:"Milliyet Sanat", desc:"Milliyet Sanat'ta yer alan haberler.", url:"" },
   { year:"2023", source:"Bilkent University", title:"Sounding Off 2023", desc:"Sounding Off 2023 programına katılımcı olarak seçilmiştir.", url:"https://music.bilkent.edu.tr/soundingoff/" },
   { year:"2023", source:"izmir.art / Arkhe", title:"Arkhe: AI Veriler Üzerine Bir Sergi", desc:"Sergi küratörü, yapımcısı ve ses tasarımcısı olarak yer almıştır. Ahmed Adnan Saygun Sanat Merkezi, İzmir.", url:"https://izmir.art/arkhe-ai-veriler-uzerine-bir-sergi/" },
+];
+
+// ── Sertifika öğeleri ──────────────────────────────────────────────────
+const CERT_ITEMS = [
+  { title:"Hackability: Sürdürülebilirlik ve Yapay Zeka", org:"İzQ Girişimcilik ve İnovasyon Merkezi", date:"May 2026", skills:"Vibe Kodlama, Yapay Zeka", url:"" },
+  { title:"Robotik Kodlama", org:"T.C. Gençlik ve Spor Bakanlığı", date:"May 2026", skills:"Robotik Kodlama", url:"" },
+  { title:"AI-Powered Content Creation", org:"Academy of Arts and Design London", date:"May 2026", skills:"Yapay Zeka", url:"" },
+  { title:"TouchDesigner", org:"Academy of Arts and Design London", date:"Mar 2026", skills:"Yeni Medya", url:"" },
+  { title:"Yaratıcı Girişimcilik Eğitim Programı", org:"İzmir Ekonomi Üniversitesi", date:"Şub 2026", skills:"Girişimcilik, Girişim Başlatma", url:"" },
+  { title:"Bateri", org:"T.C. Gençlik ve Spor Bakanlığı", date:"May 2025", skills:"Bateri, Müzik", url:"" },
+  { title:"XIV. Uluslararası Hisarlı Ahmet Sempozyumu", org:"Çanakkale Onsekiz Mart Üniversitesi", date:"May 2024", skills:"Akademik Yazı, Akademik Başarı", url:"" },
+  { title:"Sounding Off 2023", org:"Bilkent Üniversitesi", date:"May 2023", skills:"Composer, Sound Design", url:"" },
 ];
 
 function upper(str, l) {
@@ -1512,6 +1594,17 @@ function openNav() {
 function closeNav() {
   document.getElementById('mainNav').classList.remove('open');
   document.getElementById('navOverlay').classList.remove('open');
+  document.querySelectorAll('.nav-item-wrap.open').forEach(el => {
+    el.classList.remove('open');
+    const btn = el.querySelector('.nav-toggle');
+    if (btn) btn.textContent = '+';
+  });
+}
+
+function toggleNavDropdown(btn) {
+  const wrap = btn.closest('.nav-item-wrap');
+  const isOpen = wrap.classList.toggle('open');
+  btn.textContent = isOpen ? '−' : '+';
 }
 
 // ── YouTube embed dönüştürücü ──────────────────────────────────────────
@@ -1660,20 +1753,27 @@ function render() {
   document.querySelector('.nav-links').innerHTML = pages.slice(0,6).map((p,i) => {
     if (p === 'about') {
       return `<li class="nav-item-wrap">
-        <a onclick="showPage('about')" data-page="about">${d.nav[i]}</a>
+        <div class="nav-item-header">
+          <a onclick="showPage('about')" data-page="about">${d.nav[i]}</a>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
+        </div>
         <div class="nav-dropdown">
-          <a onclick="showPage('about')">${d.nav[i]}</a>
-          <a onclick="showPage('press')">${d.pressLabel}</a>
+          <a onclick="showPage('about');closeNav()">${d.nav[i]}</a>
+          <a onclick="showPage('press');closeNav()">${d.pressLabel}</a>
+          <a onclick="showPage('certifications');closeNav()">${d.certificationsLabel}</a>
         </div>
       </li>`;
     }
     if (p === 'works') {
       const cats = ['exh','game','film','theatre','book'];
       const subs = cats.map(cat =>
-        `<a onclick="showWorksFilter('${cat}')">${d.worksCategories[cat]}</a>`
+        `<a onclick="showWorksFilter('${cat}');closeNav()">${d.worksCategories[cat]}</a>`
       ).join('');
       return `<li class="nav-item-wrap">
-        <a onclick="showPage('works')" data-page="works">${d.nav[i]}</a>
+        <div class="nav-item-header">
+          <a onclick="showPage('works')" data-page="works">${d.nav[i]}</a>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
+        </div>
         <div class="nav-dropdown">${subs}</div>
       </li>`;
     }
@@ -1692,6 +1792,16 @@ function render() {
       <div class="press-title">${p.title}</div>
       <div class="press-desc">${p.desc}</div>
       ${p.url ? `<a class="press-link" href="${p.url}" target="_blank">↗ Link</a>` : ''}
+    </div>`).join('');
+  const certLblEl = document.getElementById('lbl-certifications');
+  if (certLblEl) certLblEl.textContent = upper(d.certificationsLabel, lang);
+  const certListEl = document.getElementById('certList');
+  if (certListEl) certListEl.innerHTML = CERT_ITEMS.map(c => `
+    <div class="cert-item">
+      <div class="cert-date">${c.date}</div>
+      <div class="cert-title">${c.title}</div>
+      <div class="cert-org">${c.org}</div>
+      ${c.skills ? `<div class="cert-skills">${c.skills}</div>` : ''}
     </div>`).join('');
   // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
