@@ -377,6 +377,9 @@ const LANGS = [
   {code:'ar',flag:'🇸🇦',name:'العربية'},
   {code:'nl',flag:'🇳🇱',name:'Nederlands'},
   {code:'hr',flag:'🇭🇷',name:'Hrvatski'},
+  {code:'pl',flag:'🇵🇱',name:'Polski'},
+  {code:'hi',flag:'🇮🇳',name:'हिन्दी'},
+  {code:'zh',flag:'🇨🇳',name:'中文'},
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -1251,7 +1254,160 @@ const SITE = {
         ]}
       ]
     }
+  },
+  pl: {
+  nav: ["Strona główna","O mnie","Projekty","Muzyka","Blog","Kontakt"],
+  home: {
+    location: "Izmir, Turcja",
+    roles: ["Creative Technologist","Artystka audiowizualna","Projektantka dźwięku","Producentka muzyczna"]
+  },
+  about: {
+    text: `<strong>Aybike Özsöyke</strong> (ur. 1999, Izmir) jest projektantką dźwięku, producentką muzyczną i creative technologist. Ukończyła studia licencjackie z <em>Projektowania filmowego</em> na Wydziale Sztuk Pięknych Uniwersytetu Dokuz Eylül oraz magisterskie z <em>Technologii muzycznej</em> na tej samej uczelni. W ramach <strong>Aybike Özsöyke Sound Production</strong> zarządza całym procesem dźwiękowym — od projektowania dźwięku po kompozycję muzyczną. Stworzyła muzykę i projekt dźwiękowy do gry wideo <em>Kuroba: Oghuz</em> i produkcji teatralnej <em>Mucha Wittgensteina</em>. Pełniła funkcję projektantki dźwięku na wystawie <em>American Traces in Ankara 1950–69</em> oraz kuratorki, producentki i projektantki dźwięku na <em>Arkhe: Wystawa o danych AI</em>. Jej rozmowa o AI i muzyce ukazała się w <em>Sztuczna inteligencja i sztuka: narzędzie czy cel?</em>. Wybrana do <strong>Sounding Off 2023</strong> (Uniwersytet Bilkent), występuje z livecodingiem na wydarzeniach Algorave.`,
+    metaLabels: ["Wykształcenie"],
+    meta: ["Projektowanie filmowe, licencjat — DEÜ\nTechnologia muzyczna, magister — DEÜ"]
+  },
+  pressLabel: "Prasa",
+  worksFilterAll: "Wszystkie",
+  worksCategories: {exh:"Wystawa",game:"Gra wideo",film:"Film",theatre:"Teatr",book:"Książka"},
+  works: [
+    {cat:"film", type:"Film · 2025", title:"Destan", role:"Reżyser dźwięku", desc:"Kompletny proces dźwiękowy — od projektowania dźwięku po kompozycję muzyczną.", badge:""},
+    {cat:"game", type:"Gra wideo", title:"Kuroba: Oghuz", role:"Muzyka & Projekt dźwięku", desc:"Dźwięk gry i kompozycja muzyczna.", badge:""},
+    {cat:"theatre", type:"Teatr", title:"Wittgenstein's Fly", role:"Muzyka & Projekt dźwięku", desc:"Sceniczny projekt dźwięku i oryginalna muzyka.", badge:""},
+    {cat:"book", type:"Książka · 2024", title:"Sztuczna inteligencja i sztuka: narzędzie czy cel?", role:"Współautorka", desc:"Rozmowa o sztucznej inteligencji i muzyce.", badge:""}
+  ],
+  music: {
+    filters:[
+      {label:"Wszystkie",cat:"all"},{label:"Single",cat:"single"},
+      {label:"EP",cat:"ep"},{label:"Pojawia się na",cat:"album"},{label:"Na żywo",cat:"live"}
+    ],
+    catLabels:{single:"Single",ep:"EP",album:"Pojawia się na",live:"Na żywo"},
+    playLabel:"odtwarzanie"
+  },
+  exhLabel: "Wystawy",
+  exhibitions: [
+    {year:"Lip 2023", title:"Arkhe: Wystawa o danych AI", venue:"Centrum Sztuki Ahmed Adnan Saygun, Izmir", roles:["Kuratorka","Projektantka dźwięku","Producentka"], desc:"Multidyscyplinarna wystawa o sztucznej inteligencji i danych."},
+    {year:"Lut 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Projektantka dźwięku"], desc:"Projekt dźwięku dla międzynarodowej wystawy historycznej."}
+  ],
+  blog: "Wkrótce — artykuły będą tutaj publikowane.",
+  contact: {
+    intro: "W sprawie projektów, współpracy i <em>wszystkiego, co związane z dźwiękiem</em>.",
+    email: {label:"E-mail", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com"},
+    groups: [
+      {label:"Muzyka", links:[
+        {text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke"},
+        {text:"Spotify", sub:"Strona artysty", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE"},
+        {text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
+      ]},
+      {label:"Społeczności", links:[
+        {text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/"},
+        {text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/"},
+        {text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke"}
+      ]}
+    ]
   }
+},
+  hi: {
+  nav: ["होम","परिचय","परियोजनाएं","संगीत","ब्लॉग","संपर्क"],
+  home: {
+    location: "इज़मिर, तुर्की",
+    roles: ["Creative Technologist","ऑडियोविजुअल कलाकार","साउंड डिज़ाइनर","संगीत निर्माता"]
+  },
+  about: {
+    text: `<strong>Aybike Özsöyke</strong> (जन्म 1999, इज़मिर) एक साउंड डिज़ाइनर, संगीत निर्माता और क्रिएटिव टेक्नोलॉजिस्ट हैं। उन्होंने Dokuz Eylül University के फाइन आर्ट्स फैकल्टी से <em>फिल्म डिज़ाइन</em> में स्नातक की डिग्री प्राप्त की और उसी विश्वविद्यालय से <em>संगीत प्रौद्योगिकी</em> में स्नातकोत्तर पूरा किया। <strong>Aybike Özsöyke Sound Production</strong> के माध्यम से वे साउंड डिज़ाइन से लेकर संगीत रचना तक की पूरी प्रक्रिया संभालती हैं। उन्होंने वीडियो गेम <em>Kuroba: Oghuz</em> और थिएटर प्रोडक्शन <em>Wittgenstein's Fly</em> के लिए संगीत और साउंड डिज़ाइन किया। <em>American Traces in Ankara 1950–69</em> में साउंड डिज़ाइनर के रूप में और <em>Arkhe: AI डेटा पर एक प्रदर्शनी</em> में क्यूरेटर, निर्माता और साउंड डिज़ाइनर के रूप में शामिल रहीं। AI और संगीत पर उनकी बातचीत <em>कृत्रिम बुद्धिमत्ता और कला: उपकरण या लक्ष्य?</em> में प्रकाशित हुई। <strong>Sounding Off 2023</strong> (Bilkent University) के लिए चुनी गई, वे Algorave इवेंट्स में लाइवकोडिंग परफॉर्मेंस देती हैं।`,
+    metaLabels: ["शिक्षा"],
+    meta: ["फिल्म डिज़ाइन, स्नातक — DEÜ\nसंगीत प्रौद्योगिकी, स्नातकोत्तर — DEÜ"]
+  },
+  pressLabel: "प्रेस",
+  worksFilterAll: "सभी",
+  worksCategories: {exh:"प्रदर्शनी",game:"वीडियो गेम",film:"फिल्म",theatre:"रंगमंच",book:"पुस्तक"},
+  works: [
+    {cat:"film", type:"फिल्म · 2025", title:"Destan", role:"साउंड डायरेक्टर", desc:"साउंड डिज़ाइन से संगीत रचना तक पूरी प्रक्रिया।", badge:""},
+    {cat:"game", type:"वीडियो गेम", title:"Kuroba: Oghuz", role:"संगीत & साउंड डिज़ाइन", desc:"गेम ऑडियो और संगीत रचना।", badge:""},
+    {cat:"theatre", type:"रंगमंच", title:"Wittgenstein's Fly", role:"संगीत & साउंड डिज़ाइन", desc:"मंच ध्वनि डिज़ाइन और मूल संगीत।", badge:""},
+    {cat:"book", type:"पुस्तक · 2024", title:"कृत्रिम बुद्धिमत्ता और कला: उपकरण या लक्ष्य?", role:"योगदानकर्ता", desc:"कृत्रिम बुद्धिमत्ता और संगीत पर बातचीत।", badge:""}
+  ],
+  music: {
+    filters:[
+      {label:"सभी",cat:"all"},{label:"सिंगल",cat:"single"},
+      {label:"EP",cat:"ep"},{label:"फ़ीचर्ड",cat:"album"},{label:"लाइव",cat:"live"}
+    ],
+    catLabels:{single:"सिंगल",ep:"EP",album:"फ़ीचर्ड",live:"लाइव"},
+    playLabel:"चल रहा है"
+  },
+  exhLabel: "प्रदर्शनियां",
+  exhibitions: [
+    {year:"जुलाई 2023", title:"Arkhe: AI डेटा पर एक प्रदर्शनी", venue:"अहमद अदनान सायगुन कला केंद्र, इज़मिर", roles:["क्यूरेटर","साउंड डिज़ाइनर","निर्माता"], desc:"कृत्रिम बुद्धिमत्ता और डेटा पर बहुविषयक प्रदर्शनी।"},
+    {year:"फ़रवरी 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, अंकारा", roles:["साउंड डिज़ाइनर"], desc:"एक अंतर्राष्ट्रीय ऐतिहासिक प्रदर्शनी के लिए ध्वनि डिज़ाइन।"}
+  ],
+  blog: "जल्द आ रहा है — लेख यहाँ प्रकाशित होंगे।",
+  contact: {
+    intro: "परियोजनाओं, सहयोग और <em>ध्वनि से जुड़ी हर चीज़</em> के लिए।",
+    email: {label:"ईमेल", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com"},
+    groups: [
+      {label:"संगीत", links:[
+        {text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke"},
+        {text:"Spotify", sub:"कलाकार पृष्ठ", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE"},
+        {text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
+      ]},
+      {label:"सोशल", links:[
+        {text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/"},
+        {text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/"},
+        {text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke"}
+      ]}
+    ]
+  }
+},
+  zh: {
+  nav: ["首页","关于我","项目","音乐","博客","联系我"],
+  home: {
+    location: "伊兹密尔，土耳其",
+    roles: ["创意技术专家","视听艺术家","声音设计师","音乐制作人"]
+  },
+  about: {
+    text: `<strong>Aybike Özsöyke</strong>（1999年生，伊兹密尔）是一位声音设计师、音乐制作人和创意技术专家。她在多库兹·艾吕尔大学美术学院取得<em>电影设计</em>学士学位，并在同一机构完成了<em>音乐技术</em>硕士学位。通过<strong>Aybike Özsöyke Sound Production</strong>，她负责从声音设计到音乐创作的全部声音流程。她为电子游戏<em>Kuroba: Oghuz</em>和戏剧作品<em>维特根斯坦的苍蝇</em>创作了音乐和声音设计。她曾担任<em>American Traces in Ankara 1950–69</em>展览的声音设计师，以及<em>Arkhe：关于AI数据的展览</em>的策展人、制作人和声音设计师。她关于AI与音乐的对话收录于<em>人工智能与艺术：工具还是目的？</em>一书。她入选<strong>Sounding Off 2023</strong>（比尔肯特大学），并在Algorave活动中进行现场编程表演。`,
+    metaLabels: ["教育背景"],
+    meta: ["电影设计，学士 — DEÜ\n音乐技术，硕士 — DEÜ"]
+  },
+  pressLabel: "媒体报道",
+  worksFilterAll: "全部",
+  worksCategories: {exh:"展览",game:"视频游戏",film:"电影",theatre:"戏剧",book:"书籍"},
+  works: [
+    {cat:"film", type:"电影 · 2025", title:"Destan", role:"声音总监", desc:"从声音设计到音乐创作的完整声音流程。", badge:""},
+    {cat:"game", type:"视频游戏", title:"Kuroba: Oghuz", role:"音乐 & 声音设计", desc:"游戏音频与音乐创作。", badge:""},
+    {cat:"theatre", type:"戏剧", title:"Wittgenstein's Fly", role:"音乐 & 声音设计", desc:"舞台音效设计与原创音乐。", badge:""},
+    {cat:"book", type:"书籍 · 2024", title:"人工智能与艺术：工具还是目的？", role:"撰稿人", desc:"关于人工智能与音乐的对话。", badge:""}
+  ],
+  music: {
+    filters:[
+      {label:"全部",cat:"all"},{label:"单曲",cat:"single"},
+      {label:"EP",cat:"ep"},{label:"参与专辑",cat:"album"},{label:"现场",cat:"live"}
+    ],
+    catLabels:{single:"单曲",ep:"EP",album:"参与专辑",live:"现场"},
+    playLabel:"正在播放"
+  },
+  exhLabel: "展览",
+  exhibitions: [
+    {year:"2023年7月", title:"Arkhe：关于AI数据的展览", venue:"艾哈迈德·阿德南·赛古恩艺术中心，伊兹密尔", roles:["策展人","声音设计师","制作人"], desc:"关于人工智能与数据的多学科展览。"},
+    {year:"2024年2月", title:"American Traces in Ankara 1950–69", venue:"Cermodern，安卡拉", roles:["声音设计师"], desc:"为国际历史展览进行的声音设计。"}
+  ],
+  blog: "即将推出 — 文章将在此发布。",
+  contact: {
+    intro: "欢迎就项目、合作及<em>一切与声音相关的事宜</em>与我联系。",
+    email: {label:"邮箱", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com"},
+    groups: [
+      {label:"音乐", links:[
+        {text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke"},
+        {text:"Spotify", sub:"艺人主页", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE"},
+        {text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
+      ]},
+      {label:"社交", links:[
+        {text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/"},
+        {text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/"},
+        {text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke"}
+      ]}
+    ]
+  }
+}
 };
 
 // ── Durum ──────────────────────────────────────────────────────────────
