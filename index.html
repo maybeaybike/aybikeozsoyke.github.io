@@ -154,6 +154,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-by{font-family:var(--font-m);font-size:10px;color:var(--text-muted);margin-bottom:6px}
 .music-bottom{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.1em}
+.music-cat-header{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);width:100%}
 .music-links{display:flex;gap:6px;flex-wrap:wrap}
 .music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
@@ -2160,7 +2161,7 @@ function initHomeCanvas() {
   })();
 }
 
-function showPage(id) {
+function showPage(id, push = true) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -2171,10 +2172,15 @@ function showPage(id) {
   const c = document.getElementById('homeCanvas');
   if (c) c.style.opacity = id === 'home' ? '0.45' : '0.05';
   if (id === 'home' && !_termStarted) { _termStarted = true; typeTerminal(); }
-  // URL hash güncelle — sayfayı yenileyince aynı sayfaya dön
+  // URL hash güncelle
   const newHash = id === 'home' ? '' : '#' + id;
-  if (window.location.hash !== newHash) {
-    history.replaceState(null, '', newHash || window.location.pathname);
+  const cur = window.location.hash;
+  if (cur !== newHash && cur !== ('#' + id)) {
+    if (push) {
+      history.pushState({ page: id }, '', newHash || window.location.pathname);
+    } else {
+      history.replaceState({ page: id }, '', newHash || window.location.pathname);
+    }
   }
 }
 
@@ -2308,32 +2314,46 @@ function toggleMusicAccordion() {
   if (plus) plus.textContent = isOpen ? '×' : '+';
 }
 
-function renderMusicList() {
-  const d = t();
-  const items = musicMode === 'live'
-    ? MUSIC_ITEMS.filter(i => i.cat === 'live')
-    : MUSIC_ITEMS.filter(i => i.cat !== 'live');
-  document.querySelector('.music-list').innerHTML = items.map(item => {
-    const hasVideo = !!toEmbed(item.yt) || !!toSpotifyEmbed(item.spotify);
-    const esc = s => s.replace(/'/g, "\\'");
-    return `
-    <div class="music-item${hasVideo ? '' : ' no-video'}"
-      ${hasVideo ? `onclick="playItem('${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
-      <div class="music-play">${hasVideo ? '▶' : '·'}</div>
-      <div class="music-info">
-        <div class="music-title">${item.title}</div>
-        <div class="music-by">${item.by}</div>
-        <div class="music-bottom">
-          <span class="music-cat-tag">${d.music.catLabels[item.cat] || ''}</span>
-          <div class="music-links">
-            ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
-            ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
-            ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
-          </div>
+function musicItemHtml(item, d) {
+  const hasVideo = !!toEmbed(item.yt) || !!toSpotifyEmbed(item.spotify);
+  const esc = s => s.replace(/'/g, "\\'");
+  return `
+  <div class="music-item${hasVideo ? '' : ' no-video'}"
+    ${hasVideo ? `onclick="playItem('${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
+    <div class="music-play">${hasVideo ? '▶' : '·'}</div>
+    <div class="music-info">
+      <div class="music-title">${item.title}</div>
+      <div class="music-by">${item.by}</div>
+      <div class="music-bottom">
+        <span class="music-cat-tag">${d.music.catLabels[item.cat] || ''}</span>
+        <div class="music-links">
+          ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
+          ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
+          ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
         </div>
       </div>
-      <div class="music-year">${item.year}</div>
-    </div>`;
+    </div>
+    <div class="music-year">${item.year}</div>
+  </div>`;
+}
+
+function renderMusicList() {
+  const d = t();
+  const list = document.querySelector('.music-list');
+
+  if (musicMode === 'live') {
+    list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
+      .map(item => musicItemHtml(item, d)).join('');
+    return;
+  }
+
+  // Streaming: Single → EP → Yer Aldığı Albüm şeklinde grupla
+  const order = ['single', 'ep', 'album'];
+  list.innerHTML = order.map(cat => {
+    const catItems = MUSIC_ITEMS.filter(i => i.cat === cat);
+    if (!catItems.length) return '';
+    return `<div class="music-cat-header">${d.music.catLabels[cat]}</div>`
+      + catItems.map(item => musicItemHtml(item, d)).join('');
   }).join('');
 }
 
@@ -2541,13 +2561,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initHomeCanvas();
   initTermViz();
   render();
-  // Sayfa yenilenince hash'ten başlangıç sayfasını oku
+  // Sayfa yenilenince hash'ten başlangıç sayfasını oku (history'ye ekleme)
   const hashPage = window.location.hash.slice(1);
-  showPage(pages.includes(hashPage) ? hashPage : 'home');
-  // Geri/ileri buton desteği
-  window.addEventListener('popstate', () => {
-    const h = window.location.hash.slice(1);
-    showPage(pages.includes(h) ? h : 'home');
+  showPage(pages.includes(hashPage) ? hashPage : 'home', false);
+  // Geri/ileri buton desteği — history'ye ekleme, sadece göster
+  window.addEventListener('popstate', e => {
+    const h = (e.state && e.state.page) || window.location.hash.slice(1);
+    showPage(pages.includes(h) ? h : 'home', false);
   });
 });
 </script>
