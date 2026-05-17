@@ -2171,6 +2171,11 @@ function showPage(id) {
   const c = document.getElementById('homeCanvas');
   if (c) c.style.opacity = id === 'home' ? '0.45' : '0.05';
   if (id === 'home' && !_termStarted) { _termStarted = true; typeTerminal(); }
+  // URL hash güncelle — sayfayı yenileyince aynı sayfaya dön
+  const newHash = id === 'home' ? '' : '#' + id;
+  if (window.location.hash !== newHash) {
+    history.replaceState(null, '', newHash || window.location.pathname);
+  }
 }
 
 function setLang(l) {
@@ -2423,6 +2428,19 @@ function render() {
         <div class="nav-dropdown">${subs}</div>
       </li>`;
     }
+    if (p === 'music') {
+      const liveLabel = d.music.catLabels.live;
+      return `<li class="nav-item-wrap">
+        <div class="nav-item-header">
+          <a onclick="showPage('music')" data-page="music">${d.nav[i]}</a>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
+        </div>
+        <div class="nav-dropdown">
+          <a onclick="setMusicMode('streaming');showPage('music');closeNav()">Streaming</a>
+          <a onclick="setMusicMode('live');showPage('music');closeNav()">${liveLabel}</a>
+        </div>
+      </li>`;
+    }
     return `<li><a onclick="showPage('${p}')" data-page="${p}">${d.nav[i]}</a></li>`;
   }).join('');
   ['about','works','music','blog','contact'].forEach((id,i) => {
@@ -2523,7 +2541,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initHomeCanvas();
   initTermViz();
   render();
-  showPage('home');
+  // Sayfa yenilenince hash'ten başlangıç sayfasını oku
+  const hashPage = window.location.hash.slice(1);
+  showPage(pages.includes(hashPage) ? hashPage : 'home');
+  // Geri/ileri buton desteği
+  window.addEventListener('popstate', () => {
+    const h = window.location.hash.slice(1);
+    showPage(pages.includes(h) ? h : 'home');
+  });
 });
 </script>
 </body>
