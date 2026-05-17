@@ -61,6 +61,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8}
 .about-text strong{font-weight:500;color:var(--accent)}
 .about-text em{font-style:italic;color:var(--text-muted)}
+.about-right{display:flex;flex-direction:column;gap:0}
+.about-photo{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;display:block}
 .about-meta{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border)}
 .meta-item{background:var(--bg);padding:24px 28px}
 .meta-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:10px;text-transform:uppercase}
@@ -167,6 +169,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
   /* Hakkımda: tek sütun */
   .about-layout{grid-template-columns:1fr;gap:36px}
+  .about-photo{aspect-ratio:4/3}
   .about-text{font-size:17px}
 
   /* İşler */
@@ -223,9 +226,12 @@ main{padding-top:var(--nav-h);min-height:100vh}
     <div class="section-label" id="lbl-about"></div>
     <div class="about-layout">
       <p class="about-text"></p>
-      <div class="about-meta">
-        <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
-        <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+      <div class="about-right">
+        <img class="about-photo" src="photo.jpg" alt="Aybike Özsöyke">
+        <div class="about-meta">
+          <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+          <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -283,9 +289,21 @@ const MUSIC_ITEMS = [
     apple:"https://music.apple.com/tr/album/kam/1720727937?i=1720727943" },
   { title:"Düştüm Dünyaya", by:"Aybike Özsöyke", cat:"single", year:"",
     yt:"https://www.youtube.com/watch?v=Lalgh-CCgII",
-    spotify:"",
+    spotify:"https://open.spotify.com/track/0r8oIZWy4yo0CgNKBBugJW",
     apple:"https://music.apple.com/tr/album/d%C3%BC%C5%9Ft%C3%BCm-d%C3%BCnyaya/1768036108?i=1768036110" },
-  { title:"Mergen EP", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+  { title:"Mergen", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
+    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
+    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
+  { title:"Zamansızlık", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
+    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
+    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
+  { title:"Ağaçlar Yakıldı", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
+    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
+    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
+  { title:"Hipnogojik", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
     yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
     spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
     apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
@@ -297,11 +315,11 @@ const MUSIC_ITEMS = [
     yt:"",
     spotify:"https://open.spotify.com/track/6sVW6hgMC69pc40KlbxMci",
     apple:"https://music.apple.com/tr/album/mining-wheel/1819579724?i=1819579725" },
-  { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
+  { title:"Live Coding — 8 Mart SMC Konseri", by:"Aybike Özsöyke", cat:"live", year:"",
     yt:"https://youtu.be/jopBdxWd3mc", spotify:"", apple:"" },
-  { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
+  { title:"Live Coding — Take The Aid Train", by:"Aybike Özsöyke", cat:"live", year:"",
     yt:"https://youtu.be/PVkB-iZ7D_M", spotify:"", apple:"" },
-  { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
+  { title:"Algorave", by:"Aybike Özsöyke", cat:"live", year:"",
     yt:"https://youtu.be/5b0sskxrVhc", spotify:"", apple:"" },
 ];
 
@@ -497,11 +515,28 @@ function toEmbed(url) {
   return null;
 }
 
-function playMusic(title, ytUrl) {
-  const embed = toEmbed(ytUrl);
+function toSpotifyEmbed(url) {
+  if (!url) return null;
+  const m = url.match(/open\.spotify\.com\/(track|album|playlist)\/([A-Za-z0-9]+)/);
+  if (m) return `https://open.spotify.com/embed/${m[1]}/${m[2]}`;
+  return null;
+}
+
+function playItem(title, ytUrl, spotifyUrl) {
+  const ytEmbed = toEmbed(ytUrl);
+  const spEmbed = toSpotifyEmbed(spotifyUrl);
+  const embed = ytEmbed || spEmbed;
+  const isSpotify = !ytEmbed && !!spEmbed;
   if (!embed) return;
   const player = document.getElementById('musicPlayer');
-  document.getElementById('musicIframe').src = embed;
+  const frame = document.querySelector('.music-player-frame');
+  const iframe = document.getElementById('musicIframe');
+  iframe.src = embed;
+  iframe.allow = isSpotify
+    ? 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
+    : 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  frame.style.aspectRatio = isSpotify ? 'unset' : '16/9';
+  frame.style.height = isSpotify ? '152px' : '';
   document.getElementById('musicPlayerLabel').textContent = title + ' — ' + t().music.playLabel;
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -523,11 +558,11 @@ function renderMusicList() {
   const d = t();
   const items = musicFilter === 'all' ? MUSIC_ITEMS : MUSIC_ITEMS.filter(i => i.cat === musicFilter);
   document.querySelector('.music-list').innerHTML = items.map(item => {
-    const hasVideo = !!toEmbed(item.yt);
+    const hasVideo = !!toEmbed(item.yt) || !!toSpotifyEmbed(item.spotify);
     const esc = s => s.replace(/'/g, "\\'");
     return `
     <div class="music-item${hasVideo ? '' : ' no-video'}"
-      ${hasVideo ? `onclick="playMusic('${esc(item.title)}','${esc(item.yt)}')"` : ''}>
+      ${hasVideo ? `onclick="playItem('${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
       <div class="music-play">${hasVideo ? '▶' : '·'}</div>
       <div class="music-info">
         <div class="music-title">${item.title}</div>
