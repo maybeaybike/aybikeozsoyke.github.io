@@ -1690,8 +1690,8 @@ const PRESS_ITEMS = [
 const CERT_ITEMS = [
   { title:"Hackability: Sürdürülebilirlik ve Yapay Zeka", org:"İzQ Girişimcilik ve İnovasyon Merkezi", date:"May 2026", skills:"Vibe Kodlama, Yapay Zeka", url:"" },
   { title:"Robotik Kodlama", org:"T.C. Gençlik ve Spor Bakanlığı", date:"May 2026", skills:"Robotik Kodlama", url:"" },
-  { title:"AI-Powered Content Creation", org:"Academy of Arts and Design London", date:"May 2026", skills:"Yapay Zeka", url:"" },
-  { title:"TouchDesigner", org:"Academy of Arts and Design London", date:"Mar 2026", skills:"Yeni Medya", url:"" },
+  { title:"AI-Powered Content Creation", org:"Academy of Arts and Design London", date:"May 2026", skills:"Yapay Zeka", url:"https://verified.sertifier.com/en/verify/46065675154982/" },
+  { title:"TouchDesigner", org:"Academy of Arts and Design London", date:"Mar 2026", skills:"Yeni Medya", url:"https://verified.sertifier.com/en/verify/65703284402493/" },
   { title:"Yaratıcı Girişimcilik Eğitim Programı", org:"İzmir Ekonomi Üniversitesi", date:"Şub 2026", skills:"Girişimcilik, Girişim Başlatma", url:"" },
   { title:"Bateri", org:"T.C. Gençlik ve Spor Bakanlığı", date:"May 2025", skills:"Bateri, Müzik", url:"" },
   { title:"XIV. Uluslararası Hisarlı Ahmet Sempozyumu", org:"Çanakkale Onsekiz Mart Üniversitesi", date:"May 2024", skills:"Akademik Yazı, Akademik Başarı", url:"" },
@@ -2055,6 +2055,7 @@ function render() {
       <div class="cert-title">${c.title}</div>
       <div class="cert-org">${c.org}</div>
       ${c.skills ? `<div class="cert-skills">${c.skills}</div>` : ''}
+      ${c.url ? `<a class="press-link" href="${c.url}" target="_blank">↗ Yeterlilik Belgesi</a>` : ''}
     </div>`).join('');
   // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
