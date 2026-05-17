@@ -248,6 +248,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
   <section class="page" id="works">
     <div class="section-label" id="lbl-works"></div>
     <div class="works-grid"></div>
+    <div class="section-label" id="lbl-works-exh" style="margin-top:64px"></div>
+    <div class="exh-list"></div>
   </section>
 
   <section class="page" id="music">
@@ -265,11 +267,6 @@ main{padding-top:var(--nav-h);min-height:100vh}
         </iframe>
       </div>
     </div>
-  </section>
-
-  <section class="page" id="exhibitions">
-    <div class="section-label" id="lbl-exhibitions"></div>
-    <div class="exh-list"></div>
   </section>
 
   <section class="page" id="blog">
@@ -323,7 +320,7 @@ const MUSIC_ITEMS = [
 // ── Site içeriği ───────────────────────────────────────────────────────
 const SITE = {
   tr: {
-    nav: ["Ana Sayfa","Hakkımda","İşler","Müzik","Sergiler","Blog","İletişim"],
+    nav: ["Ana Sayfa","Hakkımda","Projeler","Müzik","Blog","İletişim"],
     home: {
       location: "İzmir, Türkiye",
       roles: ["Creative Technologist","Audiovisual Artist","Ses Tasarımcısı","Müzik Prodüktörü"]
@@ -335,7 +332,6 @@ const SITE = {
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
-      { type:"Film", title:"Kristal Hayatlar", role:"Müzik", desc:"Film müziği kompozisyonu.", badge:"Kino Eyes — En İyi Müzik Ödülü" },
       { type:"Video Oyunu", title:"Kuroba: Oghuz", role:"Müzik & Ses Tasarımı", desc:"Oyun ses tasarımı ve müzik kompozisyonu.", badge:"" },
       { type:"Tiyatro", title:"Wittgenstein'ın Sineği", role:"Müzik & Ses Tasarımı", desc:"Sahne ses tasarımı ve özgün müzik.", badge:"" }
     ],
@@ -347,6 +343,7 @@ const SITE = {
       catLabels:{single:"Single",ep:"EP",album:"Bulunduğu Albümler",live:"Canlı Performans"},
       playLabel:"oynatılıyor"
     },
+    exhLabel: "Sergiler",
     exhibitions: [
       { year:"Tem 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmed Adnan Saygun Sanat Merkezi, İzmir", roles:["Küratör","Ses Tasarımcısı","Yapımcı"], desc:"Yapay zeka ve veri üzerine çok disiplinli sergi." },
       { year:"Şub 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Ses Tasarımcısı"], desc:"Uluslararası tarihsel sergi için ses tasarımı." }
@@ -370,7 +367,7 @@ const SITE = {
   },
 
   en: {
-    nav: ["Home","About","Works","Music","Exhibitions","Blog","Contact"],
+    nav: ["Home","About","Projects","Music","Blog","Contact"],
     home: {
       location: "Izmir, Turkey",
       roles: ["Creative Technologist","Audiovisual Artist","Sound Designer","Music Producer"]
@@ -382,7 +379,6 @@ const SITE = {
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
-      { type:"Film", title:"Kristal Hayatlar", role:"Music", desc:"Film score composition.", badge:"Kino Eyes — Best Music Award" },
       { type:"Video Game", title:"Kuroba: Oghuz", role:"Music & Sound Design", desc:"Game audio and music composition.", badge:"" },
       { type:"Theatre", title:"Wittgenstein's Fly", role:"Music & Sound Design", desc:"Stage sound design and original music.", badge:"" }
     ],
@@ -394,6 +390,7 @@ const SITE = {
       catLabels:{single:"Single",ep:"EP",album:"Appears On",live:"Live"},
       playLabel:"playing"
     },
+    exhLabel: "Exhibitions",
     exhibitions: [
       { year:"Jul 2023", title:"Arkhe: An Exhibition on AI Data", venue:"Ahmed Adnan Saygun Arts Centre, Izmir", roles:["Curator","Sound Designer","Producer"], desc:"Multidisciplinary exhibition on artificial intelligence and data." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Sound Designer"], desc:"Sound design for an international historical exhibition." }
@@ -417,7 +414,7 @@ const SITE = {
   },
 
   de: {
-    nav: ["Startseite","Über mich","Arbeiten","Musik","Ausstellungen","Blog","Kontakt"],
+    nav: ["Startseite","Über mich","Projekte","Musik","Blog","Kontakt"],
     home: {
       location: "Izmir, Türkei",
       roles: ["Creative Technologist","Audiovisual Artist","Klangdesignerin","Musikproduzentin"]
@@ -429,7 +426,6 @@ const SITE = {
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
-      { type:"Film", title:"Kristal Hayatlar", role:"Musik", desc:"Filmmusikkomposition.", badge:"Kino Eyes — Beste Musik" },
       { type:"Videospiel", title:"Kuroba: Oghuz", role:"Musik & Klanggestaltung", desc:"Spielaudio und Musikkomposition.", badge:"" },
       { type:"Theater", title:"Wittgensteins Fliege", role:"Musik & Klanggestaltung", desc:"Bühnenklang und Originalmusik.", badge:"" }
     ],
@@ -441,6 +437,7 @@ const SITE = {
       catLabels:{single:"Single",ep:"EP",album:"Erschienen auf",live:"Live"},
       playLabel:"wird gespielt"
     },
+    exhLabel: "Ausstellungen",
     exhibitions: [
       { year:"Jul 2023", title:"Arkhe: Eine Ausstellung über KI-Daten", venue:"Ahmed Adnan Saygun Kunstzentrum, Izmir", roles:["Kuratorin","Klangdesignerin","Produzentin"], desc:"Multidisziplinäre Ausstellung über KI und Daten." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Klangdesignerin"], desc:"Klanggestaltung für eine internationale Historienausstellung." }
@@ -467,7 +464,7 @@ const SITE = {
 // ── Durum ──────────────────────────────────────────────────────────────
 let lang = 'tr', page = 'home', musicFilter = 'all';
 const t = () => SITE[lang];
-const pages = ['home','about','works','music','exhibitions','blog','contact'];
+const pages = ['home','about','works','music','blog','contact'];
 
 function upper(str, l) {
   if (l === 'tr') return str.toLocaleUpperCase('tr-TR');
@@ -584,7 +581,7 @@ function render() {
   // Nav
   document.querySelector('.nav-links').innerHTML = pages.map((p,i) =>
     `<li><a onclick="showPage('${p}')" data-page="${p}">${d.nav[i]}</a></li>`).join('');
-  ['about','works','music','exhibitions','blog','contact'].forEach((id,i) => {
+  ['about','works','music','blog','contact'].forEach((id,i) => {
     const el = document.getElementById(`lbl-${id}`);
     if (el) el.textContent = upper(d.nav[i+1], lang);
   });
@@ -612,7 +609,9 @@ function render() {
     `<button class="music-filter${f.cat===musicFilter?' active':''}" data-cat="${f.cat}" onclick="setMusicFilter('${f.cat}')">${f.label}</button>`
   ).join('');
   renderMusicList();
-  // Sergiler
+  // Sergiler (Projeler içinde)
+  const exhLblEl = document.getElementById('lbl-works-exh');
+  if (exhLblEl) exhLblEl.textContent = upper(d.exhLabel, lang);
   document.querySelector('.exh-list').innerHTML = d.exhibitions.map(e=>`
     <div class="exh-item">
       <div class="exh-year">${e.year}</div>
