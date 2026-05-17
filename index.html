@@ -499,6 +499,9 @@ const LANGS = [
   {code:'fi',flag:'🇫🇮',name:'Suomi'},
   {code:'ro',flag:'🇷🇴',name:'Română'},
   {code:'cs',flag:'🇨🇿',name:'Čeština'},
+  {code:'he',flag:'🇮🇱',name:'עברית'},
+  {code:'ur',flag:'🇵🇰',name:'اردو'},
+  {code:'hu',flag:'🇭🇺',name:'Magyar'},
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -2130,6 +2133,168 @@ const SITE = {
         ]}
       ]
     }
+  },
+  he: {
+    nav: ["בית","אודות","פרויקטים","מוזיקה","בלוג","צור קשר"],
+    home: {
+      location: "איזמיר, טורקיה",
+      roles: ["Creative Technologist","Audiovisual Artist","מעצבת סאונד","מפיקה מוזיקלית"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (נולדה 1999, איזמיר) היא מעצבת סאונד, מפיקה מוזיקלית ו-Creative Technologist, בוגרת Dokuz Eylül Üniversitesi (DEÜ) בתואר ראשון ב<em>עיצוב קולנוע</em> ותואר שני ב<em>טכנולוגיית מוזיקה</em>. דרך <strong>Aybike Özsöyke Sound Production</strong>, עיצבה סאונד ומוזיקה מלאים למשחק הווידאו <em>Kuroba: Oghuz</em> ולמחזה <em>Wittgenstein's Fly</em>. היא נבחרה לתוכנית <strong>Sounding Off 2023</strong> (Bilkent), מופיעה עם livecoding באירועי Algorave, ופעילה בקולקטיב <em>Sisters Music Chain</em>.`,
+      metaLabels: ["השכלה"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"תערוכה",game:"משחק וידאו",film:"סרט",theatre:"תיאטרון",book:"ספר"},
+    worksFilterAll: "הכל",
+    works: [
+      { cat:"film",    type:"סרט",           title:"Destan",                                   role:"במאי סאונד",                desc:"תהליך מלא מעיצוב סאונד ועד מוזיקה.", badge:"" },
+      { cat:"game",    type:"משחק וידאו",     title:"Kuroba: Oghuz",                            role:"מוזיקה ועיצוב סאונד",       desc:"עיצוב אודיו ועיבוד מוזיקלי למשחק.", badge:"" },
+      { cat:"theatre", type:"תיאטרון",        title:"Wittgenstein's Fly",                       role:"מוזיקה ועיצוב סאונד",       desc:"עיצוב סאונד ומוזיקה מקורית לבמה.", badge:"" },
+      { cat:"book",    type:"ספר · 2026",    title:"Ses Veren Hikayeler",                      role:"מחברת",                     desc:"אוסף סיפורים מודפסים במסגרת קולקטיב Sisters Music Chain.", badge:"" },
+      { cat:"book",    type:"ספר · 2025",    title:"Dizelerin Kanatlarında Kadınlar",          role:"מחברת",                     desc:"אוסף שירה המביא לידי ביטוי קולות נשים במסגרת Sisters Music Chain.", badge:"" },
+      { cat:"book",    type:"ספר · 2024",    title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?",   role:"מחברת",                     desc:"ראיון על בינה מלאכותית ומוזיקה.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"הכל",cat:"all"},{label:"סינגל",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"הופעה באלבום",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"סינגל",ep:"EP",album:"הופעה באלבום",live:"הופעה חיה"},
+      playLabel:"מתנגן"
+    },
+    exhLabel: "תערוכות",
+    exhibitions: [
+      { year:"יולי 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"מרכז האמנות אחמט עדנאן סייגון, איזמיר", roles:["אוצרת","מעצבת סאונד","מפיקה"], desc:"תערוכה רב-תחומית על בינה מלאכותית ונתונים." },
+      { year:"פברואר 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, אנקרה", roles:["מעצבת סאונד"], desc:"עיצוב סאונד לתערוכה היסטורית בינלאומית." }
+    ],
+    pressLabel: "עיתונות",
+    certificationsLabel: "תעודות",
+    blog: "בקרוב — מאמרים יפורסמו כאן.",
+    contact: {
+      intro: "לפרויקטים, שיתופי פעולה ו<em>כל עניין הקשור לסאונד</em>.",
+      email: { label:"דואר אלקטרוני", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"מוזיקה", links:[
+          { text:"YouTube",     sub:"@aybikeozsoyke",  href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify",     sub:"דף האמן",         href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"רשתות חברתיות", links:[
+          { text:"LinkedIn",  sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike",   href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook",  sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
+  },
+  ur: {
+    nav: ["ہوم","میرے بارے میں","پراجیکٹس","موسیقی","بلاگ","رابطہ"],
+    home: {
+      location: "ازمیر، ترکیہ",
+      roles: ["Creative Technologist","Audiovisual Artist","ساؤنڈ ڈیزائنر","میوزک پروڈیوسر"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (پیدائش 1999، ازمیر) ایک ساؤنڈ ڈیزائنر، میوزک پروڈیوسر اور Creative Technologist ہیں، جنہوں نے Dokuz Eylül Üniversitesi (DEÜ) سے <em>فلم ڈیزائن</em> میں بیچلر اور <em>میوزک ٹیکنالوجی</em> میں ماسٹرز کی ڈگری حاصل کی۔ <strong>Aybike Özsöyke Sound Production</strong> کے ذریعے انہوں نے ویڈیو گیم <em>Kuroba: Oghuz</em> اور تھیٹر پروڈکشن <em>Wittgenstein's Fly</em> کے لیے مکمل ساؤنڈ ڈیزائن اور موسیقی تخلیق کی۔ وہ <strong>Sounding Off 2023</strong> (Bilkent) کے لیے منتخب ہوئیں، Algorave میں livecoding پرفارمنسز دیتی ہیں، اور <em>Sisters Music Chain</em> کلیکٹیو کا حصہ ہیں۔`,
+      metaLabels: ["تعلیم"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"نمائش",game:"ویڈیو گیم",film:"فلم",theatre:"تھیٹر",book:"کتاب"},
+    worksFilterAll: "سب",
+    works: [
+      { cat:"film",    type:"فلم",           title:"Destan",                                   role:"ساؤنڈ ڈائریکٹر",                desc:"ساؤنڈ ڈیزائن سے موسیقی تک مکمل عمل.", badge:"" },
+      { cat:"game",    type:"ویڈیو گیم",     title:"Kuroba: Oghuz",                            role:"موسیقی اور ساؤنڈ ڈیزائن",       desc:"گیم کے لیے آڈیو ڈیزائن اور میوزک کمپوزیشن.", badge:"" },
+      { cat:"theatre", type:"تھیٹر",         title:"Wittgenstein's Fly",                       role:"موسیقی اور ساؤنڈ ڈیزائن",       desc:"اسٹیج کے لیے ساؤنڈ ڈیزائن اور اصل موسیقی.", badge:"" },
+      { cat:"book",    type:"کتاب · 2026",   title:"Ses Veren Hikayeler",                      role:"مصنفہ",                          desc:"Sisters Music Chain کے تحت پرنٹڈ کہانیوں کا مجموعہ.", badge:"" },
+      { cat:"book",    type:"کتاب · 2025",   title:"Dizelerin Kanatlarında Kadınlar",          role:"مصنفہ",                          desc:"Sisters Music Chain کے تحت خواتین کی آوازوں کا شعری مجموعہ.", badge:"" },
+      { cat:"book",    type:"کتاب · 2024",   title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?",   role:"مصنفہ",                          desc:"مصنوعی ذہانت اور موسیقی پر انٹرویو.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"سب",cat:"all"},{label:"سنگل",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"البم میں شرکت",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"سنگل",ep:"EP",album:"البم میں شرکت",live:"لائیو پرفارمنس"},
+      playLabel:"چل رہا ہے"
+    },
+    exhLabel: "نمائشیں",
+    exhibitions: [
+      { year:"جولائی 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"احمد ادنان سایگون آرٹس سینٹر، ازمیر", roles:["کیوریٹر","ساؤنڈ ڈیزائنر","پروڈیوسر"], desc:"مصنوعی ذہانت اور ڈیٹا پر بین الشعبہ نمائش." },
+      { year:"فروری 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern، انقرہ", roles:["ساؤنڈ ڈیزائنر"], desc:"بین الاقوامی تاریخی نمائش کے لیے ساؤنڈ ڈیزائن." }
+    ],
+    pressLabel: "پریس",
+    certificationsLabel: "سرٹیفکیٹس",
+    blog: "جلد آ رہا ہے — مضامین یہاں شائع کیے جائیں گے۔",
+    contact: {
+      intro: "پراجیکٹس، تعاون اور <em>ساؤنڈ سے متعلق ہر معاملے</em> کے لیے۔",
+      email: { label:"ای میل", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"موسیقی", links:[
+          { text:"YouTube",     sub:"@aybikeozsoyke",  href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify",     sub:"آرٹسٹ پیج",       href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"سوشل میڈیا", links:[
+          { text:"LinkedIn",  sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike",   href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook",  sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
+  },
+  hu: {
+    nav: ["Főoldal","Rólam","Projektek","Zene","Blog","Kapcsolat"],
+    home: {
+      location: "Izmir, Törökország",
+      roles: ["Creative Technologist","Audiovisual Artist","Hangdesigner","Zenei producer"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (sz. 1999, Izmir) hangdesigner, zenei producer és creative technologist, a Dokuz Eylül Üniversitesi (DEÜ) elvégzésével <em>filmdesign</em> alapdiplomával és <em>zenetechnológia</em> mesterképzéssel. Az <strong>Aybike Özsöyke Sound Production</strong> keretében teljes hangdesignt és zenét készített a <em>Kuroba: Oghuz</em> videójátékhoz és a <em>Wittgenstein's Fly</em> színházi előadáshoz. Részt vett a <strong>Sounding Off 2023</strong> (Bilkent) programban, livecoding fellépéseket tart Algorave rendezvényeken, és tagja a <em>Sisters Music Chain</em> kollektívának.`,
+      metaLabels: ["Tanulmányok"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"Kiállítás",game:"Videójáték",film:"Film",theatre:"Színház",book:"Könyv"},
+    worksFilterAll: "Összes",
+    works: [
+      { cat:"film",    type:"Film",              title:"Destan",                                   role:"Hangrendező",               desc:"Teljes folyamat a hangdesigntól a zenéig.", badge:"" },
+      { cat:"game",    type:"Videójáték",         title:"Kuroba: Oghuz",                            role:"Zene & Hangdesign",          desc:"Játék hangdesign és zenei kompozíció.", badge:"" },
+      { cat:"theatre", type:"Színház",            title:"Wittgenstein's Fly",                       role:"Zene & Hangdesign",          desc:"Színpadi hangdesign és eredeti zene.", badge:"" },
+      { cat:"book",    type:"Könyv · 2026",       title:"Ses Veren Hikayeler",                      role:"Szerző",                     desc:"Nyomtatott mesegyűjtemény a Sisters Music Chain keretében.", badge:"" },
+      { cat:"book",    type:"Könyv · 2025",       title:"Dizelerin Kanatlarında Kadınlar",          role:"Szerző",                     desc:"Versgyűjtemény, amely a Sisters Music Chain keretében a női hangokat emeli ki.", badge:"" },
+      { cat:"book",    type:"Könyv · 2024",       title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?",   role:"Szerző",                     desc:"Interjú a mesterséges intelligenciáról és zenéről.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"Összes",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Közreműködő",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"Single",ep:"EP",album:"Közreműködő",live:"Élő fellépés"},
+      playLabel:"lejátszás alatt"
+    },
+    exhLabel: "Kiállítások",
+    exhibitions: [
+      { year:"2023 július", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmet Adnan Saygun Művészeti Központ, Izmir", roles:["Kurátor","Hangdesigner","Producer"], desc:"Multidiszciplináris kiállítás a mesterséges intelligenciáról és adatokról." },
+      { year:"2024 február", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Hangdesigner"], desc:"Hangdesign egy nemzetközi történelmi kiállításhoz." }
+    ],
+    pressLabel: "Sajtó",
+    certificationsLabel: "Tanúsítványok",
+    blog: "Hamarosan — cikkek kerülnek ide.",
+    contact: {
+      intro: "Projektekhez, együttműködéshez és <em>minden hanggal kapcsolatos ügyhöz</em>.",
+      email: { label:"E-mail", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"Zene", links:[
+          { text:"YouTube",     sub:"@aybikeozsoyke",  href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify",     sub:"Előadói oldal",   href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"Közösségi", links:[
+          { text:"LinkedIn",  sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike",   href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook",  sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
   }
 };
 
@@ -2408,7 +2573,7 @@ function setLang(l) {
   lang = l;
   worksFilter = 'all';
   document.documentElement.lang = l;
-  document.documentElement.dir = (l === 'ar' || l === 'fa') ? 'rtl' : 'ltr';
+  document.documentElement.dir = (l === 'ar' || l === 'fa' || l === 'he' || l === 'ur') ? 'rtl' : 'ltr';
   const cur = LANGS.find(x => x.code === l);
   if (cur) {
     document.getElementById('langTriggerFlag').textContent = cur.flag;
