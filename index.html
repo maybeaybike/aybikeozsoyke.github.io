@@ -64,7 +64,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .page{display:none;padding:64px 80px;min-height:calc(100vh - var(--nav-h));animation:fadein .4s ease}
 .page.active{display:block}
 #home{display:none}
-#home.active{display:flex;flex-direction:column;justify-content:center;padding-top:80px;padding-bottom:80px;min-height:calc(100vh - var(--nav-h))}
+#home.active{display:flex;flex-direction:row;align-items:center;gap:72px;padding:80px;min-height:calc(100vh - var(--nav-h))}
+.home-left{flex:1;min-width:0}
 @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 .home-eyebrow{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:24px}
@@ -73,7 +74,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .home-tagline{font-family:var(--font-m);font-size:11px;color:var(--text-muted);letter-spacing:.1em;display:flex;gap:24px;flex-wrap:wrap}
 .home-tagline span::before{content:'— ';color:var(--accent)}
 #homeCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.4s}
-.home-terminal{margin-top:52px;background:rgba(11,11,11,.94);border:1px solid var(--border2);max-width:460px;cursor:pointer;transition:border-color .25s;position:relative;z-index:1}
+.home-terminal{width:460px;flex-shrink:0;background:rgba(4,4,12,.97);border:1px solid var(--border2);cursor:pointer;transition:border-color .25s;position:relative;z-index:1;margin-top:0}
 .home-terminal:hover{border-color:var(--accent-dim)}
 .home-terminal-header{background:var(--surface);padding:9px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
 .home-terminal-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
@@ -116,10 +117,23 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .work-badge{display:inline-block;margin-top:16px;font-family:var(--font-m);font-size:9px;letter-spacing:.15em;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;text-transform:uppercase}
 
 /* ─── MÜZİK ─── */
-.music-filters{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none;max-width:860px;flex-wrap:wrap}
-.music-filter{font-family:var(--font-m);font-size:9px;letter-spacing:.12em;color:var(--text-dim);background:var(--bg);padding:12px 20px;cursor:pointer;border:none;transition:all .2s}
-.music-filter:hover{color:var(--text);background:var(--surface)}
-.music-filter.active{color:var(--accent);background:var(--surface)}
+.music-filters{max-width:860px;margin-bottom:0}
+/* Desktop dropdown */
+.music-dd-wrap{position:relative;display:inline-block}
+.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between}
+.music-dd-trigger:hover{border-color:var(--accent-dim);color:var(--text)}
+.music-dd-arrow{font-size:9px;transition:transform .2s;color:var(--text-dim)}
+.music-dd-trigger.open .music-dd-arrow{transform:rotate(180deg)}
+.music-dd-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-top:none;z-index:50}
+.music-dd-menu.open{display:block}
+.music-dd-item{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-muted);background:none;border:none;width:100%;padding:12px 20px;text-align:left;cursor:pointer;transition:all .2s}
+.music-dd-item:hover{color:var(--text);background:var(--border)}
+.music-dd-item.active{color:var(--accent)}
+/* Mobile toggle */
+.music-toggle-wrap{display:none;gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none}
+.music-mode-btn{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-dim);background:var(--bg);border:none;padding:13px 20px;cursor:pointer;flex:1;transition:all .2s}
+.music-mode-btn:hover{color:var(--text);background:var(--surface)}
+.music-mode-btn.active{color:var(--accent);background:var(--surface)}
 .music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
 .music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
@@ -236,10 +250,10 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .nav-hamburger span{display:block;width:18px;height:1px;background:var(--text)}
   main{padding-top:0}
   .page{padding:48px 20px 48px}
-  #home.active{justify-content:flex-start;padding-top:72px;padding-bottom:48px;min-height:100vh}
+  #home.active{flex-direction:column;align-items:flex-start;padding:72px 20px 48px;gap:40px;min-height:100vh}
   .home-name{font-size:clamp(44px,12vw,72px)}
   .home-tagline{gap:14px;flex-direction:column}
-  .home-terminal{max-width:100%;margin-top:36px}
+  .home-terminal{width:100%;margin-top:0}
 
   /* Hakkımda: tek sütun */
   .about-layout{grid-template-columns:1fr;gap:36px}
@@ -254,8 +268,9 @@ main{padding-top:var(--nav-h);min-height:100vh}
   /* Müzik */
   .music-item{grid-template-columns:32px 1fr;gap:12px;padding:16px 16px}
   .music-year{display:none}
-  .music-filter{padding:10px 14px}
   .music-title{font-size:17px}
+  .music-dd-wrap{display:none}
+  .music-toggle-wrap{display:flex}
 
   /* Sergiler */
   .exh-item{grid-template-columns:1fr;gap:8px}
@@ -326,9 +341,11 @@ main{padding-top:var(--nav-h);min-height:100vh}
 <canvas id="homeCanvas"></canvas>
 <main>
   <section class="page" id="home">
-    <div class="home-eyebrow"></div>
-    <h1 class="home-name">Aybike<br><em>Özsöyke</em></h1>
-    <div class="home-tagline"></div>
+    <div class="home-left">
+      <div class="home-eyebrow"></div>
+      <h1 class="home-name">Aybike<br><em>Özsöyke</em></h1>
+      <div class="home-tagline"></div>
+    </div>
     <div class="home-terminal" onclick="advanceTerminal()" title="click for next snippet">
       <div class="home-terminal-header">
         <span class="home-terminal-dot"></span>
@@ -1678,7 +1695,7 @@ const WORK_URLS = {
 };
 
 // ── Durum ──────────────────────────────────────────────────────────────
-let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all';
+let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all', musicMode = 'streaming';
 const t = () => SITE[lang];
 const pages = ['home','about','works','music','blog','contact','press','certifications'];
 
@@ -1805,39 +1822,51 @@ function initTermViz() {
 }
 
 // ── Web Audio sentez ──────────────────────────────────────────────────
-let _audioCtx = null, _audioSrc = null;
+let _audioCtx = null, _analyser = null, _analyserData = null;
 
 function initTermAudio() {
   if (_audioCtx) return;
-  try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  try {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    _analyser = _audioCtx.createAnalyser();
+    _analyser.fftSize = 256;
+    _analyserData = new Uint8Array(_analyser.frequencyBinCount);
+    _analyser.connect(_audioCtx.destination);
+  } catch(e) {}
 }
 
 function playTermTone(snippetIdx) {
-  if (!_audioCtx) return;
-  if (_audioSrc) { try { _audioSrc.stop(); } catch(e){} }
-  const sn = LIVECODE_SNIPPETS[snippetIdx];
-  // Her snippet için farklı nota dizisi
-  const sequences = [
-    [220, 277, 330, 440],
-    [196, 247, 294, 392],
-    [261, 329, 392, 523],
-    [174, 220, 261, 349],
-    [233, 293, 349, 466],
-  ];
-  const notes = sequences[snippetIdx % sequences.length];
+  if (!_audioCtx || !_analyser) return;
   const now = _audioCtx.currentTime;
-  notes.forEach((freq, i) => {
-    const osc = _audioCtx.createOscillator();
-    const gain = _audioCtx.createGain();
-    osc.type = sn.lang === 'sc' ? 'sine' : 'square';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0, now + i*0.18);
-    gain.gain.linearRampToValueAtTime(0.07, now + i*0.18 + 0.04);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + i*0.18 + 0.28);
-    osc.connect(gain);
-    gain.connect(_audioCtx.destination);
-    osc.start(now + i*0.18);
-    osc.stop(now + i*0.18 + 0.3);
+  const isScLang = LIVECODE_SNIPPETS[snippetIdx].lang === 'sc';
+
+  // Melodik akorlar: Am7 – Fmaj7 – C – G ve varyantları
+  const phrases = [
+    { chords: [[220,277,330,415],[174,220,261,349],[261,329,392],[196,247,294,392]], dur:0.32 },
+    { chords: [[196,247,294,370],[220,277,330],[261,329,392,523],[174,220,261]], dur:0.28 },
+    { chords: [[220],[247],[294],[330],[392],[440],[392],[330]], dur:0.2  },
+    { chords: [[174,220,261,349],[196,261,311],[220,277,330,440],[261,329,392]], dur:0.36 },
+    { chords: [[233,293,349,440],[246,311,369],[261,329,392,523],[220,277,330]], dur:0.3  },
+  ];
+  const phrase = phrases[snippetIdx % phrases.length];
+
+  phrase.chords.forEach((chord, ci) => {
+    const t = now + ci * phrase.dur;
+    chord.forEach(freq => {
+      const osc   = _audioCtx.createOscillator();
+      const gain  = _audioCtx.createGain();
+      const filt  = _audioCtx.createBiquadFilter();
+      osc.type = isScLang ? 'sine' : 'triangle';
+      osc.frequency.value = freq;
+      filt.type = 'lowpass';
+      filt.frequency.setValueAtTime(1200 + freq * 1.5, t);
+      filt.Q.value = 0.8;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.07 / chord.length, t + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + phrase.dur * 0.9);
+      osc.connect(filt); filt.connect(gain); gain.connect(_analyser);
+      osc.start(t); osc.stop(t + phrase.dur);
+    });
   });
 }
 
@@ -1856,26 +1885,36 @@ function initHomeCanvas() {
     _my = e.clientY / window.innerHeight;
   });
   const waves = [
-    {f:2.2,  a:0.07,  sp:0.5,  r:0,  g:170,b:255},
-    {f:3.5,  a:0.045, sp:0.85, r:0,  g:210,b:255},
-    {f:5.1,  a:0.028, sp:1.4,  r:100,g:240,b:255},
-    {f:7.0,  a:0.016, sp:2.1,  r:0,  g:130,b:200},
+    {f:2.2, a:0.13, sp:0.5,  r:0,  g:170,b:255, lw:2.0},
+    {f:3.5, a:0.08, sp:0.85, r:0,  g:220,b:255, lw:1.5},
+    {f:5.1, a:0.05, sp:1.4,  r:80, g:240,b:255, lw:1.0},
+    {f:7.0, a:0.03, sp:2.1,  r:0,  g:140,b:210, lw:0.8},
   ];
   let t = 0;
   (function draw() {
     ctx.clearRect(0, 0, c.width, c.height);
+    // Audio-reactive boost
+    let audioBoost = 0;
+    if (_analyser && _analyserData) {
+      _analyser.getByteFrequencyData(_analyserData);
+      audioBoost = _analyserData.reduce((a,b)=>a+b,0) / _analyserData.length / 128;
+    }
     waves.forEach((w, i) => {
       ctx.beginPath();
-      ctx.strokeStyle = `rgba(${w.r},${w.g},${w.b},${0.22 + _my * 0.14})`;
-      ctx.lineWidth = 1;
+      const alpha = 0.55 + _my * 0.2 + audioBoost * 0.25;
+      ctx.strokeStyle = `rgba(${w.r},${w.g},${w.b},${Math.min(alpha, 0.9)})`;
+      ctx.lineWidth = w.lw + audioBoost * 1.2;
+      ctx.shadowColor = `rgba(${w.r},${w.g},${w.b},0.5)`;
+      ctx.shadowBlur = 8 + audioBoost * 16;
       const freq = w.f * (0.75 + _mx * 0.55);
-      const amp  = c.height * (w.a + _my * 0.018);
+      const amp  = c.height * (w.a + _my * 0.025 + audioBoost * 0.06);
       const ph   = t * w.sp * 0.001 + i * 0.9;
       for (let x = 0; x <= c.width; x += 2) {
         const y = c.height * 0.5 + Math.sin((x / c.width) * Math.PI * freq + ph) * amp;
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.stroke();
+      ctx.shadowBlur = 0;
     });
     t++;
     requestAnimationFrame(draw);
@@ -1891,7 +1930,7 @@ function showPage(id) {
   page = id;
   closeNav();
   const c = document.getElementById('homeCanvas');
-  if (c) c.style.opacity = id === 'home' ? '0.11' : '0.025';
+  if (c) c.style.opacity = id === 'home' ? '0.45' : '0.05';
   if (id === 'home' && !_termStarted) { _termStarted = true; typeTerminal(); }
 }
 
@@ -1990,9 +2029,31 @@ function setMusicFilter(cat) {
   renderMusicList();
 }
 
+function setMusicMode(mode) {
+  musicMode = mode;
+  closePlayer();
+  document.querySelectorAll('.music-mode-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+  const lbl = document.getElementById('musicModeLabel');
+  if (lbl) lbl.textContent = mode === 'live' ? 'Live Performans' : 'Streaming';
+  const menu = document.getElementById('musicDdMenu');
+  if (menu) { menu.classList.remove('open'); const tr = document.querySelector('.music-dd-trigger'); if(tr) tr.classList.remove('open'); }
+  renderMusicList();
+}
+
+function toggleMusicDd() {
+  const menu = document.getElementById('musicDdMenu');
+  const tr   = document.querySelector('.music-dd-trigger');
+  if (!menu) return;
+  menu.classList.toggle('open');
+  tr.classList.toggle('open');
+}
+
 function renderMusicList() {
   const d = t();
-  const items = musicFilter === 'all' ? MUSIC_ITEMS : MUSIC_ITEMS.filter(i => i.cat === musicFilter);
+  const items = musicMode === 'live'
+    ? MUSIC_ITEMS.filter(i => i.cat === 'live')
+    : MUSIC_ITEMS.filter(i => i.cat !== 'live');
   document.querySelector('.music-list').innerHTML = items.map(item => {
     const hasVideo = !!toEmbed(item.yt) || !!toSpotifyEmbed(item.spotify);
     const esc = s => s.replace(/'/g, "\\'");
@@ -2029,7 +2090,7 @@ function renderWorks() {
   // Exhibitions → work-item formatına çevir
   const exhAsWorks = d.exhibitions.map(e => ({
     cat: 'exh',
-    type: e.year,
+    type: `${upper(d.worksCategories.exh, lang)} · ${(e.year.match(/\d{4}/) || [''])[0]}`,
     title: e.title,
     role: e.roles.join(' · '),
     desc: `${e.venue} — ${e.desc}`,
@@ -2148,9 +2209,21 @@ function render() {
   // İşler
   renderWorks();
   // Müzik
-  document.querySelector('.music-filters').innerHTML = d.music.filters.map(f =>
-    `<button class="music-filter${f.cat===musicFilter?' active':''}" data-cat="${f.cat}" onclick="setMusicFilter('${f.cat}')">${f.label}</button>`
-  ).join('');
+  document.querySelector('.music-filters').innerHTML = `
+    <div class="music-dd-wrap">
+      <button class="music-dd-trigger" onclick="toggleMusicDd()">
+        <span id="musicModeLabel">${musicMode === 'live' ? 'Live Performans' : 'Streaming'}</span>
+        <span class="music-dd-arrow">▾</span>
+      </button>
+      <div class="music-dd-menu" id="musicDdMenu">
+        <button class="music-dd-item${musicMode==='streaming'?' active':''}" onclick="setMusicMode('streaming')">Streaming</button>
+        <button class="music-dd-item${musicMode==='live'?' active':''}" onclick="setMusicMode('live')">Live Performans</button>
+      </div>
+    </div>
+    <div class="music-toggle-wrap">
+      <button class="music-mode-btn${musicMode==='streaming'?' active':''}" data-mode="streaming" onclick="setMusicMode('streaming')">Streaming</button>
+      <button class="music-mode-btn${musicMode==='live'?' active':''}" data-mode="live" onclick="setMusicMode('live')">Live Performans</button>
+    </div>`;
   renderMusicList();
   // Blog
   document.querySelector('.blog-soon').textContent = d.blog;
