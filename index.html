@@ -118,14 +118,16 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
 /* ─── MÜZİK ─── */
 .music-filters{max-width:860px;margin-bottom:0}
-/* Desktop dropdown — hover ile açılır, nav gibi */
+/* Desktop dropdown — hover + click ile açılır, nav gibi */
 .music-dd-wrap{position:relative;display:inline-block}
-.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:default;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between}
-.music-dd-wrap:hover .music-dd-trigger{border-color:var(--accent-dim);color:var(--text)}
+/* Hover alanını menüye kadar uzatan köprü (gap fix) */
+.music-dd-wrap::after{content:'';position:absolute;top:100%;left:0;right:0;height:8px;z-index:49}
+.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between;width:100%}
+.music-dd-wrap:hover .music-dd-trigger,.music-dd-wrap.open .music-dd-trigger{border-color:var(--accent-dim);color:var(--text)}
 .music-dd-arrow{font-size:9px;color:var(--text-dim);transition:transform .2s}
-.music-dd-wrap:hover .music-dd-arrow{transform:rotate(180deg)}
-.music-dd-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-top:none;z-index:50}
-.music-dd-wrap:hover .music-dd-menu{display:block}
+.music-dd-wrap:hover .music-dd-arrow,.music-dd-wrap.open .music-dd-arrow{transform:rotate(180deg)}
+.music-dd-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-top:none;z-index:50;min-width:200px}
+.music-dd-wrap:hover .music-dd-menu,.music-dd-wrap.open .music-dd-menu{display:block}
 .music-dd-item{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-muted);background:none;border:none;width:100%;padding:12px 20px;text-align:left;cursor:pointer;transition:all .2s}
 .music-dd-item:hover{color:var(--text);background:var(--border)}
 .music-dd-item.active{color:var(--accent)}
@@ -180,14 +182,13 @@ main{padding-top:var(--nav-h);min-height:100vh}
 /* ─── İLETİŞİM: profesyonel tasarım ─── */
 .contact-intro{font-family:var(--font-d);font-size:30px;font-weight:300;color:var(--text);line-height:1.4;margin-bottom:56px;max-width:620px}
 .contact-intro em{font-style:italic;color:var(--accent)}
-.contact-email-block{display:flex;align-items:center;justify-content:space-between;max-width:900px;border:1px solid var(--border);padding:28px 40px;margin-bottom:1px;text-decoration:none;background:var(--bg);transition:background .2s;cursor:pointer}
+.contact-email-block{display:flex;align-items:center;gap:20px;max-width:900px;border:1px solid var(--border);padding:26px 40px;margin-bottom:1px;text-decoration:none;background:var(--bg);transition:background .2s;cursor:pointer}
 .contact-email-block:hover{background:var(--surface)}
 .contact-email-block:hover .contact-email-arrow{color:var(--accent)}
-.contact-email-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
-.contact-email-addr{font-family:var(--font-d);font-size:clamp(18px,2vw,26px);font-weight:400;color:var(--text);letter-spacing:.01em}
-.contact-email-arrow{font-family:var(--font-m);font-size:18px;color:var(--text-dim);transition:color .2s;flex-shrink:0;margin-left:24px}
-.contact-email-icon{width:36px;height:36px;fill:var(--text-dim);flex-shrink:0;margin-right:24px;transition:fill .2s;opacity:.7}
-.contact-email-block:hover .contact-email-icon{fill:var(--accent);opacity:1}
+.contact-email-addr{font-family:var(--font-d);font-size:22px;font-weight:400;color:var(--text);letter-spacing:.01em;flex:1}
+.contact-email-arrow{font-family:var(--font-m);font-size:16px;color:var(--text-dim);transition:color .2s;flex-shrink:0}
+.contact-email-icon{width:22px;height:22px;fill:var(--text-dim);flex-shrink:0;transition:fill .2s}
+.contact-email-block:hover .contact-email-icon{fill:var(--accent)}
 .contact-lower{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
 .contact-group{background:var(--bg);padding:32px 40px}
 .contact-group-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border);text-transform:uppercase}
@@ -284,9 +285,9 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
   /* İletişim */
   .contact-intro{font-size:22px;margin-bottom:36px}
-  .contact-email-block{padding:20px 24px;flex-direction:column;align-items:flex-start;gap:12px}
+  .contact-email-block{padding:18px 20px;gap:14px}
+  .contact-email-addr{font-size:17px}
   .contact-email-arrow{display:none}
-  .contact-email-addr{font-size:18px}
   .contact-lower{grid-template-columns:1fr}
   .contact-group{padding:24px 24px}
 
@@ -491,6 +492,8 @@ const LANGS = [
   {code:'mn',flag:'🇲🇳',name:'Монгол'},
   {code:'el',flag:'🇬🇷',name:'Ελληνικά'},
   {code:'kk',flag:'🇰🇿',name:'Қазақша'},
+  {code:'fa',flag:'🇮🇷',name:'فارسی'},
+  {code:'ky',flag:'🇰🇬',name:'Кыргызча'},
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -1798,6 +1801,114 @@ const SITE = {
         ]}
       ]
     }
+  },
+  fa: {
+    nav: ["خانه","درباره","پروژه‌ها","موسیقی","وبلاگ","تماس"],
+    home: {
+      location: "ازمیر، ترکیه",
+      roles: ["Creative Technologist","Audiovisual Artist","طراح صدا","تهیه‌کننده موسیقی"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (متولد ۱۹۹۹، ازمیر) طراح صدا، تهیه‌کننده موسیقی و creative technologist است که مدرک کارشناسی در <em>طراحی فیلم</em> و کارشناسی ارشد در <em>تکنولوژی موسیقی</em> را از دانشگاه Dokuz Eylül دریافت کرده است. از طریق <strong>Aybike Özsöyke Sound Production</strong>، فرآیند کامل از طراحی صدا تا آهنگسازی را در پروژه‌هایی چون بازی ویدیویی <em>Kuroba: Oghuz</em> و نمایش تئاتری <em>Wittgenstein's Fly</em> به انجام رسانده است. مصاحبه‌ای درباره هوش مصنوعی و موسیقی او در کتاب <em>Yapay Zeka ve Sanat: Araç mı Amaç mı?</em> منتشر شده، در برنامه <strong>Sounding Off 2023</strong> (دانشگاه Bilkent) پذیرفته شده و در رویدادهای Algorave با اجراهای live coding حضور دارد.`,
+      metaLabels: ["تحصیلات"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"نمایشگاه", game:"بازی ویدیویی", film:"فیلم", theatre:"تئاتر", book:"کتاب"},
+    worksFilterAll: "همه",
+    works: [
+      { cat:"film",    type:"فیلم",           title:"Destan",                                role:"کارگردان صدا",              desc:"فرآیند کامل از طراحی صدا تا موسیقی.", badge:"" },
+      { cat:"game",    type:"بازی ویدیویی",   title:"Kuroba: Oghuz",                         role:"موسیقی و طراحی صدا",        desc:"طراحی صدا و موسیقی برای بازی.", badge:"" },
+      { cat:"theatre", type:"تئاتر",          title:"Wittgenstein's Fly",                    role:"موسیقی و طراحی صدا",        desc:"طراحی صدا و موسیقی اورجینال برای صحنه.", badge:"" },
+      { cat:"book",    type:"کتاب · 2026",    title:"Ses Veren Hikayeler",                   role:"نویسنده",                   desc:"مجموعه داستان‌های چاپی در چارچوب Sisters Music Chain.", badge:"" },
+      { cat:"book",    type:"کتاب · 2025",    title:"Dizelerin Kanatlarında Kadınlar",       role:"نویسنده",                   desc:"مجموعه شعری از صداهای زنان در چارچوب Sisters Music Chain.", badge:"" },
+      { cat:"book",    type:"کتاب · 2024",    title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?",role:"نویسنده",                   desc:"مصاحبه‌ای درباره هوش مصنوعی و موسیقی.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"همه",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"آلبوم‌ها",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"Single",ep:"EP",album:"حضور در آلبوم",live:"اجرای زنده"},
+      playLabel:"در حال پخش"
+    },
+    exhLabel: "نمایشگاه‌ها",
+    exhibitions: [
+      { year:"تیر ۱۴۰۲", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"مرکز هنری احمد عدنان سایگون، ازمیر", roles:["کیوریتور","طراح صدا","تهیه‌کننده"], desc:"نمایشگاه میان‌رشته‌ای درباره هوش مصنوعی و داده." },
+      { year:"بهمن ۱۴۰۲", title:"American Traces in Ankara 1950–69", venue:"Cermodern، آنکارا", roles:["طراح صدا"], desc:"طراحی صدا برای نمایشگاه تاریخی بین‌المللی." }
+    ],
+    pressLabel: "مطبوعات",
+    certificationsLabel: "گواهینامه‌ها",
+    blog: "به زودی — مقالات اینجا منتشر خواهند شد.",
+    contact: {
+      intro: "برای پروژه‌ها، همکاری‌ها و <em>هر موضوعی مرتبط با صدا</em>.",
+      email: { label:"ایمیل", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"موسیقی", links:[
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify", sub:"صفحه هنرمند", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"شبکه‌های اجتماعی", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
+  },
+  ky: {
+    nav: ["Башкы бет","Жөнүндө","Долбоорлор","Музыка","Блог","Байланыш"],
+    home: {
+      location: "Измир, Түркия",
+      roles: ["Creative Technologist","Audiovisual Artist","Үн дизайнери","Музыка продюсери"]
+    },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (1999-ж., Измир) — үн дизайнери, музыка продюсери жана creative technologist. Ал Dokuz Eylül университетинде <em>Кино дизайны</em> адистиги боюнча бакалавр, <em>Музыка технологиясы</em> боюнча магистр даражасын алган. <strong>Aybike Özsöyke Sound Production</strong> аркылуу <em>Kuroba: Oghuz</em> видео оюну жана <em>Wittgenstein's Fly</em> театр спектакли үчүн үн дизайны менен музыканы толук процессте жүзөгө ашырган. Жасалма интеллект жана музыка боюнча маегинен <em>Yapay Zeka ve Sanat: Araç mı Amaç mı?</em> китебинде жарыяланган; <strong>Sounding Off 2023</strong> (Bilkent университети) программасына тандалып, Algorave иш-чараларында live coding аткаруулары менен сахнага чыгат.`,
+      metaLabels: ["Билим"],
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ"]
+    },
+    worksCategories: {exh:"Көргөзмө", game:"Видео оюну", film:"Кино", theatre:"Театр", book:"Китеп"},
+    worksFilterAll: "Баары",
+    works: [
+      { cat:"film",    type:"Кино",           title:"Destan",                                role:"Үн режиссеру",                    desc:"Үн дизайнынан музыка композициясына чейинки толук процесс.", badge:"" },
+      { cat:"game",    type:"Видео оюну",     title:"Kuroba: Oghuz",                         role:"Музыка & Үн дизайны",             desc:"Оюн үчүн үн дизайны жана музыка.", badge:"" },
+      { cat:"theatre", type:"Театр",          title:"Wittgenstein's Fly",                    role:"Музыка & Үн дизайны",             desc:"Сахна үчүн үн дизайны жана оригиналдуу музыка.", badge:"" },
+      { cat:"book",    type:"Китеп · 2026",   title:"Ses Veren Hikayeler",                   role:"Автор",                           desc:"Sisters Music Chain алкагындагы басылма аңгемелер жыйнагы.", badge:"" },
+      { cat:"book",    type:"Китеп · 2025",   title:"Dizelerin Kanatlarında Kadınlar",       role:"Автор",                           desc:"Sisters Music Chain алкагында аялдардын үндөрүн даңктаган поэзия жыйнагы.", badge:"" },
+      { cat:"book",    type:"Китеп · 2024",   title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?",role:"Автор",                           desc:"Жасалма интеллект жана музыка боюнча маек.", badge:"" }
+    ],
+    music: {
+      filters:[
+        {label:"Баары",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Альбомдор",cat:"album"},{label:"Live",cat:"live"}
+      ],
+      catLabels:{single:"Single",ep:"EP",album:"Альбомго катышуу",live:"Жандуу аткаруу"},
+      playLabel:"ойнотулуп жатат"
+    },
+    exhLabel: "Көргөзмөлөр",
+    exhibitions: [
+      { year:"2023-жылдын июлу", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmet Adnan Saygun Саnat Merkezi, Измир", roles:["Куратор","Үн дизайнери","Продюсер"], desc:"Жасалма интеллект жана маалыматтар жөнүндө пәнаралык көргөзмө." },
+      { year:"2024-жылдын февралы", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Анкара", roles:["Үн дизайнери"], desc:"Эл аралык тарыхый көргөзмө үчүн үн дизайны." }
+    ],
+    pressLabel: "Маалымат каражаттары",
+    certificationsLabel: "Сертификаттар",
+    blog: "Жакында — макалалар бул жерде жарыяланат.",
+    contact: {
+      intro: "Долбоорлор, кызматташуу жана <em>үнгө байланышкан бардык маселелер</em> боюнча.",
+      email: { label:"Электрондук почта", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
+      groups: [
+        { label:"Музыка", links:[
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"Spotify", sub:"Аткаруучунун барагы", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
+          { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
+        ]},
+        { label:"Социалдык", links:[
+          { text:"LinkedIn", sub:"Aybike Özsöyke", href:"https://www.linkedin.com/in/aybikeozsoyke/" },
+          { text:"Instagram", sub:"@maybeaybike", href:"https://www.instagram.com/maybeaybike/" },
+          { text:"Facebook", sub:"Aybike Özsöyke", href:"https://www.facebook.com/aybikeozsoyke" }
+        ]}
+      ]
+    }
   }
 };
 
@@ -1896,48 +2007,57 @@ function advanceTerminal() {
   typeTerminal();
 }
 
-// ── Term-viz mini oscilloscope ─────────────────────────────────────────
+// ── Term-viz: Hydra/TouchDesigner tarzı plasma görselleştirme ────────────
 function initTermViz() {
   const c = document.getElementById('termViz');
   if (!c) return;
   const ctx = c.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
+  let W = 0, H = 0;
   function resize() {
-    c.width = c.offsetWidth * dpr;
-    c.height = c.offsetHeight * dpr;
+    W = c.offsetWidth; H = c.offsetHeight;
+    c.width = W * dpr; c.height = H * dpr;
     ctx.scale(dpr, dpr);
   }
+  resize();
+  new ResizeObserver(resize).observe(c);
   let _t = 0;
-  const patterns = [
-    {f1:2,f2:5,  a1:.35,a2:.15},
-    {f1:3,f2:7,  a1:.3, a2:.2},
-    {f1:4,f2:9,  a1:.25,a2:.25},
-    {f1:1.5,f2:4,a1:.4, a2:.1},
-    {f1:5,f2:12, a1:.2, a2:.3},
-  ];
-  function drawViz() {
+  (function drawViz() {
     requestAnimationFrame(drawViz);
-    if (!c.offsetWidth) return;
-    if (c.width !== c.offsetWidth * dpr) { c.width = c.offsetWidth * dpr; c.height = c.offsetHeight * dpr; }
-    const W = c.offsetWidth, H = c.offsetHeight;
-    ctx.clearRect(0, 0, W, H);
-    const p = patterns[_termIdx % patterns.length];
-    ctx.beginPath();
-    ctx.strokeStyle = 'rgba(0,170,255,0.7)';
-    ctx.lineWidth = 1.5;
-    ctx.shadowColor = '#00aaff';
-    ctx.shadowBlur = 6;
-    for (let x = 0; x < W; x++) {
-      const t = _t * 0.016;
-      const y = H/2 + Math.sin((x/W)*Math.PI*p.f1*2 + t)*H*p.a1
-                     + Math.sin((x/W)*Math.PI*p.f2*2 + t*1.3)*H*p.a2;
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    if (!W || !H) return;
+    // Hydra-tarzı persistence: önceki kareyi çok az sil (feedback izi)
+    ctx.fillStyle = 'rgba(4,4,12,0.09)';
+    ctx.fillRect(0, 0, W, H);
+    // Frekans verisi
+    let aData = null, avg = 0;
+    if (_analyser && _analyserData) {
+      _analyser.getByteFrequencyData(_analyserData);
+      aData = _analyserData;
+      avg = aData.reduce((a,b)=>a+b,0) / aData.length / 255;
     }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
+    // Plasma: her pikselde 4 sinüs dalgasının girişimi (Hydra osc().add().modulate() benzeri)
+    for (let xi = 0; xi < W; xi++) {
+      const nx   = xi / W;                                              // 0..1
+      const band = aData ? aData[Math.floor(nx * aData.length)] / 255 : 0;
+      // Dört bağımsız sinüs — frekans + zaman + ses modülasyonu
+      const v1 = Math.sin(nx * 10 * Math.PI + _t * 0.025);
+      const v2 = Math.sin(nx *  6 * Math.PI - _t * 0.042 + avg * 5 + band * 2.5);
+      const v3 = Math.sin(nx * 21 * Math.PI + _t * 0.014 + band * 4.2);
+      const v4 = Math.sin(nx * nx * 28       + _t * 0.033 + avg * 3.5);
+      const v  = (v1 + v2 + v3 + v4) / 4;                             // girişim toplamı
+      // Renk: elektrik mavisi / cyan paleti, ses ile kayar
+      const hue = (195 + v * 38 + band * 58 + _t * 0.14) % 360;
+      const sat = 82 + band * 18;
+      const lit = 16 + Math.abs(v) * 34 + band * 40 + avg * 20;
+      const alf = 0.32 + Math.abs(v) * 0.48 + band * 0.28;
+      // Dikey çubuk — yükseklik ve merkez ses + dalga ile modüle
+      const barH = H * (0.10 + Math.abs(v) * 0.58 + band * 0.40 + avg * 0.14);
+      const cy   = H * 0.5 + v * H * 0.24;
+      ctx.fillStyle = `hsla(${hue},${sat}%,${lit}%,${alf})`;
+      ctx.fillRect(xi, cy - barH * 0.5, 1.5, barH);
+    }
     _t++;
-  }
-  drawViz();
+  })();
 }
 
 // ── Web Audio sentez ──────────────────────────────────────────────────
@@ -2057,7 +2177,7 @@ function setLang(l) {
   lang = l;
   worksFilter = 'all';
   document.documentElement.lang = l;
-  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+  document.documentElement.dir = (l === 'ar' || l === 'fa') ? 'rtl' : 'ltr';
   const cur = LANGS.find(x => x.code === l);
   if (cur) {
     document.getElementById('langTriggerFlag').textContent = cur.flag;
@@ -2154,9 +2274,11 @@ function setMusicMode(mode) {
   const label = mode === 'live' ? 'Live Performans' : 'Streaming';
   document.querySelectorAll('.music-mode-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.mode === mode));
-  // Desktop label
+  // Desktop label + dropdown kapat
   const lbl = document.getElementById('musicModeLabel');
   if (lbl) lbl.textContent = label;
+  const ddWrap = document.querySelector('.music-dd-wrap');
+  if (ddWrap) ddWrap.classList.remove('open');
   // Mobile label + kapat accordion
   const mLbl = document.getElementById('musicMobileLbl');
   if (mLbl) mLbl.textContent = label;
@@ -2165,6 +2287,12 @@ function setMusicMode(mode) {
   if (opts) opts.classList.remove('open');
   if (plus) plus.textContent = '+';
   renderMusicList();
+}
+
+function toggleMusicDd() {
+  const wrap = document.querySelector('.music-dd-wrap');
+  if (!wrap) return;
+  wrap.classList.toggle('open');
 }
 
 function toggleMusicAccordion() {
@@ -2338,10 +2466,10 @@ function render() {
   const _mLbl = musicMode === 'live' ? 'Live Performans' : 'Streaming';
   document.querySelector('.music-filters').innerHTML = `
     <div class="music-dd-wrap">
-      <div class="music-dd-trigger">
+      <button class="music-dd-trigger" onclick="toggleMusicDd()">
         <span id="musicModeLabel">${_mLbl}</span>
         <span class="music-dd-arrow">▾</span>
-      </div>
+      </button>
       <div class="music-dd-menu" id="musicDdMenu">
         <button class="music-dd-item${musicMode==='streaming'?' active':''}" onclick="setMusicMode('streaming')">Streaming</button>
         <button class="music-dd-item${musicMode==='live'?' active':''}" onclick="setMusicMode('live')">Live Performans</button>
@@ -2366,10 +2494,7 @@ function render() {
   document.getElementById('contactEmail').innerHTML = `
     <a class="contact-email-block" href="${em.href}">
       ${platformIcon('Email')}
-      <div style="flex:1">
-        <div class="contact-email-label">${upper(em.label, lang)}</div>
-        <div class="contact-email-addr">${em.addr}</div>
-      </div>
+      <span class="contact-email-addr">${em.addr}</span>
       <span class="contact-email-arrow">→</span>
     </a>`;
   document.getElementById('contactLower').innerHTML = d.contact.groups.map(g=>`
