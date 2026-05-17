@@ -72,7 +72,20 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .home-name em{font-style:italic;color:var(--accent)}
 .home-tagline{font-family:var(--font-m);font-size:11px;color:var(--text-muted);letter-spacing:.1em;display:flex;gap:24px;flex-wrap:wrap}
 .home-tagline span::before{content:'— ';color:var(--accent)}
-.home-waveform{position:fixed;bottom:0;right:0;width:100%;height:120px;opacity:.06;pointer-events:none}
+#homeCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.4s}
+.home-terminal{margin-top:52px;background:rgba(11,11,11,.94);border:1px solid var(--border2);max-width:460px;cursor:pointer;transition:border-color .25s;position:relative;z-index:1}
+.home-terminal:hover{border-color:var(--accent-dim)}
+.home-terminal-header{background:var(--surface);padding:9px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border)}
+.home-terminal-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.home-terminal-dot:nth-child(1){background:#ff5f57}
+.home-terminal-dot:nth-child(2){background:#febc2e}
+.home-terminal-dot:nth-child(3){background:#28c840}
+.home-terminal-label{font-family:var(--font-m);font-size:9px;letter-spacing:.15em;color:var(--text-dim);margin-left:auto}
+.home-terminal-body{padding:18px 22px 14px;line-height:1.85;min-height:88px;font-size:12px}
+.t-kw{color:var(--accent)}.t-fn{color:#9d85c4}.t-str{color:#7eb89c}.t-num{color:#d4a96a}.t-cm{color:var(--text-dim)}
+.home-terminal-cursor{display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:text-bottom;margin-left:1px;animation:tcblink .7s step-end infinite}
+@keyframes tcblink{0%,100%{opacity:1}50%{opacity:0}}
+.home-terminal-hint{font-size:9px;letter-spacing:.1em;color:var(--text-dim);padding:5px 22px 10px;opacity:.45}
 
 .section-label{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:48px;display:flex;align-items:center;gap:16px}
 .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--border2)}
@@ -224,6 +237,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   #home.active{justify-content:flex-start;padding-top:72px;padding-bottom:48px;min-height:100vh}
   .home-name{font-size:clamp(44px,12vw,72px)}
   .home-tagline{gap:14px;flex-direction:column}
+  .home-terminal{max-width:100%;margin-top:36px}
 
   /* Hakkımda: tek sütun */
   .about-layout{grid-template-columns:1fr;gap:36px}
@@ -306,12 +320,22 @@ main{padding-top:var(--nav-h);min-height:100vh}
   <div class="nav-bottom"><a href="https://www.aybikeozsoyke.com">aybikeozsoyke.com</a></div>
 </nav>
 
+<canvas id="homeCanvas"></canvas>
 <main>
   <section class="page" id="home">
     <div class="home-eyebrow"></div>
     <h1 class="home-name">Aybike<br><em>Özsöyke</em></h1>
     <div class="home-tagline"></div>
-    <svg class="home-waveform" viewBox="0 0 1200 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline stroke="#c4956a" stroke-width="1" points="0,60 25,20 30,100 35,40 40,80 45,55 55,10 60,110 65,30 70,90 80,70 85,45 90,75 95,60 115,25 120,95 125,35 130,85 145,15 150,105 155,40 160,80 175,45 180,75 215,30 220,90 225,45 230,75 245,20 250,100 255,40 260,80 275,45 280,75 325,35 330,85 335,50 340,70 350,75 355,55 365,15 370,105 375,40 380,80 395,45 400,75 445,25 450,95 455,35 460,85 475,20 480,100 485,40 490,80 535,30 540,90 545,45 550,75 565,20 570,100 575,40 580,80 625,35 630,85 645,15 650,105 655,40 660,80 725,25 730,95 735,35 740,85 755,20 760,100 765,40 770,80 825,35 830,85 835,50 840,70 1000,60 1200,60"/></svg>
+    <div class="home-terminal" onclick="advanceTerminal()" title="click for next snippet">
+      <div class="home-terminal-header">
+        <span class="home-terminal-dot"></span>
+        <span class="home-terminal-dot"></span>
+        <span class="home-terminal-dot"></span>
+        <span class="home-terminal-label">live.code</span>
+      </div>
+      <div class="home-terminal-body"><span id="termCode"></span><span class="home-terminal-cursor"></span></div>
+      <div class="home-terminal-hint">↵ click to next snippet</div>
+    </div>
   </section>
 
   <section class="page" id="about">
@@ -455,12 +479,12 @@ const SITE = {
     worksCategories: {exh:"Sergi", game:"Video Oyunu", film:"Film", theatre:"Tiyatro", book:"Kitap"},
     worksFilterAll: "Tümü",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
       { cat:"game", type:"Video Oyunu", title:"Kuroba: Oghuz", role:"Müzik & Ses Tasarımı", desc:"Oyun ses tasarımı ve müzik kompozisyonu.", badge:"" },
       { cat:"theatre", type:"Tiyatro", title:"Wittgenstein'ın Sineği", role:"Müzik & Ses Tasarımı", desc:"Sahne ses tasarımı ve özgün müzik.", badge:"" },
-      { cat:"book", type:"Kitap · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Katkıda Bulunan", desc:"Yapay zeka ve müzik üzerine söyleşi.", badge:"" },
       { cat:"book", type:"Kitap · 2026", title:"Ses Veren Hikayeler", role:"Katkıda Bulunan", desc:"Sisters Music Chain kolektifi kapsamında basılı öykü kitabı.", badge:"" },
-      { cat:"book", type:"Kitap · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Katkıda Bulunan", desc:"Kadın seslerine yer veren şiir kitabı.", badge:"" }
+      { cat:"book", type:"Kitap · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Katkıda Bulunan", desc:"Sisters Music Chain kolektifi kapsamında kadın seslerine yer veren şiir kitabı.", badge:"" },
+      { cat:"book", type:"Kitap · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Katkıda Bulunan", desc:"Yapay zeka ve müzik üzerine söyleşi.", badge:"" }
     ],
     music: {
       filters:[
@@ -510,12 +534,12 @@ const SITE = {
     worksCategories: {exh:"Exhibition", game:"Video Game", film:"Film", theatre:"Theatre", book:"Book"},
     worksFilterAll: "All",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
       { cat:"game", type:"Video Game", title:"Kuroba: Oghuz", role:"Music & Sound Design", desc:"Game audio and music composition.", badge:"" },
       { cat:"theatre", type:"Theatre", title:"Wittgenstein's Fly", role:"Music & Sound Design", desc:"Stage sound design and original music.", badge:"" },
-      { cat:"book", type:"Book · 2024", title:"Artificial Intelligence and Art: Tool or Goal?", role:"Contributor", desc:"Conversation on artificial intelligence and music.", badge:"" },
       { cat:"book", type:"Book · 2026", title:"Ses Veren Hikayeler", role:"Contributor", desc:"Printed story book under the Sisters Music Chain collective.", badge:"" },
-      { cat:"book", type:"Book · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributor", desc:"A poetry book celebrating women's voices.", badge:"" }
+      { cat:"book", type:"Book · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributor", desc:"A poetry book celebrating women's voices, under the Sisters Music Chain collective.", badge:"" },
+      { cat:"book", type:"Book · 2024", title:"Artificial Intelligence and Art: Tool or Goal?", role:"Contributor", desc:"Conversation on artificial intelligence and music.", badge:"" }
     ],
     music: {
       filters:[
@@ -565,12 +589,12 @@ const SITE = {
     worksCategories: {exh:"Ausstellung", game:"Videospiel", film:"Film", theatre:"Theater", book:"Buch"},
     worksFilterAll: "Alle",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
       { cat:"game", type:"Videospiel", title:"Kuroba: Oghuz", role:"Musik & Klanggestaltung", desc:"Spielaudio und Musikkomposition.", badge:"" },
       { cat:"theatre", type:"Theater", title:"Wittgensteins Fliege", role:"Musik & Klanggestaltung", desc:"Bühnenklang und Originalmusik.", badge:"" },
-      { cat:"book", type:"Buch · 2024", title:"Künstliche Intelligenz und Kunst: Werkzeug oder Ziel?", role:"Mitwirkende", desc:"Gespräch über künstliche Intelligenz und Musik.", badge:"" },
       { cat:"book", type:"Buch · 2026", title:"Ses Veren Hikayeler", role:"Mitwirkende", desc:"Gedrucktes Geschichtenbuch des Sisters Music Chain-Kollektivs.", badge:"" },
-      { cat:"book", type:"Buch · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Mitwirkende", desc:"Ein Gedichtband, der Frauenstimmen feiert.", badge:"" }
+      { cat:"book", type:"Buch · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Mitwirkende", desc:"Ein Gedichtband, der Frauenstimmen feiert, im Rahmen des Sisters Music Chain-Kollektivs.", badge:"" },
+      { cat:"book", type:"Buch · 2024", title:"Künstliche Intelligenz und Kunst: Werkzeug oder Ziel?", role:"Mitwirkende", desc:"Gespräch über künstliche Intelligenz und Musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -620,12 +644,12 @@ const SITE = {
     worksCategories: {exh:"Exposition", game:"Jeu vidéo", film:"Film", theatre:"Théâtre", book:"Livre"},
     worksFilterAll: "Tout",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Directrice sonore", desc:"Processus sonore complet — de la conception sonore à la composition musicale.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Directrice sonore", desc:"Processus sonore complet — de la conception sonore à la composition musicale.", badge:"" },
       { cat:"game", type:"Jeu vidéo", title:"Kuroba: Oghuz", role:"Musique & Conception sonore", desc:"Conception sonore et composition musicale pour le jeu.", badge:"" },
       { cat:"theatre", type:"Théâtre", title:"Wittgenstein's Fly", role:"Musique & Conception sonore", desc:"Conception sonore scénique et musique originale.", badge:"" },
-      { cat:"book", type:"Livre · 2024", title:"Intelligence Artificielle et Art: Outil ou But?", role:"Contributrice", desc:"Conversation sur l'intelligence artificielle et la musique.", badge:"" },
       { cat:"book", type:"Livre · 2026", title:"Ses Veren Hikayeler", role:"Contributrice", desc:"Livre d'histoires imprimé du collectif Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Livre · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributrice", desc:"Un recueil de poèmes célébrant les voix féminines.", badge:"" }
+      { cat:"book", type:"Livre · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributrice", desc:"Un recueil de poèmes célébrant les voix féminines, sous l'égide du collectif Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Livre · 2024", title:"Intelligence Artificielle et Art: Outil ou But?", role:"Contributrice", desc:"Conversation sur l'intelligence artificielle et la musique.", badge:"" }
     ],
     music: {
       filters:[
@@ -675,12 +699,12 @@ const SITE = {
     worksCategories: {exh:"Mostra", game:"Videogioco", film:"Film", theatre:"Teatro", book:"Libro"},
     worksFilterAll: "Tutto",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Intero processo sonoro — dalla progettazione del suono alla composizione musicale.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Sound Director", desc:"Intero processo sonoro — dalla progettazione del suono alla composizione musicale.", badge:"" },
       { cat:"game", type:"Videogioco", title:"Kuroba: Oghuz", role:"Musica & Sound Design", desc:"Audio di gioco e composizione musicale.", badge:"" },
       { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Musica & Sound Design", desc:"Sound design scenico e musica originale.", badge:"" },
-      { cat:"book", type:"Libro · 2024", title:"Intelligenza Artificiale e Arte: Strumento o Fine?", role:"Contributrice", desc:"Conversazione sull'intelligenza artificiale e la musica.", badge:"" },
       { cat:"book", type:"Libro · 2026", title:"Ses Veren Hikayeler", role:"Contributrice", desc:"Libro di racconti stampato del collettivo Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Libro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributrice", desc:"Una raccolta di poesie che celebra le voci femminili.", badge:"" }
+      { cat:"book", type:"Libro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Contributrice", desc:"Una raccolta di poesie che celebra le voci femminili, nell'ambito del collettivo Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Libro · 2024", title:"Intelligenza Artificiale e Arte: Strumento o Fine?", role:"Contributrice", desc:"Conversazione sull'intelligenza artificiale e la musica.", badge:"" }
     ],
     music: {
       filters:[
@@ -730,12 +754,12 @@ const SITE = {
     worksCategories: {exh:"展示", game:"ビデオゲーム", film:"映画", theatre:"演劇", book:"書籍"},
     worksFilterAll: "すべて",
     works: [
-      { cat:"film", type:"映画 · 2025", title:"Destan", role:"サウンドディレクター", desc:"サウンドデザインから音楽作曲まで全ての音声プロセスを管理。", badge:"" },
+      { cat:"film", type:"映画", title:"Destan", role:"サウンドディレクター", desc:"サウンドデザインから音楽作曲まで全ての音声プロセスを管理。", badge:"" },
       { cat:"game", type:"ビデオゲーム", title:"Kuroba: Oghuz", role:"音楽 & サウンドデザイン", desc:"ゲームオーディオと音楽作曲。", badge:"" },
       { cat:"theatre", type:"演劇", title:"Wittgenstein's Fly", role:"音楽 & サウンドデザイン", desc:"舞台音響デザインとオリジナル音楽。", badge:"" },
-      { cat:"book", type:"書籍 · 2024", title:"人工知能と芸術：ツールか目的か？", role:"寄稿者", desc:"人工知能と音楽に関する対談。", badge:"" },
       { cat:"book", type:"書籍 · 2026", title:"Ses Veren Hikayeler", role:"寄稿者", desc:"Sisters Music Chainコレクティブの印刷された物語集。", badge:"" },
-      { cat:"book", type:"書籍 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"寄稿者", desc:"女性の声を讃える詩集。", badge:"" }
+      { cat:"book", type:"書籍 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"寄稿者", desc:"Sisters Music Chainコレクティブ傘下の女性の声を讃える詩集。", badge:"" },
+      { cat:"book", type:"書籍 · 2024", title:"人工知能と芸術：ツールか目的か？", role:"寄稿者", desc:"人工知能と音楽に関する対談。", badge:"" }
     ],
     music: {
       filters:[
@@ -785,12 +809,12 @@ const SITE = {
     worksCategories: {exh:"Выставка", game:"Видеоигра", film:"Фильм", theatre:"Театр", book:"Книга"},
     worksFilterAll: "Все",
     works: [
-      { cat:"film", type:"Фильм · 2025", title:"Destan", role:"Звуковой директор", desc:"Полный звуковой процесс — от звукового дизайна до музыкальной композиции.", badge:"" },
+      { cat:"film", type:"Фильм", title:"Destan", role:"Звуковой директор", desc:"Полный звуковой процесс — от звукового дизайна до музыкальной композиции.", badge:"" },
       { cat:"game", type:"Видеоигра", title:"Kuroba: Oghuz", role:"Музыка & Звуковой дизайн", desc:"Игровое аудио и музыкальная композиция.", badge:"" },
       { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Музыка & Звуковой дизайн", desc:"Сценический звук и оригинальная музыка.", badge:"" },
-      { cat:"book", type:"Книга · 2024", title:"Искусственный интеллект и искусство: инструмент или цель?", role:"Участник", desc:"Разговор об искусственном интеллекте и музыке.", badge:"" },
       { cat:"book", type:"Книга · 2026", title:"Ses Veren Hikayeler", role:"Участник", desc:"Печатный сборник рассказов коллектива Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Книга · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Участник", desc:"Поэтический сборник, посвящённый женским голосам.", badge:"" }
+      { cat:"book", type:"Книга · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Участник", desc:"Поэтический сборник коллектива Sisters Music Chain, посвящённый женским голосам.", badge:"" },
+      { cat:"book", type:"Книга · 2024", title:"Искусственный интеллект и искусство: инструмент или цель?", role:"Участник", desc:"Разговор об искусственном интеллекте и музыке.", badge:"" }
     ],
     music: {
       filters:[
@@ -840,12 +864,12 @@ const SITE = {
     worksCategories: {exh:"전시", game:"비디오 게임", film:"영화", theatre:"연극", book:"도서"},
     worksFilterAll: "전체",
     works: [
-      { cat:"film", type:"영화 · 2025", title:"Destan", role:"사운드 디렉터", desc:"사운드 디자인부터 음악 작곡까지 전체 음향 과정 관리.", badge:"" },
+      { cat:"film", type:"영화", title:"Destan", role:"사운드 디렉터", desc:"사운드 디자인부터 음악 작곡까지 전체 음향 과정 관리.", badge:"" },
       { cat:"game", type:"비디오 게임", title:"Kuroba: Oghuz", role:"음악 & 사운드 디자인", desc:"게임 오디오 및 음악 작곡.", badge:"" },
       { cat:"theatre", type:"연극", title:"Wittgenstein's Fly", role:"음악 & 사운드 디자인", desc:"무대 사운드 디자인과 오리지널 음악.", badge:"" },
-      { cat:"book", type:"도서 · 2024", title:"인공 지능과 예술: 도구인가 목적인가?", role:"기여자", desc:"인공 지능과 음악에 관한 대담.", badge:"" },
       { cat:"book", type:"도서 · 2026", title:"Ses Veren Hikayeler", role:"기여자", desc:"Sisters Music Chain 컬렉티브의 인쇄된 이야기 모음집.", badge:"" },
-      { cat:"book", type:"도서 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"기여자", desc:"여성의 목소리를 기념하는 시집.", badge:"" }
+      { cat:"book", type:"도서 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"기여자", desc:"Sisters Music Chain 컬렉티브 소속 여성의 목소리를 기념하는 시집.", badge:"" },
+      { cat:"book", type:"도서 · 2024", title:"인공 지능과 예술: 도구인가 목적인가?", role:"기여자", desc:"인공 지능과 음악에 관한 대담.", badge:"" }
     ],
     music: {
       filters:[
@@ -895,12 +919,12 @@ const SITE = {
     worksCategories: {exh:"Exposición", game:"Videojuego", film:"Película", theatre:"Teatro", book:"Libro"},
     worksFilterAll: "Todo",
     works: [
-      { cat:"film", type:"Película · 2025", title:"Destan", role:"Directora de sonido", desc:"Proceso sonoro completo — del diseño de sonido a la composición musical.", badge:"" },
+      { cat:"film", type:"Película", title:"Destan", role:"Directora de sonido", desc:"Proceso sonoro completo — del diseño de sonido a la composición musical.", badge:"" },
       { cat:"game", type:"Videojuego", title:"Kuroba: Oghuz", role:"Música & Diseño de sonido", desc:"Audio de juego y composición musical.", badge:"" },
       { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Diseño de sonido", desc:"Diseño de sonido escénico y música original.", badge:"" },
-      { cat:"book", type:"Libro · 2024", title:"Inteligencia Artificial y Arte: ¿Herramienta o Fin?", role:"Colaboradora", desc:"Conversación sobre inteligencia artificial y música.", badge:"" },
       { cat:"book", type:"Libro · 2026", title:"Ses Veren Hikayeler", role:"Colaboradora", desc:"Libro de cuentos impreso del colectivo Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Libro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Colaboradora", desc:"Un libro de poemas que celebra las voces femeninas.", badge:"" }
+      { cat:"book", type:"Libro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Colaboradora", desc:"Un libro de poemas que celebra las voces femeninas, bajo el colectivo Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Libro · 2024", title:"Inteligencia Artificial y Arte: ¿Herramienta o Fin?", role:"Colaboradora", desc:"Conversación sobre inteligencia artificial y música.", badge:"" }
     ],
     music: {
       filters:[
@@ -950,12 +974,12 @@ const SITE = {
     worksCategories: {exh:"Sərgi", game:"Video oyunu", film:"Film", theatre:"Teatr", book:"Kitab"},
     worksFilterAll: "Hamısı",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Səs rejissoru", desc:"Səs dizaynından musiqi kompozisiyasına qədər tam səs prosesi.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Səs rejissoru", desc:"Səs dizaynından musiqi kompozisiyasına qədər tam səs prosesi.", badge:"" },
       { cat:"game", type:"Video oyunu", title:"Kuroba: Oghuz", role:"Musiqi & Səs dizaynı", desc:"Oyun audio və musiqi kompozisiyası.", badge:"" },
       { cat:"theatre", type:"Teatr", title:"Wittgenstein's Fly", role:"Musiqi & Səs dizaynı", desc:"Səhnə səs dizaynı və orijinal musiqi.", badge:"" },
-      { cat:"book", type:"Kitab · 2024", title:"Süni İntellekt və İncəsənət: Vasitə mi, Məqsəd mi?", role:"İştirakçı", desc:"Süni intellekt və musiqi haqqında söhbət.", badge:"" },
       { cat:"book", type:"Kitab · 2026", title:"Ses Veren Hikayeler", role:"İştirakçı", desc:"Sisters Music Chain kollektivi çərçivəsində çap edilmiş hekayə kitabı.", badge:"" },
-      { cat:"book", type:"Kitab · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"İştirakçı", desc:"Qadın səslərini uca tutan şeir kitabı.", badge:"" }
+      { cat:"book", type:"Kitab · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"İştirakçı", desc:"Sisters Music Chain kollektivi çərçivəsində qadın səslərini uca tutan şeir kitabı.", badge:"" },
+      { cat:"book", type:"Kitab · 2024", title:"Süni İntellekt və İncəsənət: Vasitə mi, Məqsəd mi?", role:"İştirakçı", desc:"Süni intellekt və musiqi haqqında söhbət.", badge:"" }
     ],
     music: {
       filters:[
@@ -1005,12 +1029,12 @@ const SITE = {
     worksCategories: {exh:"Utställning", game:"Videospel", film:"Film", theatre:"Teater", book:"Bok"},
     worksFilterAll: "Alla",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Ljudregissör", desc:"Hela ljudprocessen — från ljuddesign till musikkomposition.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Ljudregissör", desc:"Hela ljudprocessen — från ljuddesign till musikkomposition.", badge:"" },
       { cat:"game", type:"Videospel", title:"Kuroba: Oghuz", role:"Musik & Ljuddesign", desc:"Spelljud och musikkomposition.", badge:"" },
       { cat:"theatre", type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Ljuddesign", desc:"Scenljuddesign och originalmusik.", badge:"" },
-      { cat:"book", type:"Bok · 2024", title:"Artificiell intelligens och konst: Verktyg eller mål?", role:"Medverkande", desc:"Samtal om artificiell intelligens och musik.", badge:"" },
       { cat:"book", type:"Bok · 2026", title:"Ses Veren Hikayeler", role:"Medverkande", desc:"Tryckt sagobok av Sisters Music Chain-kollektivet.", badge:"" },
-      { cat:"book", type:"Bok · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Medverkande", desc:"En diktsamling som hyllar kvinnors röster.", badge:"" }
+      { cat:"book", type:"Bok · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Medverkande", desc:"En diktsamling som hyllar kvinnors röster, inom Sisters Music Chain-kollektivet.", badge:"" },
+      { cat:"book", type:"Bok · 2024", title:"Artificiell intelligens och konst: Verktyg eller mål?", role:"Medverkande", desc:"Samtal om artificiell intelligens och musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -1060,12 +1084,12 @@ const SITE = {
     worksCategories: {exh:"Exposição", game:"Videojogo", film:"Filme", theatre:"Teatro", book:"Livro"},
     worksFilterAll: "Tudo",
     works: [
-      { cat:"film", type:"Filme · 2025", title:"Destan", role:"Directora de som", desc:"Processo sonoro completo — do design de som à composição musical.", badge:"" },
+      { cat:"film", type:"Filme", title:"Destan", role:"Directora de som", desc:"Processo sonoro completo — do design de som à composição musical.", badge:"" },
       { cat:"game", type:"Videojogo", title:"Kuroba: Oghuz", role:"Música & Design de som", desc:"Áudio de jogo e composição musical.", badge:"" },
       { cat:"theatre", type:"Teatro", title:"Wittgenstein's Fly", role:"Música & Design de som", desc:"Design sonoro cénico e música original.", badge:"" },
-      { cat:"book", type:"Livro · 2024", title:"Inteligência Artificial e Arte: Ferramenta ou Fim?", role:"Colaboradora", desc:"Conversa sobre inteligência artificial e música.", badge:"" },
       { cat:"book", type:"Livro · 2026", title:"Ses Veren Hikayeler", role:"Colaboradora", desc:"Livro de histórias impresso do coletivo Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Livro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Colaboradora", desc:"Um livro de poemas celebrando as vozes femininas.", badge:"" }
+      { cat:"book", type:"Livro · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Colaboradora", desc:"Um livro de poemas celebrando as vozes femininas, sob o coletivo Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"Livro · 2024", title:"Inteligência Artificial e Arte: Ferramenta ou Fim?", role:"Colaboradora", desc:"Conversa sobre inteligência artificial e música.", badge:"" }
     ],
     music: {
       filters:[
@@ -1115,12 +1139,12 @@ const SITE = {
     worksCategories: {exh:"Udstilling", game:"Videospil", film:"Film", theatre:"Teater", book:"Bog"},
     worksFilterAll: "Alle",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Lydinstruktør", desc:"Hele lydprocessen — fra lyddesign til musikkomposition.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Lydinstruktør", desc:"Hele lydprocessen — fra lyddesign til musikkomposition.", badge:"" },
       { cat:"game", type:"Videospil", title:"Kuroba: Oghuz", role:"Musik & Lyddesign", desc:"Spilaud og musikkomposition.", badge:"" },
       { cat:"theatre", type:"Teater", title:"Wittgenstein's Fly", role:"Musik & Lyddesign", desc:"Scenelydsdesign og originalmusik.", badge:"" },
-      { cat:"book", type:"Bog · 2024", title:"Kunstig intelligens og kunst: Redskab eller mål?", role:"Bidragyder", desc:"Samtale om kunstig intelligens og musik.", badge:"" },
       { cat:"book", type:"Bog · 2026", title:"Ses Veren Hikayeler", role:"Bidragyder", desc:"Trykt samling af fortællinger fra Sisters Music Chain-kollektivet.", badge:"" },
-      { cat:"book", type:"Bog · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Bidragyder", desc:"En digtsamling der fejrer kvindelige stemmer.", badge:"" }
+      { cat:"book", type:"Bog · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Bidragyder", desc:"En digtsamling der fejrer kvindelige stemmer, under Sisters Music Chain-kollektivet.", badge:"" },
+      { cat:"book", type:"Bog · 2024", title:"Kunstig intelligens og kunst: Redskab eller mål?", role:"Bidragyder", desc:"Samtale om kunstig intelligens og musik.", badge:"" }
     ],
     music: {
       filters:[
@@ -1170,12 +1194,12 @@ const SITE = {
     worksCategories: {exh:"Виставка", game:"Відеогра", film:"Фільм", theatre:"Театр", book:"Книга"},
     worksFilterAll: "Усі",
     works: [
-      { cat:"film", type:"Фільм · 2025", title:"Destan", role:"Звуковий директор", desc:"Повний звуковий процес — від звукового дизайну до музичної композиції.", badge:"" },
+      { cat:"film", type:"Фільм", title:"Destan", role:"Звуковий директор", desc:"Повний звуковий процес — від звукового дизайну до музичної композиції.", badge:"" },
       { cat:"game", type:"Відеогра", title:"Kuroba: Oghuz", role:"Музика & Звуковий дизайн", desc:"Ігрове аудіо та музична композиція.", badge:"" },
       { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Музика & Звуковий дизайн", desc:"Сценічний звуковий дизайн та оригінальна музика.", badge:"" },
-      { cat:"book", type:"Книга · 2024", title:"Штучний інтелект і мистецтво: інструмент чи мета?", role:"Учасник", desc:"Розмова про штучний інтелект та музику.", badge:"" },
       { cat:"book", type:"Книга · 2026", title:"Ses Veren Hikayeler", role:"Учасник", desc:"Друкована збірка оповідань колективу Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"Книга · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Учасник", desc:"Збірка поезій, присвячена жіночим голосам.", badge:"" }
+      { cat:"book", type:"Книга · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Учасник", desc:"Збірка поезій колективу Sisters Music Chain, присвячена жіночим голосам.", badge:"" },
+      { cat:"book", type:"Книга · 2024", title:"Штучний інтелект і мистецтво: інструмент чи мета?", role:"Учасник", desc:"Розмова про штучний інтелект та музику.", badge:"" }
     ],
     music: {
       filters:[
@@ -1225,12 +1249,12 @@ const SITE = {
     worksCategories: {exh:"معرض", game:"لعبة فيديو", film:"فيلم", theatre:"مسرح", book:"كتاب"},
     worksFilterAll: "الكل",
     works: [
-      { cat:"film", type:"فيلم · 2025", title:"Destan", role:"مديرة الصوت", desc:"عملية صوتية متكاملة — من تصميم الصوت إلى التأليف الموسيقي.", badge:"" },
+      { cat:"film", type:"فيلم", title:"Destan", role:"مديرة الصوت", desc:"عملية صوتية متكاملة — من تصميم الصوت إلى التأليف الموسيقي.", badge:"" },
       { cat:"game", type:"لعبة فيديو", title:"Kuroba: Oghuz", role:"موسيقى وتصميم صوت", desc:"صوتيات اللعبة والتأليف الموسيقي.", badge:"" },
       { cat:"theatre", type:"مسرح", title:"Wittgenstein's Fly", role:"موسيقى وتصميم صوت", desc:"تصميم الصوت المسرحي والموسيقى الأصلية.", badge:"" },
-      { cat:"book", type:"كتاب · 2024", title:"الذكاء الاصطناعي والفن: أداةٌ أم غاية؟", role:"مساهمة", desc:"حوار حول الذكاء الاصطناعي والموسيقى.", badge:"" },
       { cat:"book", type:"كتاب · 2026", title:"Ses Veren Hikayeler", role:"مساهمة", desc:"كتاب قصص مطبوع ضمن مجموعة Sisters Music Chain.", badge:"" },
-      { cat:"book", type:"كتاب · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"مساهمة", desc:"كتاب شعري يحتفي بأصوات النساء.", badge:"" }
+      { cat:"book", type:"كتاب · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"مساهمة", desc:"كتاب شعري يحتفي بأصوات النساء ضمن مجموعة Sisters Music Chain.", badge:"" },
+      { cat:"book", type:"كتاب · 2024", title:"الذكاء الاصطناعي والفن: أداةٌ أم غاية؟", role:"مساهمة", desc:"حوار حول الذكاء الاصطناعي والموسيقى.", badge:"" }
     ],
     music: {
       filters:[
@@ -1277,12 +1301,12 @@ const SITE = {
     worksCategories: {exh:"Tentoonstelling", game:"Videospel", film:"Film", theatre:"Theater", book:"Boek"},
     worksFilterAll: "Alles",
     works:[
-      {cat:"film",type:"Film · 2025",title:"Destan",role:"Geluidsregisseur",desc:"Volledig geluidsproces — van geluidsontwerp tot muziekcompositie.",badge:""},
+      {cat:"film",type:"Film",title:"Destan",role:"Geluidsregisseur",desc:"Volledig geluidsproces — van geluidsontwerp tot muziekcompositie.",badge:""},
       {cat:"game",type:"Videospel",title:"Kuroba: Oghuz",role:"Muziek & Geluidsontwerp",desc:"Spelgeluid en muziekcompositie.",badge:""},
       {cat:"theatre",type:"Theater",title:"Wittgenstein's Fly",role:"Muziek & Geluidsontwerp",desc:"Scenisch geluidsontwerp en originele muziek.",badge:""},
-      {cat:"book",type:"Boek · 2024",title:"Kunstmatige intelligentie en kunst: hulpmiddel of doel?",role:"Bijdrager",desc:"Gesprek over kunstmatige intelligentie en muziek.",badge:""},
-      {cat:"book",type:"Boek · 2023",title:"Ses Veren Hikayeler",role:"Bijdrager",desc:"Gedrukt verhalenboek van het Sisters Music Chain-collectief.",badge:""},
-      {cat:"book",type:"Boek · 2022",title:"Dizelerin Kanatlarında Kadınlar",role:"Bijdrager",desc:"Een dichtbundel ter ere van vrouwenstemmen.",badge:""}
+      {cat:"book",type:"Boek · 2026",title:"Ses Veren Hikayeler",role:"Bijdrager",desc:"Gedrukt verhalenboek van het Sisters Music Chain-collectief.",badge:""},
+      {cat:"book",type:"Boek · 2025",title:"Dizelerin Kanatlarında Kadınlar",role:"Bijdrager",desc:"Een dichtbundel ter ere van vrouwenstemmen, binnen het Sisters Music Chain-collectief.",badge:""},
+      {cat:"book",type:"Boek · 2024",title:"Kunstmatige intelligentie en kunst: hulpmiddel of doel?",role:"Bijdrager",desc:"Gesprek over kunstmatige intelligentie en muziek.",badge:""}
     ],
     music:{
       filters:[{label:"Alles",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Verschijnt op",cat:"album"},{label:"Live",cat:"live"}],
@@ -1326,12 +1350,12 @@ const SITE = {
     worksCategories: {exh:"Izložba", game:"Videoigra", film:"Film", theatre:"Kazalište", book:"Knjiga"},
     worksFilterAll: "Sve",
     works:[
-      {cat:"film",type:"Film · 2025",title:"Destan",role:"Direktor zvuka",desc:"Cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije.",badge:""},
+      {cat:"film",type:"Film",title:"Destan",role:"Direktor zvuka",desc:"Cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije.",badge:""},
       {cat:"game",type:"Videoigra",title:"Kuroba: Oghuz",role:"Glazba & Dizajn zvuka",desc:"Zvuk igre i glazbena kompozicija.",badge:""},
       {cat:"theatre",type:"Kazalište",title:"Wittgenstein's Fly",role:"Glazba & Dizajn zvuka",desc:"Scenski dizajn zvuka i originalna glazba.",badge:""},
-      {cat:"book",type:"Knjiga · 2024",title:"Umjetna inteligencija i umjetnost: alat ili cilj?",role:"Suradnica",desc:"Razgovor o umjetnoj inteligenciji i glazbi.",badge:""},
-      {cat:"book",type:"Knjiga · 2023",title:"Ses Veren Hikayeler",role:"Suradnica",desc:"Tiskana knjiga priča kolektiva Sisters Music Chain.",badge:""},
-      {cat:"book",type:"Knjiga · 2022",title:"Dizelerin Kanatlarında Kadınlar",role:"Suradnica",desc:"Knjiga poezije koja slavi ženske glasove.",badge:""}
+      {cat:"book",type:"Knjiga · 2026",title:"Ses Veren Hikayeler",role:"Suradnica",desc:"Tiskana knjiga priča kolektiva Sisters Music Chain.",badge:""},
+      {cat:"book",type:"Knjiga · 2025",title:"Dizelerin Kanatlarında Kadınlar",role:"Suradnica",desc:"Knjiga poezije koja slavi ženske glasove, u sklopu kolektiva Sisters Music Chain.",badge:""},
+      {cat:"book",type:"Knjiga · 2024",title:"Umjetna inteligencija i umjetnost: alat ili cilj?",role:"Suradnica",desc:"Razgovor o umjetnoj inteligenciji i glazbi.",badge:""}
     ],
     music:{
       filters:[{label:"Sve",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Pojavljuje se na",cat:"album"},{label:"Uživo",cat:"live"}],
@@ -1379,12 +1403,12 @@ const SITE = {
   worksFilterAll: "Wszystkie",
   worksCategories: {exh:"Wystawa",game:"Gra wideo",film:"Film",theatre:"Teatr",book:"Książka"},
   works: [
-    {cat:"film", type:"Film · 2025", title:"Destan", role:"Reżyser dźwięku", desc:"Kompletny proces dźwiękowy — od projektowania dźwięku po kompozycję muzyczną.", badge:""},
+    {cat:"film", type:"Film", title:"Destan", role:"Reżyser dźwięku", desc:"Kompletny proces dźwiękowy — od projektowania dźwięku po kompozycję muzyczną.", badge:""},
     {cat:"game", type:"Gra wideo", title:"Kuroba: Oghuz", role:"Muzyka & Projekt dźwięku", desc:"Dźwięk gry i kompozycja muzyczna.", badge:""},
     {cat:"theatre", type:"Teatr", title:"Wittgenstein's Fly", role:"Muzyka & Projekt dźwięku", desc:"Sceniczny projekt dźwięku i oryginalna muzyka.", badge:""},
-    {cat:"book", type:"Książka · 2024", title:"Sztuczna inteligencja i sztuka: narzędzie czy cel?", role:"Współautorka", desc:"Rozmowa o sztucznej inteligencji i muzyce.", badge:""},
     {cat:"book", type:"Książka · 2026", title:"Ses Veren Hikayeler", role:"Współautorka", desc:"Drukowana książka opowiadań kolektywu Sisters Music Chain.", badge:""},
-    {cat:"book", type:"Książka · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Współautorka", desc:"Tomik poezji celebrujący kobiece głosy.", badge:""}
+    {cat:"book", type:"Książka · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Współautorka", desc:"Tomik poezji celebrujący kobiece głosy, w ramach kolektywu Sisters Music Chain.", badge:""},
+    {cat:"book", type:"Książka · 2024", title:"Sztuczna inteligencja i sztuka: narzędzie czy cel?", role:"Współautorka", desc:"Rozmowa o sztucznej inteligencji i muzyce.", badge:""}
   ],
   music: {
     filters:[
@@ -1433,12 +1457,12 @@ const SITE = {
   worksFilterAll: "सभी",
   worksCategories: {exh:"प्रदर्शनी",game:"वीडियो गेम",film:"फिल्म",theatre:"रंगमंच",book:"पुस्तक"},
   works: [
-    {cat:"film", type:"फिल्म · 2025", title:"Destan", role:"साउंड डायरेक्टर", desc:"साउंड डिज़ाइन से संगीत रचना तक पूरी प्रक्रिया।", badge:""},
+    {cat:"film", type:"फिल्म", title:"Destan", role:"साउंड डायरेक्टर", desc:"साउंड डिज़ाइन से संगीत रचना तक पूरी प्रक्रिया।", badge:""},
     {cat:"game", type:"वीडियो गेम", title:"Kuroba: Oghuz", role:"संगीत & साउंड डिज़ाइन", desc:"गेम ऑडियो और संगीत रचना।", badge:""},
     {cat:"theatre", type:"रंगमंच", title:"Wittgenstein's Fly", role:"संगीत & साउंड डिज़ाइन", desc:"मंच ध्वनि डिज़ाइन और मूल संगीत।", badge:""},
-    {cat:"book", type:"पुस्तक · 2024", title:"कृत्रिम बुद्धिमत्ता और कला: उपकरण या लक्ष्य?", role:"योगदानकर्ता", desc:"कृत्रिम बुद्धिमत्ता और संगीत पर बातचीत।", badge:""},
     {cat:"book", type:"पुस्तक · 2026", title:"Ses Veren Hikayeler", role:"योगदानकर्ता", desc:"Sisters Music Chain कलेक्टिव की मुद्रित कहानियों की पुस्तक।", badge:""},
-    {cat:"book", type:"पुस्तक · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"योगदानकर्ता", desc:"महिलाओं की आवाज़ों को समर्पित कविता संग्रह।", badge:""}
+    {cat:"book", type:"पुस्तक · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"योगदानकर्ता", desc:"Sisters Music Chain कलेक्टिव के अंतर्गत महिलाओं की आवाज़ों को समर्पित कविता संग्रह।", badge:""},
+    {cat:"book", type:"पुस्तक · 2024", title:"कृत्रिम बुद्धिमत्ता और कला: उपकरण या लक्ष्य?", role:"योगदानकर्ता", desc:"कृत्रिम बुद्धिमत्ता और संगीत पर बातचीत।", badge:""}
   ],
   music: {
     filters:[
@@ -1487,12 +1511,12 @@ const SITE = {
   worksFilterAll: "全部",
   worksCategories: {exh:"展览",game:"视频游戏",film:"电影",theatre:"戏剧",book:"书籍"},
   works: [
-    {cat:"film", type:"电影 · 2025", title:"Destan", role:"声音总监", desc:"从声音设计到音乐创作的完整声音流程。", badge:""},
+    {cat:"film", type:"电影", title:"Destan", role:"声音总监", desc:"从声音设计到音乐创作的完整声音流程。", badge:""},
     {cat:"game", type:"视频游戏", title:"Kuroba: Oghuz", role:"音乐 & 声音设计", desc:"游戏音频与音乐创作。", badge:""},
     {cat:"theatre", type:"戏剧", title:"Wittgenstein's Fly", role:"音乐 & 声音设计", desc:"舞台音效设计与原创音乐。", badge:""},
-    {cat:"book", type:"书籍 · 2024", title:"人工智能与艺术：工具还是目的？", role:"撰稿人", desc:"关于人工智能与音乐的对话。", badge:""},
     {cat:"book", type:"书籍 · 2026", title:"Ses Veren Hikayeler", role:"撰稿人", desc:"Sisters Music Chain集体出版的纸质故事书。", badge:""},
-    {cat:"book", type:"书籍 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"撰稿人", desc:"一本颂扬女性声音的诗集。", badge:""}
+    {cat:"book", type:"书籍 · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"撰稿人", desc:"Sisters Music Chain集体旗下颂扬女性声音的诗集。", badge:""},
+    {cat:"book", type:"书籍 · 2024", title:"人工智能与艺术：工具还是目的？", role:"撰稿人", desc:"关于人工智能与音乐的对话。", badge:""}
   ],
   music: {
     filters:[
@@ -1540,12 +1564,12 @@ const SITE = {
     worksCategories: {exh:"Ko'rgazma", game:"Video o'yin", film:"Film", theatre:"Teatr", book:"Kitob"},
     worksFilterAll: "Barchasi",
     works: [
-      { cat:"film", type:"Film · 2025", title:"Destan", role:"Tovush direktori", desc:"Tovush dizaynidan musiqa kompozitsiyasiga to'liq jarayon.", badge:"" },
+      { cat:"film", type:"Film", title:"Destan", role:"Tovush direktori", desc:"Tovush dizaynidan musiqa kompozitsiyasiga to'liq jarayon.", badge:"" },
       { cat:"game", type:"Video o'yin", title:"Kuroba: Oghuz", role:"Musiqa & Tovush dizayni", desc:"O'yin audio va musiqa kompozitsiyasi.", badge:"" },
       { cat:"theatre", type:"Teatr", title:"Wittgenstein's Fly", role:"Musiqa & Tovush dizayni", desc:"Sahna tovush dizayni va original musiqa.", badge:"" },
-      { cat:"book", type:"Kitob · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Muallif", desc:"Sun'iy intellekt va musiqa bo'yicha suhbat.", badge:"" },
       { cat:"book", type:"Kitob · 2026", title:"Ses Veren Hikayeler", role:"Muallif", desc:"Sisters Music Chain jamoasining bosmaxona hikoyalar to'plami.", badge:"" },
-      { cat:"book", type:"Kitob · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Muallif", desc:"Ayollar ovozlarini ulug'lovchi she'rlar kitobı.", badge:"" }
+      { cat:"book", type:"Kitob · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Muallif", desc:"Sisters Music Chain jamoasi doirasida ayollar ovozlarini ulug'lovchi she'rlar kitobı.", badge:"" },
+      { cat:"book", type:"Kitob · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Muallif", desc:"Sun'iy intellekt va musiqa bo'yicha suhbat.", badge:"" }
     ],
     music: {
       filters:[
@@ -1595,12 +1619,12 @@ const SITE = {
     worksCategories: {exh:"Үзэсгэлэн", game:"Видео тоглоом", film:"Кино", theatre:"Театр", book:"Ном"},
     worksFilterAll: "Бүгд",
     works: [
-      { cat:"film", type:"Кино · 2025", title:"Destan", role:"Дуу найруулагч", desc:"Дуу дизайнаас хөгжмийн зохиол хүртэлх бүрэн үйл явц.", badge:"" },
+      { cat:"film", type:"Кино", title:"Destan", role:"Дуу найруулагч", desc:"Дуу дизайнаас хөгжмийн зохиол хүртэлх бүрэн үйл явц.", badge:"" },
       { cat:"game", type:"Видео тоглоом", title:"Kuroba: Oghuz", role:"Хөгжим & Дуу дизайн", desc:"Тоглоомын аудио болон хөгжмийн зохиол.", badge:"" },
       { cat:"theatre", type:"Театр", title:"Wittgenstein's Fly", role:"Хөгжим & Дуу дизайн", desc:"Тайзны дуу дизайн болон анхны хөгжим.", badge:"" },
-      { cat:"book", type:"Ном · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Зохиогч", desc:"Хиймэл оюун ухаан, хөгжмийн талаарх ярилцлага.", badge:"" },
       { cat:"book", type:"Ном · 2026", title:"Ses Veren Hikayeler", role:"Зохиогч", desc:"Sisters Music Chain хамтлагийн хэвлэмэл үлгэрийн цуглуулга.", badge:"" },
-      { cat:"book", type:"Ном · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Зохиогч", desc:"Эмэгтэйчүүдийн дуу хоолойг алдаршуулсан шүлгийн цуглуулга.", badge:"" }
+      { cat:"book", type:"Ном · 2025", title:"Dizelerin Kanatlarında Kadınlar", role:"Зохиогч", desc:"Sisters Music Chain хамтлагийн дор эмэгтэйчүүдийн дуу хоолойг алдаршуулсан шүлгийн цуглуулга.", badge:"" },
+      { cat:"book", type:"Ном · 2024", title:"Yapay Zeka ve Sanat: Araç mı Amaç mı?", role:"Зохиогч", desc:"Хиймэл оюун ухаан, хөгжмийн талаарх ярилцлага.", badge:"" }
     ],
     music: {
       filters:[
@@ -1637,12 +1661,17 @@ const SITE = {
   }
 };
 
-// ── Kitap satın alma linkleri (başlık sırasına göre: Yapay Zeka, Ses Veren, Dizelerin)
+// ── Kitap satın alma linkleri (başlık sırasına göre: Ses Veren, Dizelerin, Yapay Zeka)
 const BOOK_URLS = [
-  'https://www.utopyayayinevi.com.tr/sanat-felsefesi-clone/',
   'https://www.lenamama.com/product-page/ses-veren-hik%C3%A2yeler',
   'https://www.lenamama.com/product-page/dizelerin-kanatlar%C4%B1nda-kad%C4%B1nlar',
+  'https://www.utopyayayinevi.com.tr/sanat-felsefesi-clone/',
 ];
+
+// ── Proje satın alma / Steam linkleri
+const WORK_URLS = {
+  'Kuroba: Oghuz': 'https://store.steampowered.com/app/4344770/Kuroba_Oghuz/',
+};
 
 // ── Durum ──────────────────────────────────────────────────────────────
 let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all';
@@ -1674,6 +1703,98 @@ function upper(str, l) {
   return str.toUpperCase();
 }
 
+// ── Livecoding snippet'leri ────────────────────────────────────────────
+const LIVECODE_SNIPPETS = [
+  { lang:'tidal', code:`d1 $ s "bd sd hh cp"\n  # gain 0.8\n  # room 0.3\n\nd2 $ note (scale "minor"\n    "0 2 4 7")\n  # s "superpiano"` },
+  { lang:'tidal', code:`setcps (130/60/4)\n\nd1 $ every 4 (fast 2)\n  $ s "bd ~ sd ~"\n  |+ speed rand\n  # delay 0.4` },
+  { lang:'tidal', code:`d1 $ sound "arpy*8"\n  # note (scale "dorian"\n    (irand 7))\n  # pan rand\n  # room 0.6` },
+  { lang:'sc', code:`{ SinOsc.ar(\n    LFNoise1.kr(0.5)\n      .range(200, 800),\n    0, 0.3\n  )\n}.play` },
+  { lang:'tidal', code:`d1 $ slow 2\n  $ struct "t f t t f t f t"\n  $ s "hh27"\n  # pan (sine)\n\nd2 $ s "bass3" # n 0` },
+];
+
+let _termIdx = 0, _termChar = 0, _termTimer = null, _termStarted = false;
+
+function formatLiveCode(text, lang) {
+  let h = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if (lang === 'tidal') {
+    h = h.replace(/\b(d1|d2|d3|d4|setcps|every|fast|slow|note|s|gain|room|pan|speed|delay|irand|rand|scale|sound|struct|sine)\b/g,'<span class="t-kw">$1</span>');
+    h = h.replace(/"([^"]*)"/g,'<span class="t-str">"$1"</span>');
+    h = h.replace(/\b(\d+\.?\d*)\b/g,'<span class="t-num">$1</span>');
+  } else if (lang === 'sc') {
+    h = h.replace(/\b(SinOsc|LFNoise1|ar|kr|play|range)\b/g,'<span class="t-fn">$1</span>');
+    h = h.replace(/\b(\d+\.?\d*)\b/g,'<span class="t-num">$1</span>');
+  }
+  return h.replace(/\n/g,'<br>');
+}
+
+function typeTerminal() {
+  const el = document.getElementById('termCode');
+  if (!el) return;
+  clearTimeout(_termTimer);
+  const sn = LIVECODE_SNIPPETS[_termIdx];
+  function tick() {
+    if (_termChar <= sn.code.length) {
+      el.innerHTML = formatLiveCode(sn.code.slice(0, _termChar), sn.lang);
+      _termChar++;
+      _termTimer = setTimeout(tick, 24 + Math.random() * 32);
+    } else {
+      _termTimer = setTimeout(() => {
+        _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
+        _termChar = 0;
+        typeTerminal();
+      }, 3800);
+    }
+  }
+  tick();
+}
+
+function advanceTerminal() {
+  _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
+  _termChar = 0;
+  typeTerminal();
+}
+
+// ── Canvas dalga animasyonu ────────────────────────────────────────────
+let _mx = 0.5, _my = 0.5;
+
+function initHomeCanvas() {
+  const c = document.getElementById('homeCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  document.addEventListener('mousemove', e => {
+    _mx = e.clientX / window.innerWidth;
+    _my = e.clientY / window.innerHeight;
+  });
+  const waves = [
+    {f:2.2,  a:0.055, sp:0.5,  r:196,g:149,b:106},
+    {f:3.5,  a:0.035, sp:0.85, r:157,g:133,b:196},
+    {f:5.1,  a:0.022, sp:1.4,  r:126,g:184,b:156},
+    {f:7.0,  a:0.012, sp:2.1,  r:196,g:149,b:106},
+  ];
+  let t = 0;
+  (function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    waves.forEach((w, i) => {
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(${w.r},${w.g},${w.b},${0.22 + _my * 0.14})`;
+      ctx.lineWidth = 1;
+      const freq = w.f * (0.75 + _mx * 0.55);
+      const amp  = c.height * (w.a + _my * 0.018);
+      const ph   = t * w.sp * 0.001 + i * 0.9;
+      for (let x = 0; x <= c.width; x += 2) {
+        const y = c.height * 0.5 + Math.sin((x / c.width) * Math.PI * freq + ph) * amp;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+    t++;
+    requestAnimationFrame(draw);
+  })();
+}
+
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -1682,6 +1803,9 @@ function showPage(id) {
   if (el) el.classList.add('active');
   page = id;
   closeNav();
+  const c = document.getElementById('homeCanvas');
+  if (c) c.style.opacity = id === 'home' ? '0.11' : '0.025';
+  if (id === 'home' && !_termStarted) { _termStarted = true; typeTerminal(); }
 }
 
 function setLang(l) {
@@ -1824,14 +1948,17 @@ function renderWorks() {
 
   let _bookIdx = 0;
   document.querySelector('.works-grid').innerHTML = filteredWorks.map(w => {
-    const bookUrl = w.cat === 'book' ? BOOK_URLS[_bookIdx++] : null;
+    let itemUrl = null;
+    if (w.cat === 'book') itemUrl = BOOK_URLS[_bookIdx++];
+    else if (WORK_URLS[w.title]) itemUrl = WORK_URLS[w.title];
+    const linkLabel = w.cat === 'game' ? '↗ Steam' : '↗ Link';
     return `<div class="work-item">
       <div class="work-type">${w.type}</div>
       <div class="work-title">${w.title}</div>
       <div class="work-role">${w.role}</div>
       <div class="work-desc">${w.desc}</div>
       ${w.badge ? `<div class="work-badge">${w.badge}</div>` : ''}
-      ${bookUrl ? `<a class="press-link" href="${bookUrl}" target="_blank">↗ Link</a>` : ''}
+      ${itemUrl ? `<a class="press-link" href="${itemUrl}" target="_blank">${linkLabel}</a>` : ''}
     </div>`;
   }).join('');
 
@@ -1983,6 +2110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('langTriggerName').textContent = cur.name;
   document.getElementById('navToggle').addEventListener('click', openNav);
   document.getElementById('navOverlay').addEventListener('click', closeNav);
+  initHomeCanvas();
   render();
   showPage('home');
 });
