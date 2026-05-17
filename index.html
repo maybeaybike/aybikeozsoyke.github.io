@@ -21,7 +21,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-weight:300;font-size:13px;line-height:1.7;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.6}
 
-/* ─── MASAÜSTÜ: üst yatay nav ─── */
+/* ─── MASAÜSTÜ NAV ─── */
 nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);border-bottom:1px solid var(--border);display:flex;flex-direction:row;align-items:center;padding:0 48px;z-index:100;background:var(--bg);gap:24px}
 .nav-logo{cursor:pointer;flex-shrink:0}
 .nav-logo-img{max-width:130px;height:auto;display:block;opacity:.85;transition:opacity .2s}
@@ -53,17 +53,20 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .home-tagline span::before{content:'— ';color:var(--accent)}
 .home-waveform{position:fixed;bottom:0;right:0;width:100%;height:120px;opacity:.06;pointer-events:none}
 
-.section-label{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:40px;display:flex;align-items:center;gap:16px}
+.section-label{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:48px;display:flex;align-items:center;gap:16px}
 .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--border2)}
 
-.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8;max-width:720px}
+/* ─── HAKKIMDA: masaüstünde iki sütun ─── */
+.about-layout{display:grid;grid-template-columns:1fr 360px;gap:72px;align-items:start;max-width:1100px}
+.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8}
 .about-text strong{font-weight:500;color:var(--accent)}
 .about-text em{font-style:italic;color:var(--text-muted)}
-.about-meta{margin-top:56px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:720px}
+.about-meta{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border)}
 .meta-item{background:var(--bg);padding:24px 28px}
-.meta-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:8px}
-.meta-value{font-family:var(--font-d);font-size:16px;font-weight:400;color:var(--text);line-height:1.6}
+.meta-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:10px;text-transform:uppercase}
+.meta-value{font-family:var(--font-d);font-size:17px;font-weight:400;color:var(--text);line-height:1.7}
 
+/* ─── İŞLER ─── */
 .works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
 .work-item{background:var(--bg);padding:32px 36px;transition:background .2s}
 .work-item:hover{background:var(--surface)}
@@ -74,36 +77,35 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .work-badge{display:inline-block;margin-top:16px;font-family:var(--font-m);font-size:9px;letter-spacing:.15em;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;text-transform:uppercase}
 
 /* ─── MÜZİK ─── */
-.music-filters{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none;max-width:800px;flex-wrap:wrap}
+.music-filters{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none;max-width:860px;flex-wrap:wrap}
 .music-filter{font-family:var(--font-m);font-size:9px;letter-spacing:.12em;color:var(--text-dim);background:var(--bg);padding:12px 20px;cursor:pointer;border:none;transition:all .2s}
 .music-filter:hover{color:var(--text);background:var(--surface)}
 .music-filter.active{color:var(--accent);background:var(--surface)}
-.music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:800px}
-.music-item{background:var(--bg);padding:20px 36px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;transition:background .2s;cursor:pointer}
+.music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
+.music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
 .music-item.no-video{cursor:default}
-.music-play{width:32px;height:32px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:10px;flex-shrink:0;transition:all .2s}
+.music-play{width:34px;height:34px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:9px;flex-shrink:0;transition:all .2s}
 .music-item:not(.no-video):hover .music-play{border-color:var(--accent);color:var(--accent)}
 .music-info{min-width:0}
-.music-title{font-family:var(--font-d);font-size:19px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.music-by{font-family:var(--font-m);font-size:10px;color:var(--text-muted);margin-bottom:4px}
-.music-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.12em}
+.music-title{font-family:var(--font-d);font-size:19px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:2px}
+.music-by{font-family:var(--font-m);font-size:10px;color:var(--text-muted);margin-bottom:6px}
+.music-bottom{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.1em}
 .music-links{display:flex;gap:6px;flex-wrap:wrap}
-.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:2px 7px;text-decoration:none;transition:all .2s}
+.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
-.music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0}
-
-/* Yerleşik oynatıcı */
-.music-player{max-width:800px;background:var(--surface);border:1px solid var(--border);border-top:none;display:none}
+.music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0;align-self:start;padding-top:4px}
+.music-player{max-width:860px;background:var(--surface);border:1px solid var(--border);border-top:none;display:none}
 .music-player.open{display:block}
-.music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border)}
-.music-player-label{font-family:var(--font-m);font-size:9px;color:var(--text-muted);letter-spacing:.1em}
-.music-player-close{font-family:var(--font-m);font-size:11px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .2s;padding:0}
+.music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border)}
+.music-player-label{font-family:var(--font-m);font-size:9px;color:var(--text-muted);letter-spacing:.08em}
+.music-player-close{font-family:var(--font-m);font-size:9px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .2s;letter-spacing:.1em}
 .music-player-close:hover{color:var(--accent)}
 .music-player-frame{position:relative;width:100%;aspect-ratio:16/9}
 .music-player-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
+/* ─── SERGİLER ─── */
 .exh-list{display:flex;flex-direction:column;gap:40px;max-width:780px}
 .exh-item{display:grid;grid-template-columns:90px 1fr;gap:32px;padding-bottom:40px;border-bottom:1px solid var(--border)}
 .exh-item:last-child{border-bottom:none;padding-bottom:0}
@@ -113,16 +115,25 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .exh-roles{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .exh-role{font-family:var(--font-m);font-size:9px;letter-spacing:.12em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 9px;text-transform:uppercase}
 .exh-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
-
 .blog-soon{font-family:var(--font-d);font-size:22px;color:var(--text-muted);font-style:italic;padding:60px 0}
 
-.contact-intro{font-family:var(--font-d);font-size:28px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:56px;max-width:520px}
+/* ─── İLETİŞİM: profesyonel tasarım ─── */
+.contact-intro{font-family:var(--font-d);font-size:30px;font-weight:300;color:var(--text);line-height:1.4;margin-bottom:56px;max-width:620px}
 .contact-intro em{font-style:italic;color:var(--accent)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:700px}
-.contact-group-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);text-transform:uppercase}
-.contact-link{display:block;font-family:var(--font-d);font-size:18px;font-weight:400;color:var(--text-muted);text-decoration:none;padding:10px 0;transition:color .2s;border-bottom:1px solid var(--border)}
+.contact-email-block{display:flex;align-items:center;justify-content:space-between;max-width:900px;border:1px solid var(--border);padding:28px 40px;margin-bottom:1px;text-decoration:none;background:var(--bg);transition:background .2s;cursor:pointer}
+.contact-email-block:hover{background:var(--surface)}
+.contact-email-block:hover .contact-email-arrow{color:var(--accent)}
+.contact-email-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.contact-email-addr{font-family:var(--font-d);font-size:clamp(20px,2.5vw,30px);font-weight:400;color:var(--text);letter-spacing:.01em}
+.contact-email-arrow{font-family:var(--font-m);font-size:22px;color:var(--text-dim);transition:color .2s;flex-shrink:0;margin-left:24px}
+.contact-lower{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
+.contact-group{background:var(--bg);padding:32px 40px}
+.contact-group-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.contact-link{display:flex;align-items:baseline;justify-content:space-between;font-family:var(--font-d);font-size:20px;font-weight:400;color:var(--text-muted);text-decoration:none;padding:10px 0;transition:color .2s;border-bottom:1px solid var(--border)}
+.contact-link:last-child{border-bottom:none}
 .contact-link:hover{color:var(--accent)}
-.contact-link span{font-family:var(--font-m);font-size:10px;color:var(--text-dim);display:block;margin-top:2px}
+.contact-link-sub{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.08em;transition:color .2s}
+.contact-link:hover .contact-link-sub{color:var(--accent-dim)}
 
 /* ─── MOBİL: hamburger + sol sidebar ─── */
 @media(max-width:860px){
@@ -149,16 +160,34 @@ main{padding-top:var(--nav-h);min-height:100vh}
   }
   .nav-hamburger span{display:block;width:18px;height:1px;background:var(--text)}
   main{padding-top:0}
-  .page{padding:56px 24px 40px}
+  .page{padding:48px 20px 48px}
   #home.active{justify-content:flex-start;padding-top:72px;padding-bottom:48px;min-height:100vh}
   .home-name{font-size:clamp(44px,12vw,72px)}
+  .home-tagline{gap:14px;flex-direction:column}
+
+  /* Hakkımda: tek sütun */
+  .about-layout{grid-template-columns:1fr;gap:36px}
+  .about-text{font-size:17px}
+
+  /* İşler */
   .works-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .about-meta{grid-template-columns:1fr}
-  .exh-item{grid-template-columns:1fr;gap:8px}
-  .music-item{grid-template-columns:auto 1fr;gap:14px;padding:16px 20px}
+
+  /* Müzik */
+  .music-item{grid-template-columns:32px 1fr;gap:12px;padding:16px 16px}
   .music-year{display:none}
   .music-filter{padding:10px 14px}
+  .music-title{font-size:17px}
+
+  /* Sergiler */
+  .exh-item{grid-template-columns:1fr;gap:8px}
+
+  /* İletişim */
+  .contact-intro{font-size:22px;margin-bottom:36px}
+  .contact-email-block{padding:20px 24px;flex-direction:column;align-items:flex-start;gap:12px}
+  .contact-email-arrow{display:none}
+  .contact-email-addr{font-size:18px}
+  .contact-lower{grid-template-columns:1fr}
+  .contact-group{padding:24px 24px}
 }
 </style>
 </head>
@@ -189,18 +218,23 @@ main{padding-top:var(--nav-h);min-height:100vh}
     <div class="home-tagline"></div>
     <svg class="home-waveform" viewBox="0 0 1200 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline stroke="#c4956a" stroke-width="1" points="0,60 25,20 30,100 35,40 40,80 45,55 55,10 60,110 65,30 70,90 80,70 85,45 90,75 95,60 115,25 120,95 125,35 130,85 145,15 150,105 155,40 160,80 175,45 180,75 215,30 220,90 225,45 230,75 245,20 250,100 255,40 260,80 275,45 280,75 325,35 330,85 335,50 340,70 350,75 355,55 365,15 370,105 375,40 380,80 395,45 400,75 445,25 450,95 455,35 460,85 475,20 480,100 485,40 490,80 535,30 540,90 545,45 550,75 565,20 570,100 575,40 580,80 625,35 630,85 645,15 650,105 655,40 660,80 725,25 730,95 735,35 740,85 755,20 760,100 765,40 770,80 825,35 830,85 835,50 840,70 1000,60 1200,60"/></svg>
   </section>
+
   <section class="page" id="about">
     <div class="section-label" id="lbl-about"></div>
-    <p class="about-text"></p>
-    <div class="about-meta">
-      <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
-      <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+    <div class="about-layout">
+      <p class="about-text"></p>
+      <div class="about-meta">
+        <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+        <div class="meta-item"><div class="meta-label"></div><div class="meta-value"></div></div>
+      </div>
     </div>
   </section>
+
   <section class="page" id="works">
     <div class="section-label" id="lbl-works"></div>
     <div class="works-grid"></div>
   </section>
+
   <section class="page" id="music">
     <div class="section-label" id="lbl-music"></div>
     <div class="music-filters"></div>
@@ -217,42 +251,58 @@ main{padding-top:var(--nav-h);min-height:100vh}
       </div>
     </div>
   </section>
+
   <section class="page" id="exhibitions">
     <div class="section-label" id="lbl-exhibitions"></div>
     <div class="exh-list"></div>
   </section>
+
   <section class="page" id="blog">
     <div class="section-label" id="lbl-blog"></div>
     <p class="blog-soon"></p>
   </section>
+
   <section class="page" id="contact">
     <div class="section-label" id="lbl-contact"></div>
     <p class="contact-intro"></p>
-    <div class="contact-grid"></div>
+    <div id="contactEmail"></div>
+    <div class="contact-lower" id="contactLower"></div>
   </section>
 </main>
 
 <script>
-// ── Müzik içeriği ──────────────────────────────────────────────────────
+// ── Müzik öğeleri ─────────────────────────────────────────────────────
 const MUSIC_ITEMS = [
   { title:"İntrüzif Düşünceler", by:"Aybike Özsöyke", cat:"single", year:"",
-    url:"https://youtu.be/c-5gxVK-tDM", url2:"" },
+    yt:"https://youtu.be/c-5gxVK-tDM",
+    spotify:"https://open.spotify.com/track/6PRXUZZ6m8ABSMsmURuWVR",
+    apple:"https://music.apple.com/tr/album/i-ntr%C3%BCzif-d%C3%BC%C5%9F%C3%BCnceler/1842343071?i=1842343072" },
   { title:"Kam", by:"Aybike Özsöyke", cat:"single", year:"",
-    url:"", url2:"" },
+    yt:"https://www.youtube.com/watch?v=6BPdYt_n7z0",
+    spotify:"https://open.spotify.com/track/3hrmmKzP5FhJaYi8widCff",
+    apple:"https://music.apple.com/tr/album/kam/1720727937?i=1720727943" },
   { title:"Düştüm Dünyaya", by:"Aybike Özsöyke", cat:"single", year:"",
-    url:"", url2:"" },
-  { title:"Mergen", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
-    url:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY", url2:"" },
+    yt:"https://www.youtube.com/watch?v=Lalgh-CCgII",
+    spotify:"",
+    apple:"https://music.apple.com/tr/album/d%C3%BC%C5%9Ft%C3%BCm-d%C3%BCnyaya/1768036108?i=1768036110" },
+  { title:"Mergen EP", by:"Aybike Özsöyke & Simay Akca", cat:"ep", year:"2024",
+    yt:"https://youtube.com/playlist?list=OLAK5uy_nx9QETxaifAkzPOuzeM1hxzZvJzCP0KJY",
+    spotify:"https://open.spotify.com/album/3MtLKX1MQAvFg6A78anSD7",
+    apple:"https://music.apple.com/tr/album/mergen-ep/1740491948" },
   { title:"Sesinde Gözyaşı Var", by:"Olta Dayanışması — Olta 14", cat:"album", year:"2023",
-    url:"https://youtu.be/vetNZKN20h0", url2:"https://open.spotify.com/track/6sVW6hgMC69pc40KlbxMci" },
-  { title:"Anachronic", by:"Sisters Music Chain", cat:"album", year:"2024",
-    url:"", url2:"" },
+    yt:"https://youtu.be/vetNZKN20h0",
+    spotify:"https://open.spotify.com/track/4U6VxaKL1UUJ06u4GOWgBX",
+    apple:"https://music.apple.com/tr/album/sesinde-g%C3%B6zya%C5%9F%C4%B1-var/1762672772?i=1762672921" },
+  { title:"Mining Wheel", by:"Sisters Music Chain — Anachronic", cat:"album", year:"2024",
+    yt:"",
+    spotify:"https://open.spotify.com/track/6sVW6hgMC69pc40KlbxMci",
+    apple:"https://music.apple.com/tr/album/mining-wheel/1819579724?i=1819579725" },
   { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
-    url:"https://youtu.be/jopBdxWd3mc", url2:"" },
+    yt:"https://youtu.be/jopBdxWd3mc", spotify:"", apple:"" },
   { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
-    url:"https://youtu.be/PVkB-iZ7D_M", url2:"" },
+    yt:"https://youtu.be/PVkB-iZ7D_M", spotify:"", apple:"" },
   { title:"Algorave", by:"Çeşitli Etkinlikler", cat:"live", year:"",
-    url:"https://youtu.be/5b0sskxrVhc", url2:"" },
+    yt:"https://youtu.be/5b0sskxrVhc", spotify:"", apple:"" },
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -266,7 +316,7 @@ const SITE = {
     about: {
       text: `<strong>Aybike Özsöyke</strong> (d. 1999, İzmir), ses tasarımcısı, müzik prodüktörü ve creative technologist'tir. Dokuz Eylül Üniversitesi Güzel Sanatlar Fakültesi'nde <em>Film Tasarımı</em> lisans eğitiminin ardından aynı üniversitede <em>Müzik Teknolojisi</em> yüksek lisansını tamamlamıştır. Kurucusu olduğu <strong>Aybike Özsöyke Sound Production</strong> ile ses tasarımından müzik kompozisyonuna tüm ses sürecini bütüncül biçimde yürütmektedir. <em>Kristal Hayatlar</em> filmiyle Kino Eyes Film Festivali <strong>En İyi Müzik Ödülü</strong>'ne layık görülen Özsöyke; <em>Kuroba: Oghuz</em> video oyunu ve <em>Wittgenstein'ın Sineği</em> tiyatrosu için de müzik ve ses tasarımı çalışmaları üstlenmiştir. <em>American Traces in Ankara 1950–69</em> sergisinde ses tasarımcısı, <em>Arkhe: AI Veriler Üzerine Bir Sergi</em>'de ise küratör, yapımcı ve ses tasarımcısı olarak yer almıştır. Yapay zeka ve müzik üzerine söyleşisiyle <em>Yapay Zeka ve Sanat: Araç mı Amaç mı?</em> kitabında, Sisters Music Chain kolektifi kapsamında <em>Anachronic</em> albümünün yanı sıra <em>Dizelerin Kanatlarında Kadınlar</em> ve <em>Ses Veren Hikayeler</em> yayınlarına, Olta Dayanışması'nın <em>Olta 14</em> albümüne katkıda bulunmuştur. <strong>Sounding Off 2023</strong>'e (Bilkent Üniversitesi) katılımcı olarak seçilmiş; Algorave etkinliklerinde livecoding performanslarıyla sahne almaktadır.`,
       metaLabels: ["Eğitim","Ödül"],
-      meta: ["Film Tasarımı, Lisans — DEÜ<br>Müzik Teknolojisi, Yüksek Lisans — DEÜ","Kino Eyes — En İyi Müzik"]
+      meta: ["Film Tasarımı, Lisans — DEÜ\nMüzik Teknolojisi, Yüksek Lisans — DEÜ","Kino Eyes — En İyi Müzik"]
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Ses Direktörü", desc:"Ses tasarımından müzik kompozisyonuna tüm ses sürecinin yönetimi.", badge:"" },
@@ -275,15 +325,12 @@ const SITE = {
       { type:"Tiyatro", title:"Wittgenstein'ın Sineği", role:"Müzik & Ses Tasarımı", desc:"Sahne ses tasarımı ve özgün müzik.", badge:"" }
     ],
     music: {
-      filters: [
-        { label:"Tümü", cat:"all" },
-        { label:"Single", cat:"single" },
-        { label:"EP", cat:"ep" },
-        { label:"Bulunduğu Albümler", cat:"album" },
-        { label:"Live", cat:"live" }
+      filters:[
+        {label:"Tümü",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Bulunduğu Albümler",cat:"album"},{label:"Live",cat:"live"}
       ],
-      catLabels: { single:"Single", ep:"EP", album:"Bulunduğu Albümler", live:"Canlı Performans" },
-      playLabel: "oynatılıyor"
+      catLabels:{single:"Single",ep:"EP",album:"Bulunduğu Albümler",live:"Canlı Performans"},
+      playLabel:"oynatılıyor"
     },
     exhibitions: [
       { year:"Tem 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmed Adnan Saygun Sanat Merkezi, İzmir", roles:["Küratör","Ses Tasarımcısı","Yapımcı"], desc:"Yapay zeka ve veri üzerine çok disiplinli sergi." },
@@ -292,12 +339,10 @@ const SITE = {
     blog: "Yakında — yazılar yayında olacak.",
     contact: {
       intro: "Projeler, kolaborasyonlar ve <em>her türlü ses meselesi</em> için.",
+      email: { label:"E-posta", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
       groups: [
-        { label:"İletişim", links:[
-          { text:"info@aybikeozsoyke.com", sub:"E-posta", href:"mailto:info@aybikeozsoyke.com" }
-        ]},
         { label:"Müzik", links:[
-          { text:"YouTube", sub:"Aybike Özsöyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
           { text:"Spotify", sub:"Sanatçı sayfası", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
@@ -318,7 +363,7 @@ const SITE = {
     about: {
       text: `<strong>Aybike Özsöyke</strong> (b. 1999, Izmir) is a sound designer, music producer and creative technologist. She holds a BA in <em>Film Design</em> from Dokuz Eylül University Faculty of Fine Arts and completed her MA in <em>Music Technology</em> at the same institution. Through <strong>Aybike Özsöyke Sound Production</strong>, she manages the full sound process — from sound design to music composition. She received the <strong>Best Music Award</strong> at the Kino Eyes Film Festival for <em>Kristal Hayatlar</em>, and delivered music and sound design for the video game <em>Kuroba: Oghuz</em> and the theatre production <em>Wittgenstein's Fly</em>. She served as sound designer for <em>American Traces in Ankara 1950–69</em> and as curator, producer and sound designer for <em>Arkhe: An Exhibition on AI Data</em>. Her conversation on AI and music appears in <em>Artificial Intelligence and Art: Tool or Goal?</em>. She has contributed to Sisters Music Chain's <em>Anachronic</em> album and Olta Dayanışması's <em>Olta 14</em>. Selected for <strong>Sounding Off 2023</strong> (Bilkent University), she performs livecoding at Algorave events.`,
       metaLabels: ["Education","Award"],
-      meta: ["Film Design, BA — DEU<br>Music Technology, MA — DEU","Kino Eyes — Best Music"]
+      meta: ["Film Design, BA — DEU\nMusic Technology, MA — DEU","Kino Eyes — Best Music"]
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Sound Director", desc:"Full sound process from sound design to music composition.", badge:"" },
@@ -327,15 +372,12 @@ const SITE = {
       { type:"Theatre", title:"Wittgenstein's Fly", role:"Music & Sound Design", desc:"Stage sound design and original music.", badge:"" }
     ],
     music: {
-      filters: [
-        { label:"All", cat:"all" },
-        { label:"Single", cat:"single" },
-        { label:"EP", cat:"ep" },
-        { label:"Appears On", cat:"album" },
-        { label:"Live", cat:"live" }
+      filters:[
+        {label:"All",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Appears On",cat:"album"},{label:"Live",cat:"live"}
       ],
-      catLabels: { single:"Single", ep:"EP", album:"Appears On", live:"Live" },
-      playLabel: "playing"
+      catLabels:{single:"Single",ep:"EP",album:"Appears On",live:"Live"},
+      playLabel:"playing"
     },
     exhibitions: [
       { year:"Jul 2023", title:"Arkhe: An Exhibition on AI Data", venue:"Ahmed Adnan Saygun Arts Centre, Izmir", roles:["Curator","Sound Designer","Producer"], desc:"Multidisciplinary exhibition on artificial intelligence and data." },
@@ -344,12 +386,10 @@ const SITE = {
     blog: "Coming soon — articles will be published here.",
     contact: {
       intro: "For projects, collaborations and <em>all things sound</em>.",
+      email: { label:"Email", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
       groups: [
-        { label:"Contact", links:[
-          { text:"info@aybikeozsoyke.com", sub:"Email", href:"mailto:info@aybikeozsoyke.com" }
-        ]},
         { label:"Music", links:[
-          { text:"YouTube", sub:"Aybike Özsöyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
           { text:"Spotify", sub:"Artist page", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
@@ -370,7 +410,7 @@ const SITE = {
     about: {
       text: `<strong>Aybike Özsöyke</strong> (geb. 1999, Izmir) ist Klangdesignerin, Musikproduzentin und Creative Technologist. Sie schloss ihr Bachelorstudium in <em>Filmgestaltung</em> an der Dokuz Eylül Universität ab und absolvierte ihren Master in <em>Musiktechnologie</em> an derselben Universität. Mit <strong>Aybike Özsöyke Sound Production</strong> betreut sie den gesamten Klangprozess. Für <em>Kristal Hayatlar</em> erhielt sie den <strong>Preis für die beste Musik</strong> beim Kino Eyes Filmfestival. Sie gestaltete Musik und Sound für das Videospiel <em>Kuroba: Oghuz</em> und die Theaterproduktion <em>Wittgensteins Fliege</em>. Bei <em>Arkhe: Eine Ausstellung über KI-Daten</em> wirkte sie als Kuratorin, Produzentin und Klangdesignerin mit. Ihr Beitrag über KI und Musik erschien in <em>Künstliche Intelligenz und Kunst: Werkzeug oder Ziel?</em>. Sie wurde für <strong>Sounding Off 2023</strong> (Bilkent Universität) ausgewählt und tritt bei Algorave-Veranstaltungen mit Livecoding auf.`,
       metaLabels: ["Ausbildung","Auszeichnung"],
-      meta: ["Filmgestaltung, Bachelor — DEÜ<br>Musiktechnologie, Master — DEÜ","Kino Eyes — Beste Musik"]
+      meta: ["Filmgestaltung, Bachelor — DEÜ\nMusiktechnologie, Master — DEÜ","Kino Eyes — Beste Musik"]
     },
     works: [
       { type:"Film · 2025", title:"Destan", role:"Klangregie", desc:"Gesamter Klangprozess — von Klanggestaltung bis Musikkomposition.", badge:"" },
@@ -379,15 +419,12 @@ const SITE = {
       { type:"Theater", title:"Wittgensteins Fliege", role:"Musik & Klanggestaltung", desc:"Bühnenklang und Originalmusik.", badge:"" }
     ],
     music: {
-      filters: [
-        { label:"Alle", cat:"all" },
-        { label:"Single", cat:"single" },
-        { label:"EP", cat:"ep" },
-        { label:"Erschienen auf", cat:"album" },
-        { label:"Live", cat:"live" }
+      filters:[
+        {label:"Alle",cat:"all"},{label:"Single",cat:"single"},
+        {label:"EP",cat:"ep"},{label:"Erschienen auf",cat:"album"},{label:"Live",cat:"live"}
       ],
-      catLabels: { single:"Single", ep:"EP", album:"Erschienen auf", live:"Live" },
-      playLabel: "wird gespielt"
+      catLabels:{single:"Single",ep:"EP",album:"Erschienen auf",live:"Live"},
+      playLabel:"wird gespielt"
     },
     exhibitions: [
       { year:"Jul 2023", title:"Arkhe: Eine Ausstellung über KI-Daten", venue:"Ahmed Adnan Saygun Kunstzentrum, Izmir", roles:["Kuratorin","Klangdesignerin","Produzentin"], desc:"Multidisziplinäre Ausstellung über KI und Daten." },
@@ -396,12 +433,10 @@ const SITE = {
     blog: "Demnächst — Artikel werden hier veröffentlicht.",
     contact: {
       intro: "Für Projekte, Kollaborationen und <em>alles rund um Klang</em>.",
+      email: { label:"E-Mail", addr:"info@aybikeozsoyke.com", href:"mailto:info@aybikeozsoyke.com" },
       groups: [
-        { label:"Kontakt", links:[
-          { text:"info@aybikeozsoyke.com", sub:"E-Mail", href:"mailto:info@aybikeozsoyke.com" }
-        ]},
         { label:"Musik", links:[
-          { text:"YouTube", sub:"Aybike Özsöyke", href:"https://www.youtube.com/@aybikeozsoyke" },
+          { text:"YouTube", sub:"@aybikeozsoyke", href:"https://www.youtube.com/@aybikeozsoyke" },
           { text:"Spotify", sub:"Künstlerseite", href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE" },
           { text:"Apple Music", sub:"Aybike Özsöyke", href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502" }
         ]},
@@ -462,9 +497,8 @@ function toEmbed(url) {
   return null;
 }
 
-// ── Oynatıcı ───────────────────────────────────────────────────────────
-function playMusic(title, url) {
-  const embed = toEmbed(url);
+function playMusic(title, ytUrl) {
+  const embed = toEmbed(ytUrl);
   if (!embed) return;
   const player = document.getElementById('musicPlayer');
   document.getElementById('musicIframe').src = embed;
@@ -477,7 +511,6 @@ function closePlayer() {
   document.getElementById('musicPlayer').classList.remove('open');
 }
 
-// ── Müzik filtresi ─────────────────────────────────────────────────────
 function setMusicFilter(cat) {
   musicFilter = cat;
   closePlayer();
@@ -488,25 +521,23 @@ function setMusicFilter(cat) {
 
 function renderMusicList() {
   const d = t();
-  const items = musicFilter === 'all'
-    ? MUSIC_ITEMS
-    : MUSIC_ITEMS.filter(i => i.cat === musicFilter);
+  const items = musicFilter === 'all' ? MUSIC_ITEMS : MUSIC_ITEMS.filter(i => i.cat === musicFilter);
   document.querySelector('.music-list').innerHTML = items.map(item => {
-    const hasVideo = !!toEmbed(item.url);
-    const escapedTitle = item.title.replace(/'/g, "\\'");
-    const escapedUrl = item.url.replace(/'/g, "\\'");
+    const hasVideo = !!toEmbed(item.yt);
+    const esc = s => s.replace(/'/g, "\\'");
     return `
     <div class="music-item${hasVideo ? '' : ' no-video'}"
-      ${hasVideo ? `onclick="playMusic('${escapedTitle}','${escapedUrl}')"` : ''}>
+      ${hasVideo ? `onclick="playMusic('${esc(item.title)}','${esc(item.yt)}')"` : ''}>
       <div class="music-play">${hasVideo ? '▶' : '·'}</div>
       <div class="music-info">
         <div class="music-title">${item.title}</div>
         <div class="music-by">${item.by}</div>
-        <div class="music-meta">
+        <div class="music-bottom">
           <span class="music-cat-tag">${d.music.catLabels[item.cat] || ''}</span>
           <div class="music-links">
-            ${item.url ? `<a class="music-link-btn" href="${item.url}" target="_blank" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
-            ${item.url2 ? `<a class="music-link-btn" href="${item.url2}" target="_blank" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
+            ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
+            ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
+            ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
           </div>
         </div>
       </div>
@@ -518,19 +549,23 @@ function renderMusicList() {
 // ── Render ─────────────────────────────────────────────────────────────
 function render() {
   const d = t();
+  // Nav
   document.querySelector('.nav-links').innerHTML = pages.map((p,i) =>
     `<li><a onclick="showPage('${p}')" data-page="${p}">${d.nav[i]}</a></li>`).join('');
   ['about','works','music','exhibitions','blog','contact'].forEach((id,i) => {
     const el = document.getElementById(`lbl-${id}`);
     if (el) el.textContent = upper(d.nav[i+1], lang);
   });
+  // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
   document.querySelector('.home-tagline').innerHTML = d.home.roles.map(r=>`<span>${r}</span>`).join('');
+  // Hakkımda
   document.querySelector('.about-text').innerHTML = d.about.text;
   document.querySelectorAll('.meta-item').forEach((el,i) => {
     el.querySelector('.meta-label').textContent = upper(d.about.metaLabels[i], lang);
-    el.querySelector('.meta-value').innerHTML = d.about.meta[i];
+    el.querySelector('.meta-value').innerHTML = d.about.meta[i].replace(/\n/g,'<br>');
   });
+  // İşler
   document.querySelector('.works-grid').innerHTML = d.works.map(w=>`
     <div class="work-item">
       <div class="work-type">${w.type}</div>
@@ -539,11 +574,12 @@ function render() {
       <div class="work-desc">${w.desc}</div>
       ${w.badge?`<div class="work-badge">${w.badge}</div>`:''}
     </div>`).join('');
-  // Filtre butonları — upper() kullanmıyoruz, İngilizce kelimeler bozulmasın
+  // Müzik
   document.querySelector('.music-filters').innerHTML = d.music.filters.map(f =>
     `<button class="music-filter${f.cat===musicFilter?' active':''}" data-cat="${f.cat}" onclick="setMusicFilter('${f.cat}')">${f.label}</button>`
   ).join('');
   renderMusicList();
+  // Sergiler
   document.querySelector('.exh-list').innerHTML = d.exhibitions.map(e=>`
     <div class="exh-item">
       <div class="exh-year">${e.year}</div>
@@ -554,12 +590,27 @@ function render() {
         <div class="exh-desc">${e.desc}</div>
       </div>
     </div>`).join('');
+  // Blog
   document.querySelector('.blog-soon').textContent = d.blog;
+  // İletişim
   document.querySelector('.contact-intro').innerHTML = d.contact.intro;
-  document.querySelector('.contact-grid').innerHTML = d.contact.groups.map(g=>`
+  const em = d.contact.email;
+  document.getElementById('contactEmail').innerHTML = `
+    <a class="contact-email-block" href="${em.href}">
+      <div>
+        <div class="contact-email-label">${upper(em.label, lang)}</div>
+        <div class="contact-email-addr">${em.addr}</div>
+      </div>
+      <span class="contact-email-arrow">→</span>
+    </a>`;
+  document.getElementById('contactLower').innerHTML = d.contact.groups.map(g=>`
     <div class="contact-group">
       <div class="contact-group-label">${upper(g.label,lang)}</div>
-      ${g.links.map(l=>`<a class="contact-link" href="${l.href}" target="_blank">${l.text}<span>${l.sub}</span></a>`).join('')}
+      ${g.links.map(l=>`
+        <a class="contact-link" href="${l.href}" target="_blank">
+          <span>${l.text}</span>
+          <span class="contact-link-sub">${l.sub}</span>
+        </a>`).join('')}
     </div>`).join('');
 }
 
