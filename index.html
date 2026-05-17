@@ -40,10 +40,20 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);border-bottom:1px so
 .nav-links a{font-family:var(--font-m);font-size:10px;font-weight:300;color:var(--text-muted);text-decoration:none;letter-spacing:.1em;padding:8px 14px;transition:color .2s;cursor:pointer;display:block}
 .nav-links a:hover,.nav-links a.active{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
-.lang-sw{display:flex;gap:2px;flex-shrink:0;flex-wrap:wrap;max-width:220px;justify-content:flex-end;align-content:center}
-.lang-btn{font-size:18px;line-height:1;background:none;border:1px solid transparent;padding:2px 3px;cursor:pointer;opacity:.5;transition:all .2s;border-radius:2px}
-.lang-btn:hover{opacity:.85}
-.lang-btn.active{opacity:1;border-color:var(--accent-dim)}
+.lang-trigger{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);padding:5px 10px;cursor:pointer;font-family:var(--font-m);font-size:10px;color:var(--text-muted);letter-spacing:.08em;flex-shrink:0;transition:all .2s}
+.lang-trigger:hover{border-color:var(--accent-dim);color:var(--text)}
+.lang-trigger-arrow{font-size:8px;color:var(--text-dim)}
+.lang-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500}
+.lang-modal-overlay.open{display:block}
+.lang-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:501;background:var(--surface);border:1px solid var(--border);padding:40px 32px 32px;width:min(560px,90vw);max-height:80vh;overflow-y:auto}
+.lang-modal.open{display:block}
+.lang-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:14px;color:var(--text-dim);cursor:pointer;transition:color .2s}
+.lang-modal-close:hover{color:var(--accent)}
+.lang-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.lang-modal-item{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--bg);cursor:pointer;transition:background .2s;font-family:var(--font-m);font-size:11px;color:var(--text-muted);letter-spacing:.05em}
+.lang-modal-item:hover{background:var(--surface);color:var(--text)}
+.lang-modal-item.active{color:var(--accent)}
+.lang-modal-flag{font-size:20px;line-height:1;flex-shrink:0}
 .nav-bottom{display:none}
 .nav-hamburger{display:none}
 .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150}
@@ -149,6 +159,25 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .contact-link-sub{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.08em;transition:color .2s}
 .contact-link:hover .contact-link-sub{color:var(--accent-dim)}
 
+/* ─── NAV DROPDOWN ─── */
+.nav-item-wrap{position:relative}
+.nav-dropdown{position:absolute;top:100%;left:0;min-width:180px;background:var(--bg);border:1px solid var(--border);display:none;z-index:200;flex-direction:column}
+.nav-item-wrap:hover .nav-dropdown{display:flex}
+.nav-dropdown a{font-family:var(--font-m);font-size:10px;color:var(--text-muted);letter-spacing:.08em;padding:12px 18px;cursor:pointer;text-decoration:none;display:block;transition:color .2s;border-bottom:1px solid var(--border);white-space:nowrap}
+.nav-dropdown a:last-child{border-bottom:none}
+.nav-dropdown a:hover{color:var(--accent)}
+
+/* ─── BASIN / PRESS ─── */
+.press-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
+.press-item{background:var(--bg);padding:28px 36px;transition:background .2s}
+.press-item:hover{background:var(--surface)}
+.press-year{font-family:var(--font-m);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:10px}
+.press-source{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.press-title{font-family:var(--font-d);font-size:22px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:8px;line-height:1.3}
+.press-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
+.press-link{display:inline-block;margin-top:10px;font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s}
+.press-link:hover{background:var(--accent);color:var(--bg)}
+
 /* ─── MOBİL: hamburger + sol sidebar ─── */
 @media(max-width:860px){
   nav{
@@ -163,7 +192,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .nav-links a{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:11px}
   .nav-links a::before{content:'';width:16px;height:1px;background:var(--text-dim);transition:width .2s,background .2s;flex-shrink:0}
   .nav-links a.active::before,.nav-links a:hover::before{width:28px;background:var(--accent)}
-  .lang-sw{max-width:none;justify-content:flex-start;margin-top:28px}
+  .lang-trigger{margin-top:28px;font-size:11px;padding:7px 12px}
   .nav-bottom{display:block;margin-top:auto;font-size:10px;color:var(--text-dim);letter-spacing:.08em}
   .nav-bottom a{color:var(--text-dim);text-decoration:none;transition:color .2s}
   .nav-bottom a:hover{color:var(--accent)}
@@ -219,7 +248,11 @@ main{padding-top:var(--nav-h);min-height:100vh}
     <img class="nav-logo-img" src="logo.png" alt="Aybike Özsöyke Sound Production">
   </div>
   <ul class="nav-links"></ul>
-  <div class="lang-sw" id="langSw"></div>
+  <button class="lang-trigger" id="langTrigger" onclick="openLangModal()">
+    <span id="langTriggerFlag">🇹🇷</span>
+    <span id="langTriggerName">Türkçe</span>
+    <span class="lang-trigger-arrow">▾</span>
+  </button>
   <div class="nav-bottom"><a href="https://www.aybikeozsoyke.com">aybikeozsoyke.com</a></div>
 </nav>
 
@@ -277,7 +310,18 @@ main{padding-top:var(--nav-h);min-height:100vh}
     <div id="contactEmail"></div>
     <div class="contact-lower" id="contactLower"></div>
   </section>
+
+  <section class="page" id="press">
+    <div class="section-label" id="lbl-press"></div>
+    <div class="press-list" id="pressList"></div>
+  </section>
 </main>
+
+<div class="lang-modal-overlay" id="langModalOverlay" onclick="closeLangModal()"></div>
+<div class="lang-modal" id="langModal">
+  <button class="lang-modal-close" onclick="closeLangModal()">✕</button>
+  <div class="lang-modal-grid" id="langModalGrid"></div>
+</div>
 
 <script>
 // ── Müzik öğeleri ─────────────────────────────────────────────────────
@@ -316,11 +360,23 @@ const MUSIC_ITEMS = [
 
 // ── Dil listesi ────────────────────────────────────────────────────────
 const LANGS = [
-  {code:'tr',flag:'🇹🇷'},{code:'en',flag:'🇬🇧'},{code:'de',flag:'🇩🇪'},
-  {code:'fr',flag:'🇫🇷'},{code:'it',flag:'🇮🇹'},{code:'ja',flag:'🇯🇵'},
-  {code:'ru',flag:'🇷🇺'},{code:'ko',flag:'🇰🇷'},{code:'es',flag:'🇪🇸'},
-  {code:'az',flag:'🇦🇿'},{code:'sv',flag:'🇸🇪'},{code:'pt',flag:'🇵🇹'},
-  {code:'da',flag:'🇩🇰'},{code:'uk',flag:'🇺🇦'},{code:'ar',flag:'🇸🇦'},
+  {code:'tr',flag:'🇹🇷',name:'Türkçe'},
+  {code:'en',flag:'🇬🇧',name:'English'},
+  {code:'de',flag:'🇩🇪',name:'Deutsch'},
+  {code:'fr',flag:'🇫🇷',name:'Français'},
+  {code:'it',flag:'🇮🇹',name:'Italiano'},
+  {code:'ja',flag:'🇯🇵',name:'日本語'},
+  {code:'ru',flag:'🇷🇺',name:'Русский'},
+  {code:'ko',flag:'🇰🇷',name:'한국어'},
+  {code:'es',flag:'🇪🇸',name:'Español'},
+  {code:'az',flag:'🇦🇿',name:'Azərbaycan'},
+  {code:'sv',flag:'🇸🇪',name:'Svenska'},
+  {code:'pt',flag:'🇵🇹',name:'Português'},
+  {code:'da',flag:'🇩🇰',name:'Dansk'},
+  {code:'uk',flag:'🇺🇦',name:'Українська'},
+  {code:'ar',flag:'🇸🇦',name:'العربية'},
+  {code:'nl',flag:'🇳🇱',name:'Nederlands'},
+  {code:'hr',flag:'🇭🇷',name:'Hrvatski'},
 ];
 
 // ── Site içeriği ───────────────────────────────────────────────────────
@@ -354,6 +410,7 @@ const SITE = {
       { year:"Tem 2023", title:"Arkhe: AI Veriler Üzerine Bir Sergi", venue:"Ahmed Adnan Saygun Sanat Merkezi, İzmir", roles:["Küratör","Ses Tasarımcısı","Yapımcı"], desc:"Yapay zeka ve veri üzerine çok disiplinli sergi." },
       { year:"Şub 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Ses Tasarımcısı"], desc:"Uluslararası tarihsel sergi için ses tasarımı." }
     ],
+    pressLabel: "Basın",
     blog: "Yakında — yazılar yayında olacak.",
     contact: {
       intro: "Projeler, kolaborasyonlar ve <em>her türlü ses meselesi</em> için.",
@@ -401,6 +458,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: An Exhibition on AI Data", venue:"Ahmed Adnan Saygun Arts Centre, Izmir", roles:["Curator","Sound Designer","Producer"], desc:"Multidisciplinary exhibition on artificial intelligence and data." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Sound Designer"], desc:"Sound design for an international historical exhibition." }
     ],
+    pressLabel: "Press",
     blog: "Coming soon — articles will be published here.",
     contact: {
       intro: "For projects, collaborations and <em>all things sound</em>.",
@@ -448,6 +506,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: Eine Ausstellung über KI-Daten", venue:"Ahmed Adnan Saygun Kunstzentrum, Izmir", roles:["Kuratorin","Klangdesignerin","Produzentin"], desc:"Multidisziplinäre Ausstellung über KI und Daten." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Klangdesignerin"], desc:"Klanggestaltung für eine internationale Historienausstellung." }
     ],
+    pressLabel: "Presse",
     blog: "Demnächst — Artikel werden hier veröffentlicht.",
     contact: {
       intro: "Für Projekte, Kollaborationen und <em>alles rund um Klang</em>.",
@@ -495,6 +554,7 @@ const SITE = {
       { year:"Juil. 2023", title:"Arkhe: Une Exposition sur les Données IA", venue:"Centre d'Art Ahmed Adnan Saygun, Izmir", roles:["Curatrice","Designer sonore","Productrice"], desc:"Exposition multidisciplinaire sur l'intelligence artificielle et les données." },
       { year:"Févr. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Designer sonore"], desc:"Conception sonore pour une exposition historique internationale." }
     ],
+    pressLabel: "Presse",
     blog: "Bientôt — des articles seront publiés ici.",
     contact: {
       intro: "Pour les projets, collaborations et <em>tout ce qui touche au son</em>.",
@@ -542,6 +602,7 @@ const SITE = {
       { year:"Lug 2023", title:"Arkhe: Una Mostra sui Dati dell'IA", venue:"Centro d'Arte Ahmed Adnan Saygun, Izmir", roles:["Curatrice","Sound Designer","Produttrice"], desc:"Mostra multidisciplinare su intelligenza artificiale e dati." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Sound Designer"], desc:"Progettazione sonora per una mostra storica internazionale." }
     ],
+    pressLabel: "Stampa",
     blog: "Prossimamente — gli articoli saranno pubblicati qui.",
     contact: {
       intro: "Per progetti, collaborazioni e <em>tutto ciò che riguarda il suono</em>.",
@@ -589,6 +650,7 @@ const SITE = {
       { year:"2023年7月", title:"Arkhe: AIデータに関する展覧会", venue:"アフメット・アドナン・サイグン芸術センター、イズミル", roles:["キュレーター","サウンドデザイナー","プロデューサー"], desc:"人工知能とデータに関する学際的な展覧会。" },
       { year:"2024年2月", title:"American Traces in Ankara 1950–69", venue:"サーモダーン、アンカラ", roles:["サウンドデザイナー"], desc:"国際的な歴史展のためのサウンドデザイン。" }
     ],
+    pressLabel: "プレス",
     blog: "近日公開 — 記事を掲載予定です。",
     contact: {
       intro: "プロジェクト、コラボレーション、<em>音に関するすべて</em>のお問い合わせはこちら。",
@@ -636,6 +698,7 @@ const SITE = {
       { year:"Июль 2023", title:"Arkhe: Выставка об ИИ и данных", venue:"Центр искусств Ахмета Аднана Сайгуна, Измир", roles:["Куратор","Звуковой дизайнер","Продюсер"], desc:"Мультидисциплинарная выставка об искусственном интеллекте и данных." },
       { year:"Февр. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Анкара", roles:["Звуковой дизайнер"], desc:"Звуковое оформление международной исторической выставки." }
     ],
+    pressLabel: "Пресса",
     blog: "Скоро — здесь будут опубликованы статьи.",
     contact: {
       intro: "По вопросам проектов, коллабораций и <em>всего, что связано со звуком</em>.",
@@ -683,6 +746,7 @@ const SITE = {
       { year:"2023년 7월", title:"Arkhe: AI 데이터에 관한 전시", venue:"아흐메드 아드난 사이군 예술센터, 이즈미르", roles:["큐레이터","사운드 디자이너","프로듀서"], desc:"인공 지능과 데이터에 관한 다학제 전시." },
       { year:"2024년 2월", title:"American Traces in Ankara 1950–69", venue:"서모던, 앙카라", roles:["사운드 디자이너"], desc:"국제 역사 전시를 위한 사운드 디자인." }
     ],
+    pressLabel: "언론",
     blog: "곧 공개 예정 — 글이 게재될 예정입니다.",
     contact: {
       intro: "프로젝트, 협업, <em>음악 관련 모든 것</em>에 대해 문의하세요.",
@@ -730,6 +794,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: Una Exposición sobre Datos de IA", venue:"Centro de Arte Ahmed Adnan Saygun, Izmir", roles:["Curadora","Diseñadora de sonido","Productora"], desc:"Exposición multidisciplinar sobre inteligencia artificial y datos." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Diseñadora de sonido"], desc:"Diseño de sonido para una exposición histórica internacional." }
     ],
+    pressLabel: "Prensa",
     blog: "Próximamente — los artículos se publicarán aquí.",
     contact: {
       intro: "Para proyectos, colaboraciones y <em>todo lo relacionado con el sonido</em>.",
@@ -777,6 +842,7 @@ const SITE = {
       { year:"İyul 2023", title:"Arkhe: Süni İntellekt Məlumatları üzrə Sərgi", venue:"Əhməd Adnan Saygın Sənət Mərkəzi, İzmir", roles:["Kurator","Səs dizayneri","Prodüser"], desc:"Süni intellekt və məlumatlar haqqında çoxdisiplinli sərgi." },
       { year:"Fevr. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Səs dizayneri"], desc:"Beynəlxalq tarixi sərgi üçün səs dizaynı." }
     ],
+    pressLabel: "Mətbuat",
     blog: "Tezliklə — məqalələr burada dərc olunacaq.",
     contact: {
       intro: "Layihələr, əməkdaşlıq və <em>hər cür səs məsələsi</em> üçün.",
@@ -824,6 +890,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: En utställning om AI-data", venue:"Ahmed Adnan Saygun konstcenter, Izmir", roles:["Kurator","Ljuddesigner","Producent"], desc:"Multidisciplinär utställning om artificiell intelligens och data." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Ljuddesigner"], desc:"Ljuddesign för en internationell historisk utställning." }
     ],
+    pressLabel: "Press",
     blog: "Kommer snart — artiklar kommer att publiceras här.",
     contact: {
       intro: "För projekt, samarbeten och <em>allt som rör ljud</em>.",
@@ -871,6 +938,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: Uma Exposição sobre Dados de IA", venue:"Centro de Arte Ahmed Adnan Saygun, Izmir", roles:["Curadora","Designer de som","Produtora"], desc:"Exposição multidisciplinar sobre inteligência artificial e dados." },
       { year:"Fev 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Designer de som"], desc:"Design sonoro para uma exposição histórica internacional." }
     ],
+    pressLabel: "Imprensa",
     blog: "Em breve — os artigos serão publicados aqui.",
     contact: {
       intro: "Para projetos, colaborações e <em>tudo sobre som</em>.",
@@ -918,6 +986,7 @@ const SITE = {
       { year:"Jul 2023", title:"Arkhe: En udstilling om AI-data", venue:"Ahmed Adnan Saygun Kunstcenter, Izmir", roles:["Kurator","Lyddesigner","Producer"], desc:"Multidisciplinær udstilling om kunstig intelligens og data." },
       { year:"Feb 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Ankara", roles:["Lyddesigner"], desc:"Lyddesign til en international historisk udstilling." }
     ],
+    pressLabel: "Presse",
     blog: "Kommer snart — artikler vil blive offentliggjort her.",
     contact: {
       intro: "Til projekter, samarbejder og <em>alt inden for lyd</em>.",
@@ -965,6 +1034,7 @@ const SITE = {
       { year:"Лип. 2023", title:"Arkhe: Виставка про дані ШІ", venue:"Мистецький центр Ахмета Аднана Сайгуна, Ізмір", roles:["Куратор","Звуковий дизайнер","Продюсер"], desc:"Мультидисциплінарна виставка про штучний інтелект та дані." },
       { year:"Лют. 2024", title:"American Traces in Ankara 1950–69", venue:"Cermodern, Анкара", roles:["Звуковий дизайнер"], desc:"Звуковий дизайн для міжнародної історичної виставки." }
     ],
+    pressLabel: "Преса",
     blog: "Незабаром — статті будуть опубліковані тут.",
     contact: {
       intro: "Для проєктів, колаборацій і <em>всього, що пов'язано зі звуком</em>.",
@@ -1012,6 +1082,7 @@ const SITE = {
       { year:"يوليو 2023", title:"Arkhe: معرض حول بيانات الذكاء الاصطناعي", venue:"مركز أحمد عدنان سايغون للفنون، إزمير", roles:["قيّمة","مصممة صوت","منتجة"], desc:"معرض متعدد التخصصات حول الذكاء الاصطناعي والبيانات." },
       { year:"فبراير 2024", title:"American Traces in Ankara 1950–69", venue:"سيرموديرن، أنقرة", roles:["مصممة صوت"], desc:"تصميم الصوت لمعرض تاريخي دولي." }
     ],
+    pressLabel: "الصحافة",
     blog: "قريباً — ستُنشر المقالات هنا.",
     contact: {
       intro: "للمشاريع والتعاون و<em>كل ما يتعلق بالصوت</em>.",
@@ -1028,13 +1099,105 @@ const SITE = {
         ]}
       ]
     }
+  },
+
+  nl: {
+    nav: ["Home","Over mij","Projecten","Muziek","Blog","Contact"],
+    home: { location:"Izmir, Nederland", roles:["Creative Technologist","Audiovisueel kunstenaar","Geluidsontwerper","Muziekproducent"] },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (geb. 1999, Izmir) is geluidsontwerper, muziekproducent en creative technologist. Ze behaalde een bachelor in <em>Filmontwerp</em> aan de Faculteit Schone Kunsten van de Dokuz Eylül Universiteit en rondde een master in <em>Muziektechnologie</em> af aan dezelfde instelling. Via <strong>Aybike Özsöyke Sound Production</strong> beheert ze het volledige geluidsproces — van geluidsontwerp tot muziekcompositie. Ze verzorgde muziek en geluidsontwerp voor het videospel <em>Kuroba: Oghuz</em> en de theaterproductie <em>Wittgensteins vlieg</em>. Ze was geluidsontwerper voor <em>American Traces in Ankara 1950–69</em> en curator, producent en geluidsontwerper voor <em>Arkhe: Een tentoonstelling over AI-data</em>. Haar gesprek over AI en muziek verscheen in <em>Kunstmatige intelligentie en kunst: hulpmiddel of doel?</em>. Geselecteerd voor <strong>Sounding Off 2023</strong> (Bilkent Universiteit) treedt ze op met livecoding bij Algorave-evenementen.`,
+      metaLabels:["Opleiding"],
+      meta:["Filmontwerp, bachelor — DEÜ\nMuziektechnologie, master — DEÜ"]
+    },
+    works:[
+      {type:"Film · 2025",title:"Destan",role:"Geluidsregisseur",desc:"Volledig geluidsproces — van geluidsontwerp tot muziekcompositie.",badge:""},
+      {type:"Videospel",title:"Kuroba: Oghuz",role:"Muziek & Geluidsontwerp",desc:"Spelgeluid en muziekcompositie.",badge:""},
+      {type:"Theater",title:"Wittgenstein's Fly",role:"Muziek & Geluidsontwerp",desc:"Scenisch geluidsontwerp en originele muziek.",badge:""}
+    ],
+    music:{
+      filters:[{label:"Alles",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Verschijnt op",cat:"album"},{label:"Live",cat:"live"}],
+      catLabels:{single:"Single",ep:"EP",album:"Verschijnt op",live:"Live"},
+      playLabel:"wordt afgespeeld"
+    },
+    pressLabel: "Pers",
+    exhLabel:"Tentoonstellingen",
+    exhibitions:[
+      {year:"Jul 2023",title:"Arkhe: Een tentoonstelling over AI-data",venue:"Ahmed Adnan Saygun Kunstcentrum, Izmir",roles:["Curator","Geluidsontwerper","Producent"],desc:"Multidisciplinaire tentoonstelling over kunstmatige intelligentie en data."},
+      {year:"Feb 2024",title:"American Traces in Ankara 1950–69",venue:"Cermodern, Ankara",roles:["Geluidsontwerper"],desc:"Geluidsontwerp voor een internationale historische tentoonstelling."}
+    ],
+    blog:"Binnenkort — artikelen worden hier gepubliceerd.",
+    contact:{
+      intro:"Voor projecten, samenwerkingen en <em>alles wat met geluid te maken heeft</em>.",
+      email:{label:"E-mail",addr:"info@aybikeozsoyke.com",href:"mailto:info@aybikeozsoyke.com"},
+      groups:[
+        {label:"Muziek",links:[
+          {text:"YouTube",sub:"@aybikeozsoyke",href:"https://www.youtube.com/@aybikeozsoyke"},
+          {text:"Spotify",sub:"Artiestenpagina",href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE"},
+          {text:"Apple Music",sub:"Aybike Özsöyke",href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
+        ]},
+        {label:"Sociaal",links:[
+          {text:"Instagram",sub:"@maybeaybike",href:"https://www.instagram.com/maybeaybike/"},
+          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"}
+        ]}
+      ]
+    }
+  },
+
+  hr: {
+    nav: ["Početna","O meni","Projekti","Glazba","Blog","Kontakt"],
+    home: { location:"Izmir, Turska", roles:["Creative Technologist","Audiovizualni umjetnik","Dizajner zvuka","Glazbeni producent"] },
+    about: {
+      text: `<strong>Aybike Özsöyke</strong> (r. 1999, Izmir) je dizajner zvuka, glazbeni producent i creative technologist. Diplomirala je <em>Filmski dizajn</em> na Fakultetu likovnih umjetnosti Sveučilišta Dokuz Eylül i završila magistarski studij <em>Glazbene tehnologije</em> na istoj instituciji. Putem <strong>Aybike Özsöyke Sound Production</strong> vodi cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije. Izradila je glazbu i dizajn zvuka za videoigru <em>Kuroba: Oghuz</em> i kazališnu produkciju <em>Wittgensteinova muha</em>. Djelovala je kao dizajner zvuka na <em>American Traces in Ankara 1950–69</em> te kao kustosica, producentica i dizajner zvuka na <em>Arkhe: Izložba o AI podacima</em>. Njezin razgovor o AI i glazbi objavljen je u knjizi <em>Umjetna inteligencija i umjetnost: alat ili cilj?</em>. Odabrana za <strong>Sounding Off 2023</strong> (Sveučilište Bilkent), nastupa s livecodingom na Algorave događanjima.`,
+      metaLabels:["Obrazovanje"],
+      meta:["Filmski dizajn, prvostupnik — DEÜ\nGlazbena tehnologija, magistar — DEÜ"]
+    },
+    works:[
+      {type:"Film · 2025",title:"Destan",role:"Direktor zvuka",desc:"Cjelokupni zvučni proces — od dizajna zvuka do glazbene kompozicije.",badge:""},
+      {type:"Videoigra",title:"Kuroba: Oghuz",role:"Glazba & Dizajn zvuka",desc:"Zvuk igre i glazbena kompozicija.",badge:""},
+      {type:"Kazalište",title:"Wittgenstein's Fly",role:"Glazba & Dizajn zvuka",desc:"Scenski dizajn zvuka i originalna glazba.",badge:""}
+    ],
+    music:{
+      filters:[{label:"Sve",cat:"all"},{label:"Single",cat:"single"},{label:"EP",cat:"ep"},{label:"Pojavljuje se na",cat:"album"},{label:"Uživo",cat:"live"}],
+      catLabels:{single:"Single",ep:"EP",album:"Pojavljuje se na",live:"Uživo"},
+      playLabel:"reproducira se"
+    },
+    pressLabel: "Mediji",
+    exhLabel:"Izložbe",
+    exhibitions:[
+      {year:"Srp 2023",title:"Arkhe: Izložba o AI podacima",venue:"Umjetnički centar Ahmed Adnan Saygun, Izmir",roles:["Kustosica","Dizajner zvuka","Producentica"],desc:"Multidisciplinarna izložba o umjetnoj inteligenciji i podacima."},
+      {year:"Velj. 2024",title:"American Traces in Ankara 1950–69",venue:"Cermodern, Ankara",roles:["Dizajner zvuka"],desc:"Dizajn zvuka za međunarodnu povijesnu izložbu."}
+    ],
+    blog:"Uskoro — članci će biti objavljeni ovdje.",
+    contact:{
+      intro:"Za projekte, suradnje i <em>sve u vezi sa zvukom</em>.",
+      email:{label:"E-pošta",addr:"info@aybikeozsoyke.com",href:"mailto:info@aybikeozsoyke.com"},
+      groups:[
+        {label:"Glazba",links:[
+          {text:"YouTube",sub:"@aybikeozsoyke",href:"https://www.youtube.com/@aybikeozsoyke"},
+          {text:"Spotify",sub:"Stranica izvođača",href:"https://open.spotify.com/artist/0t4nteycSHapXBhyg3swdE"},
+          {text:"Apple Music",sub:"Aybike Özsöyke",href:"https://music.apple.com/tr/artist/aybike-%C3%B6zs%C3%B6yke/1612080502"}
+        ]},
+        {label:"Društveno",links:[
+          {text:"Instagram",sub:"@maybeaybike",href:"https://www.instagram.com/maybeaybike/"},
+          {text:"LinkedIn",sub:"Aybike Özsöyke",href:"https://www.linkedin.com/in/aybikeozsoyke/"}
+        ]}
+      ]
+    }
   }
 };
 
 // ── Durum ──────────────────────────────────────────────────────────────
 let lang = 'tr', page = 'home', musicFilter = 'all';
 const t = () => SITE[lang];
-const pages = ['home','about','works','music','blog','contact'];
+const pages = ['home','about','works','music','blog','contact','press'];
+
+// ── Basın öğeleri ──────────────────────────────────────────────────────
+const PRESS_ITEMS = [
+  { year:"2023", source:"Bilkent University", title:"Sounding Off 2023", desc:"Sounding Off 2023 programına katılımcı olarak seçilmiştir.", url:"https://music.bilkent.edu.tr/soundingoff/" },
+  { year:"2024", source:"Hisarlı Ahmet Sempozyumu", title:"Video Oyunlarında Ses Mekânsallaştırma", desc:"'Proto-Turkic Homeland' Projesi Özelinde Video Oyunlarında Ses Mekânsallaştırma. Cihan Işıkhan ile birlikte.", url:"" },
+  { year:"2023", source:"izmir.art / Arkhe", title:"Arkhe: AI Veriler Üzerine Bir Sergi", desc:"Sergi küratörü, yapımcısı ve ses tasarımcısı olarak yer almıştır. Ahmed Adnan Saygun Sanat Merkezi, İzmir.", url:"https://izmir.art/arkhe-ai-veriler-uzerine-bir-sergi/" },
+  { year:"2023–2025", source:"Milliyet Sanat", title:"Milliyet Sanat", desc:"Milliyet Sanat'ta yer alan haberler.", url:"" },
+];
 
 function upper(str, l) {
   if (l === 'tr') return str.toLocaleUpperCase('tr-TR');
@@ -1055,8 +1218,23 @@ function setLang(l) {
   lang = l;
   document.documentElement.lang = l;
   document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  const cur = LANGS.find(x => x.code === l);
+  if (cur) {
+    document.getElementById('langTriggerFlag').textContent = cur.flag;
+    document.getElementById('langTriggerName').textContent = cur.name;
+  }
+  document.querySelectorAll('.lang-modal-item').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  closeLangModal();
   render(); showPage(page);
+}
+
+function openLangModal() {
+  document.getElementById('langModal').classList.add('open');
+  document.getElementById('langModalOverlay').classList.add('open');
+}
+function closeLangModal() {
+  document.getElementById('langModal').classList.remove('open');
+  document.getElementById('langModalOverlay').classList.remove('open');
 }
 
 function openNav() {
@@ -1150,12 +1328,41 @@ function renderMusicList() {
 function render() {
   const d = t();
   // Nav
-  document.querySelector('.nav-links').innerHTML = pages.map((p,i) =>
-    `<li><a onclick="showPage('${p}')" data-page="${p}">${d.nav[i]}</a></li>`).join('');
+  document.querySelector('.nav-links').innerHTML = pages.slice(0,6).map((p,i) => {
+    if (p === 'about') {
+      return `<li class="nav-item-wrap">
+        <a onclick="showPage('about')" data-page="about">${d.nav[i]}</a>
+        <div class="nav-dropdown">
+          <a onclick="showPage('about')">${d.nav[i]}</a>
+          <a onclick="showPage('press')">${d.pressLabel}</a>
+        </div>
+      </li>`;
+    }
+    if (p === 'works') {
+      const subs = d.works.map(w =>
+        `<a onclick="showPage('works')">${w.title}</a>`
+      ).join('');
+      return `<li class="nav-item-wrap">
+        <a onclick="showPage('works')" data-page="works">${d.nav[i]}</a>
+        <div class="nav-dropdown">${subs}</div>
+      </li>`;
+    }
+    return `<li><a onclick="showPage('${p}')" data-page="${p}">${d.nav[i]}</a></li>`;
+  }).join('');
   ['about','works','music','blog','contact'].forEach((id,i) => {
     const el = document.getElementById(`lbl-${id}`);
     if (el) el.textContent = upper(d.nav[i+1], lang);
   });
+  const pressLblEl = document.getElementById('lbl-press');
+  if (pressLblEl) pressLblEl.textContent = upper(d.pressLabel, lang);
+  document.getElementById('pressList').innerHTML = PRESS_ITEMS.map(p => `
+    <div class="press-item">
+      <div class="press-year">${p.year}</div>
+      <div class="press-source">${p.source}</div>
+      <div class="press-title">${p.title}</div>
+      <div class="press-desc">${p.desc}</div>
+      ${p.url ? `<a class="press-link" href="${p.url}" target="_blank">↗ Link</a>` : ''}
+    </div>`).join('');
   // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
   document.querySelector('.home-tagline').innerHTML = d.home.roles.map(r=>`<span>${r}</span>`).join('');
@@ -1218,9 +1425,15 @@ function render() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('langSw').innerHTML = LANGS.map(l =>
-    `<button class="lang-btn${l.code==='tr'?' active':''}" data-lang="${l.code}" onclick="setLang('${l.code}')" title="${l.code.toUpperCase()}">${l.flag}</button>`
+  document.getElementById('langModalGrid').innerHTML = LANGS.map(l =>
+    `<div class="lang-modal-item${l.code==='tr'?' active':''}" data-lang="${l.code}" onclick="setLang('${l.code}')">
+      <span class="lang-modal-flag">${l.flag}</span>
+      <span>${l.name}</span>
+    </div>`
   ).join('');
+  const cur = LANGS.find(l => l.code === 'tr');
+  document.getElementById('langTriggerFlag').textContent = cur.flag;
+  document.getElementById('langTriggerName').textContent = cur.name;
   document.getElementById('navToggle').addEventListener('click', openNav);
   document.getElementById('navOverlay').addEventListener('click', closeNav);
   render();
