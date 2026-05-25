@@ -2875,7 +2875,7 @@ function render() {
       ).join('');
       return `<li class="nav-item-wrap">
         <div class="nav-item-header">
-          <a onclick="showPage('works')" data-page="works">${d.nav[i]}</a>
+          <a onclick="showWorksFilter('all')" data-page="works">${d.nav[i]}</a>
           <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
         </div>
         <div class="nav-dropdown">${subs}</div>
