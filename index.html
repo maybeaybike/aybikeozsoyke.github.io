@@ -2788,6 +2788,9 @@ function renderMusicList() {
 function showWorksFilter(cat) {
   worksFilter = cat;
   showPage('works');
+  // filtre bilgisini hash'e ekle
+  const newHash = cat === 'all' ? '#works' : `#works/${cat}`;
+  history.replaceState({ page: 'works', filter: cat }, '', newHash);
   renderWorks();
 }
 
@@ -3006,12 +3009,26 @@ document.addEventListener('DOMContentLoaded', () => {
   initTermViz();
   render();
   // Sayfa yenilenince hash'ten başlangıç sayfasını oku (history'ye ekleme)
-  const hashPage = window.location.hash.slice(1);
-  showPage(pages.includes(hashPage) ? hashPage : 'home', false);
-  // Geri/ileri buton desteği — history'ye ekleme, sadece göster
+  const hashFull = window.location.hash.slice(1);
+  const [hashPage, hashFilter] = hashFull.split('/');
+  if (pages.includes(hashPage)) {
+    if (hashPage === 'works' && hashFilter) worksFilter = hashFilter;
+    showPage(hashPage, false);
+    if (hashPage === 'works') renderWorks();
+  } else {
+    showPage('home', false);
+  }
+  // Geri/ileri buton desteği
   window.addEventListener('popstate', e => {
-    const h = (e.state && e.state.page) || window.location.hash.slice(1);
-    showPage(pages.includes(h) ? h : 'home', false);
+    const raw = (e.state && e.state.page) ? e.state.page : window.location.hash.slice(1).split('/')[0];
+    const flt = (e.state && e.state.filter) || window.location.hash.slice(1).split('/')[1] || 'all';
+    if (pages.includes(raw)) {
+      if (raw === 'works') worksFilter = flt;
+      showPage(raw, false);
+      if (raw === 'works') renderWorks();
+    } else {
+      showPage('home', false);
+    }
   });
 });
 </script>
