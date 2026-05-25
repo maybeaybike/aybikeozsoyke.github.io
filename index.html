@@ -2659,7 +2659,7 @@ function toSpotifyEmbed(url) {
   return null;
 }
 
-function playItem(title, ytUrl, spotifyUrl) {
+function playItem(el, title, ytUrl, spotifyUrl) {
   const ytEmbed = toEmbed(ytUrl);
   const spEmbed = toSpotifyEmbed(spotifyUrl);
   const embed = ytEmbed || spEmbed;
@@ -2675,6 +2675,8 @@ function playItem(title, ytUrl, spotifyUrl) {
   frame.style.aspectRatio = isSpotify ? 'unset' : '16/9';
   frame.style.height = isSpotify ? '152px' : '';
   document.getElementById('musicPlayerLabel').textContent = title + ' — ' + t().music.playLabel;
+  // tıklanan öğenin hemen altına taşı
+  el.after(player);
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
@@ -2732,7 +2734,7 @@ function musicItemHtml(item, d) {
   const esc = s => s.replace(/'/g, "\\'");
   return `
   <div class="music-item${hasVideo ? '' : ' no-video'}"
-    ${hasVideo ? `onclick="playItem('${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
+    ${hasVideo ? `onclick="playItem(this,'${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
     <div class="music-play">${hasVideo ? '▶' : '·'}</div>
     <div class="music-info">
       <div class="music-title">${item.title}</div>
