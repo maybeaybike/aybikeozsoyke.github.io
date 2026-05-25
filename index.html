@@ -2755,6 +2755,13 @@ function musicItemHtml(item, d) {
 function renderMusicList() {
   const d = t();
   const list = document.querySelector('.music-list');
+  // player'ı liste dışına taşı, innerHTML sıfırlanınca yok olmasın
+  const player = document.getElementById('musicPlayer');
+  const musicSection = document.getElementById('music');
+  if (player && player.parentNode !== musicSection) {
+    closePlayer();
+    musicSection.appendChild(player);
+  }
 
   if (musicMode === 'live') {
     list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
