@@ -106,6 +106,21 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .meta-label{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-bottom:10px;text-transform:uppercase}
 .meta-value{font-family:var(--font-d);font-size:17px;font-weight:400;color:var(--text);line-height:1.7}
 
+/* ─── AKADEMİ TOGGLE ─── */
+.akad-wrap{max-width:1100px;margin-top:56px;border:1px solid var(--border)}
+.akad-header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;cursor:pointer;background:var(--bg);transition:background .2s;user-select:none}
+.akad-header:hover{background:var(--surface)}
+.akad-label{font-family:var(--font-m);font-size:10px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase}
+.akad-plus{background:none;border:1px solid var(--border2);color:var(--text-dim);font-size:14px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:var(--font-m);transition:all .2s;flex-shrink:0}
+.akad-plus:hover{color:var(--accent);border-color:var(--accent-dim)}
+.akad-body{display:none;border-top:1px solid var(--border)}
+.akad-body.open{display:block}
+.akad-item{padding:28px 28px}
+.akad-year{font-family:var(--font-m);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:8px}
+.akad-source{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.akad-title{font-family:var(--font-d);font-size:20px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:8px;line-height:1.3}
+.akad-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
+
 /* ─── İŞLER ─── */
 .works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px}
 .work-item{background:var(--bg);padding:32px 36px;transition:background .2s}
@@ -375,6 +390,20 @@ main{padding-top:var(--nav-h);min-height:100vh}
       <p class="about-text"></p>
       <div class="about-right">
         <img class="about-photo" src="photo.jpg" alt="Aybike Özsöyke">
+      </div>
+    </div>
+    <div class="akad-wrap">
+      <div class="akad-header" onclick="toggleAkad()">
+        <span class="akad-label">Akademi</span>
+        <button class="akad-plus" id="akadPlus">+</button>
+      </div>
+      <div class="akad-body" id="akadBody">
+        <div class="akad-item">
+          <div class="akad-year">2024</div>
+          <div class="akad-source">XIV. Uluslararası Hisarlı Ahmet Sempozyumu — Çanakkale Onsekiz Mart Üniversitesi</div>
+          <div class="akad-title">Video Oyunlarında Ses Mekânsallaştırma</div>
+          <div class="akad-desc">'Proto-Turkic Homeland' Projesi Özelinde Video Oyunlarında Ses Mekânsallaştırma. Cihan Işıkhan ile birlikte.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -2317,7 +2346,6 @@ const pages = ['home','about','works','music','blog','contact','press','certific
 
 // ── Basın öğeleri ──────────────────────────────────────────────────────
 const PRESS_ITEMS = [
-  { year:"2024", source:"Hisarlı Ahmet Sempozyumu", title:"Video Oyunlarında Ses Mekânsallaştırma", desc:"'Proto-Turkic Homeland' Projesi Özelinde Video Oyunlarında Ses Mekânsallaştırma. Cihan Işıkhan ile birlikte.", url:"" },
   { year:"2026", source:"Milliyet Sanat / Supermagazin / vd.", title:"Ses Veren Hikâyeler", desc:"Sisters Music Chain kolektifinin basılı öykü kitabı basında.", urls:[
     { label:"Milliyet Sanat", href:"https://www.milliyetsanat.com/haberler/diger/kadin-seslerinin-kolektif-gucu-ses-veren-hikayeler-/23853" },
     { label:"Süper Magazin", href:"https://supermagazin.com.tr/ses-veren-hikayeler-okuyucuyla-bulustu/" },
@@ -2711,6 +2739,14 @@ function toggleMusicDd() {
   const wrap = document.querySelector('.music-dd-wrap');
   if (!wrap) return;
   wrap.classList.toggle('open');
+}
+
+function toggleAkad() {
+  const body = document.getElementById('akadBody');
+  const plus = document.getElementById('akadPlus');
+  if (!body) return;
+  const open = body.classList.toggle('open');
+  if (plus) plus.textContent = open ? '×' : '+';
 }
 
 function toggleMusicAccordion() {
