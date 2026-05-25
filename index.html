@@ -221,7 +221,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .press-source{font-family:var(--font-m);font-size:9px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
 .press-title{font-family:var(--font-d);font-size:22px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:8px;line-height:1.3}
 .press-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
-.press-link{display:inline-block;margin-top:10px;font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s}
+.press-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.press-link{font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s;white-space:nowrap}
 .press-link:hover{background:var(--accent);color:var(--bg)}
 
 /* ─── SERTİFİKALAR ─── */
@@ -2319,7 +2320,13 @@ const PRESS_ITEMS = [
   { year:"2024", source:"Hisarlı Ahmet Sempozyumu", title:"Video Oyunlarında Ses Mekânsallaştırma", desc:"'Proto-Turkic Homeland' Projesi Özelinde Video Oyunlarında Ses Mekânsallaştırma. Cihan Işıkhan ile birlikte.", url:"" },
   { year:"2023–2025", source:"Milliyet Sanat", title:"Milliyet Sanat", desc:"Milliyet Sanat'ta yer alan haberler.", url:"" },
   { year:"2023", source:"Bilkent University", title:"Sounding Off 2023", desc:"Sounding Off 2023 programına katılımcı olarak seçilmiştir.", url:"https://music.bilkent.edu.tr/soundingoff/" },
-  { year:"2023", source:"izmir.art / Arkhe", title:"Arkhe: AI Veriler Üzerine Bir Sergi", desc:"Sergi küratörü, yapımcısı ve ses tasarımcısı olarak yer almıştır. Ahmed Adnan Saygun Sanat Merkezi, İzmir.", url:"https://izmir.art/arkhe-ai-veriler-uzerine-bir-sergi/" },
+  { year:"2023", source:"izmir.art / Arkhe", title:"Arkhe: AI Veriler Üzerine Bir Sergi", desc:"Sergi küratörü, yapımcısı ve ses tasarımcısı olarak yer almıştır. Ahmed Adnan Saygun Sanat Merkezi, İzmir.", urls:[
+    { label:"izmir.art — Açılış", href:"https://www.izmir.art/tr/arkhe-ai-veriler-uzerine-bir-sergi-ahmet-adnan-saygun-sanat-merkezi-nde-acildi-jy34lu0h_" },
+    { label:"izmir.art — Yapay Zeka ve Sanat", href:"https://www.izmir.art/tr/yapay-zeka-sanatin-yeni-arkhesi" },
+    { label:"izmir.art — Sergi", href:"https://www.izmir.art/tr/arkhe-ai-veriler-uzerine-bir-sergi?seans=6492c0caee940af3ec8b40b4" },
+    { label:"kultursanat.izmir.bel.tr", href:"https://kultursanat.izmir.bel.tr/Etkinlikler/arkhe-ai-sergisi" },
+    { label:"aassm.org.tr", href:"https://aassm.org.tr/tr/Sergiler/Detay/5228" },
+  ]},
 ];
 
 // ── Sertifika öğeleri ──────────────────────────────────────────────────
@@ -2853,14 +2860,19 @@ function render() {
   });
   const pressLblEl = document.getElementById('lbl-press');
   if (pressLblEl) pressLblEl.textContent = upper(d.pressLabel, lang);
-  document.getElementById('pressList').innerHTML = PRESS_ITEMS.map(p => `
+  document.getElementById('pressList').innerHTML = PRESS_ITEMS.map(p => {
+    const links = p.urls
+      ? p.urls.map(u => `<a class="press-link" href="${u.href}" target="_blank">↗ ${u.label}</a>`).join('')
+      : p.url ? `<a class="press-link" href="${p.url}" target="_blank">↗ Link</a>` : '';
+    return `
     <div class="press-item">
       <div class="press-year">${p.year}</div>
       <div class="press-source">${p.source}</div>
       <div class="press-title">${p.title}</div>
       <div class="press-desc">${p.desc}</div>
-      ${p.url ? `<a class="press-link" href="${p.url}" target="_blank">↗ Link</a>` : ''}
-    </div>`).join('');
+      ${links ? `<div class="press-links">${links}</div>` : ''}
+    </div>`;
+  }).join('');
   const certLblEl = document.getElementById('lbl-certifications');
   if (certLblEl) certLblEl.textContent = upper(d.certificationsLabel, lang);
   const certListEl = document.getElementById('certList');
