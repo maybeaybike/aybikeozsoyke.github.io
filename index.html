@@ -2592,7 +2592,9 @@ function showPage(id, push = true) {
   // URL hash güncelle
   const newHash = id === 'home' ? '' : '#' + id;
   const cur = window.location.hash;
-  if (cur !== newHash && cur !== ('#' + id)) {
+  // Mevcut hash zaten bu sayfaya aitse (örn. #works/theatre) üzerine yazma
+  const curBase = cur.split('/')[0];
+  if (curBase !== newHash && cur !== ('#' + id)) {
     if (push) {
       history.pushState({ page: id }, '', newHash || window.location.pathname);
     } else {
