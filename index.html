@@ -2719,6 +2719,9 @@ function setMusicMode(mode) {
   if (opts) opts.classList.remove('open');
   if (plus) plus.textContent = '+';
   renderMusicList();
+  // hash güncelle
+  const mHash = mode === 'streaming' ? '#music' : `#music/${mode}`;
+  history.replaceState({ page: 'music', mode }, '', mHash);
 }
 
 function toggleMusicDd() {
@@ -2885,7 +2888,7 @@ function render() {
       const liveLabel = d.music.catLabels.live;
       return `<li class="nav-item-wrap">
         <div class="nav-item-header">
-          <a onclick="showPage('music')" data-page="music">${d.nav[i]}</a>
+          <a onclick="setMusicMode('streaming');showPage('music')" data-page="music">${d.nav[i]}</a>
           <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
         </div>
         <div class="nav-dropdown">
@@ -3012,22 +3015,26 @@ document.addEventListener('DOMContentLoaded', () => {
   render();
   // Sayfa yenilenince hash'ten başlangıç sayfasını oku (history'ye ekleme)
   const hashFull = window.location.hash.slice(1);
-  const [hashPage, hashFilter] = hashFull.split('/');
+  const [hashPage, hashSub] = hashFull.split('/');
   if (pages.includes(hashPage)) {
-    if (hashPage === 'works' && hashFilter) worksFilter = hashFilter;
+    if (hashPage === 'works' && hashSub) worksFilter = hashSub;
+    if (hashPage === 'music' && hashSub) musicMode = hashSub;
     showPage(hashPage, false);
     if (hashPage === 'works') renderWorks();
+    if (hashPage === 'music') renderMusicList();
   } else {
     showPage('home', false);
   }
   // Geri/ileri buton desteği
   window.addEventListener('popstate', e => {
     const raw = (e.state && e.state.page) ? e.state.page : window.location.hash.slice(1).split('/')[0];
-    const flt = (e.state && e.state.filter) || window.location.hash.slice(1).split('/')[1] || 'all';
+    const sub = (e.state && (e.state.filter || e.state.mode)) || window.location.hash.slice(1).split('/')[1] || '';
     if (pages.includes(raw)) {
-      if (raw === 'works') worksFilter = flt;
+      if (raw === 'works') worksFilter = sub || 'all';
+      if (raw === 'music') musicMode = sub || 'streaming';
       showPage(raw, false);
       if (raw === 'works') renderWorks();
+      if (raw === 'music') renderMusicList();
     } else {
       showPage('home', false);
     }
