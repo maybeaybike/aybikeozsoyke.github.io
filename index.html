@@ -374,7 +374,6 @@ main{padding-top:var(--nav-h);min-height:100vh}
       <p class="about-text"></p>
       <div class="about-right">
         <img class="about-photo" src="photo.jpg" alt="Aybike Özsöyke">
-        <div class="about-meta"></div>
       </div>
     </div>
   </section>
@@ -2878,7 +2877,7 @@ function render() {
   document.querySelector('.home-tagline').innerHTML = d.home.roles.map(r=>`<span>${r}</span>`).join('');
   // Hakkımda
   document.querySelector('.about-text').innerHTML = d.about.text;
-  document.querySelector('.about-meta').innerHTML = d.about.metaLabels.map((lbl,i) => `
+  if(false) d.about.metaLabels.map((lbl,i) => `
     <div class="meta-item">
       <div class="meta-label">${upper(lbl,lang)}</div>
       <div class="meta-value">${d.about.meta[i].replace(/\n/g,'<br>')}</div>
