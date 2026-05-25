@@ -145,6 +145,10 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-mode-btn:hover{color:var(--text);background:var(--surface)}
 .music-mode-btn.active{color:var(--accent);background:var(--surface)}
 .music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px}
+.music-split{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;border:1px solid var(--border);background:var(--border);gap:1px}
+.music-split-col{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.music-split-header{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--accent);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);width:100%}
+@media(max-width:700px){.music-split{grid-template-columns:1fr}}
 .music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
 .music-item.no-video{cursor:default}
@@ -2322,7 +2326,7 @@ const WORK_URLS = {
 };
 
 // ── Durum ──────────────────────────────────────────────────────────────
-let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all', musicMode = 'streaming';
+let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all', musicMode = 'both';
 const t = () => SITE[lang];
 const pages = ['home','about','works','music','blog','contact','press','akademi','certifications'];
 
@@ -2703,7 +2707,7 @@ function setMusicFilter(cat) {
 function setMusicMode(mode) {
   musicMode = mode;
   closePlayer();
-  const label = mode === 'live' ? 'Live Performans' : 'Streaming';
+  const label = mode === 'live' ? 'Live Performans' : mode === 'both' ? 'Müzik' : 'Streaming';
   document.querySelectorAll('.music-mode-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.mode === mode));
   // Desktop label + dropdown kapat
@@ -2720,7 +2724,7 @@ function setMusicMode(mode) {
   if (plus) plus.textContent = '+';
   renderMusicList();
   // hash güncelle
-  const mHash = mode === 'streaming' ? '#music' : `#music/${mode}`;
+  const mHash = mode === 'both' ? '#music' : `#music/${mode}`;
   history.replaceState({ page: 'music', mode }, '', mHash);
 }
 
@@ -2776,6 +2780,29 @@ function renderMusicList() {
   if (musicMode === 'live') {
     list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
       .map(item => musicItemHtml(item, d)).join('');
+    return;
+  }
+
+  if (musicMode === 'both') {
+    const order = ['single', 'ep', 'album'];
+    const streamingHtml = order.map(cat => {
+      const catItems = MUSIC_ITEMS.filter(i => i.cat === cat);
+      if (!catItems.length) return '';
+      return `<div class="music-cat-header">${d.music.catLabels[cat]}</div>`
+        + catItems.map(item => musicItemHtml(item, d)).join('');
+    }).join('');
+    const liveHtml = MUSIC_ITEMS.filter(i => i.cat === 'live')
+      .map(item => musicItemHtml(item, d)).join('');
+    list.innerHTML = `<div class="music-split">
+      <div class="music-split-col">
+        <div class="music-split-header">Streaming</div>
+        ${streamingHtml}
+      </div>
+      <div class="music-split-col">
+        <div class="music-split-header">${d.music.catLabels.live}</div>
+        ${liveHtml}
+      </div>
+    </div>`;
     return;
   }
 
@@ -2888,7 +2915,7 @@ function render() {
       const liveLabel = d.music.catLabels.live;
       return `<li class="nav-item-wrap">
         <div class="nav-item-header">
-          <a onclick="setMusicMode('streaming');showPage('music')" data-page="music">${d.nav[i]}</a>
+          <a onclick="setMusicMode('both');showPage('music')" data-page="music">${d.nav[i]}</a>
           <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
         </div>
         <div class="nav-dropdown">
@@ -3018,7 +3045,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const [hashPage, hashSub] = hashFull.split('/');
   if (pages.includes(hashPage)) {
     if (hashPage === 'works' && hashSub) worksFilter = hashSub;
-    if (hashPage === 'music' && hashSub) musicMode = hashSub;
+    if (hashPage === 'music') musicMode = hashSub || 'both';
     showPage(hashPage, false);
     if (hashPage === 'works') renderWorks();
     if (hashPage === 'music') renderMusicList();
@@ -3031,7 +3058,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sub = (e.state && (e.state.filter || e.state.mode)) || window.location.hash.slice(1).split('/')[1] || '';
     if (pages.includes(raw)) {
       if (raw === 'works') worksFilter = sub || 'all';
-      if (raw === 'music') musicMode = sub || 'streaming';
+      if (raw === 'music') musicMode = sub || 'both';
       showPage(raw, false);
       if (raw === 'works') renderWorks();
       if (raw === 'music') renderMusicList();
