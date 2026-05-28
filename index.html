@@ -126,9 +126,11 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-choice-arrow{font-family:var(--font-m);font-size:10px;color:var(--accent);margin-top:8px;letter-spacing:.1em}
 .music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:0 0 28px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
 .music-back:hover{color:var(--accent)}
-.music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px;margin:0 auto}
+/* .music-list artık max-width yok — item'lar kendi max-width'ini taşır */
+.music-list{display:flex;flex-direction:column}
+.music-list>:first-child{border-top:1px solid var(--border)}
 @media(max-width:500px){.music-choice{grid-template-columns:1fr}}
-.music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
+.music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer;align-self:center;width:100%;max-width:900px;border:1px solid var(--border);border-top:none}
 .music-item:hover{background:var(--surface)}
 .music-item.no-video{cursor:default}
 .music-item.playing{background:var(--surface)}
@@ -140,12 +142,13 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-by{font-family:var(--font-m);font-size:10px;color:var(--text-muted);margin-bottom:6px}
 .music-bottom{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.1em}
-.music-cat-header{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);width:100%}
+.music-cat-header{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);border-top:none;align-self:center;width:100%;max-width:900px}
 .music-links{display:flex;gap:6px;flex-wrap:wrap}
 .music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
 .music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0;align-self:start;padding-top:4px}
-.music-player{max-width:1200px;background:var(--surface);border:1px solid var(--border);border-top:none;display:none;margin:0 auto}
+/* Player: item'lardan geniş, kendi başına ortalanır */
+.music-player{width:100%;max-width:1200px;align-self:center;background:var(--surface);border:1px solid var(--border);border-top:none;display:none;margin:0 auto}
 .music-player.open{display:block}
 .music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border)}
 .music-player-label{font-family:var(--font-m);font-size:9px;color:var(--text-muted);letter-spacing:.08em}
@@ -2763,15 +2766,11 @@ function renderMusicList() {
         </button>
       </div>`;
     list.innerHTML = '';
-    list.style.background = 'none';
-    list.style.border = 'none';
     return;
   }
 
   // Streaming veya Live: geri butonu + liste
   filters.innerHTML = `<button class="music-back" onclick="setMusicMode('both')">← ${d.nav[3]}</button>`;
-  list.style.background = '';
-  list.style.border = '';
 
   if (musicMode === 'live') {
     list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
