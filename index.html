@@ -118,41 +118,16 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .work-badge{display:inline-block;margin-top:16px;font-family:var(--font-m);font-size:9px;letter-spacing:.15em;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;text-transform:uppercase}
 
 /* ─── MÜZİK ─── */
-.music-filters{max-width:1200px;margin:0 auto 0}
-.music-tabs{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:0;max-width:1200px}
-.music-tab{flex:1;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--text-muted);background:var(--bg);border:none;padding:14px 20px;cursor:pointer;transition:all .2s;text-align:center;text-transform:uppercase}
-.music-tab:hover{color:var(--text);background:var(--surface)}
-.music-tab.active{color:var(--accent);background:var(--surface)}
-/* Desktop dropdown — hover + click ile açılır, nav gibi */
-.music-dd-wrap{position:relative;display:inline-block}
-/* Hover alanını menüye kadar uzatan köprü (gap fix) */
-.music-dd-wrap::after{content:'';position:absolute;top:100%;left:0;right:0;height:8px;z-index:49}
-.music-dd-trigger{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);background:var(--bg);border:1px solid var(--border2);padding:11px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;min-width:200px;justify-content:space-between;width:100%}
-.music-dd-wrap:hover .music-dd-trigger,.music-dd-wrap.open .music-dd-trigger{border-color:var(--accent-dim);color:var(--text)}
-.music-dd-arrow{font-size:9px;color:var(--text-dim);transition:transform .2s}
-.music-dd-wrap:hover .music-dd-arrow,.music-dd-wrap.open .music-dd-arrow{transform:rotate(180deg)}
-.music-dd-menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border2);border-top:none;z-index:50;min-width:200px}
-.music-dd-wrap:hover .music-dd-menu,.music-dd-wrap.open .music-dd-menu{display:block}
-.music-dd-item{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-muted);background:none;border:none;width:100%;padding:12px 20px;text-align:left;cursor:pointer;transition:all .2s}
-.music-dd-item:hover{color:var(--text);background:var(--border)}
-.music-dd-item.active{color:var(--accent)}
-/* Mobile toggle — nav gibi accordion */
-.music-toggle-wrap{display:none;border:1px solid var(--border)}
-.music-toggle-header{display:flex;align-items:center;width:100%;background:var(--bg)}
-.music-toggle-label{font-family:var(--font-m);font-size:10px;letter-spacing:.12em;color:var(--text-muted);padding:13px 20px;flex:1}
-.music-toggle-plus{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;background:none;border:none;border-left:1px solid var(--border);color:var(--text-dim);font-size:14px;cursor:pointer;transition:all .2s;font-family:var(--font-m);line-height:1}
-.music-toggle-plus:hover{color:var(--accent)}
-.music-toggle-opts{display:none;flex-direction:column;border-top:1px solid var(--border)}
-.music-toggle-opts.open{display:flex}
-.music-mode-btn{font-family:var(--font-m);font-size:10px;letter-spacing:.1em;color:var(--text-dim);background:var(--bg);border:none;border-bottom:1px solid var(--border);padding:13px 20px;cursor:pointer;text-align:left;width:100%;transition:all .2s}
-.music-mode-btn:last-child{border-bottom:none}
-.music-mode-btn:hover{color:var(--text);background:var(--surface)}
-.music-mode-btn.active{color:var(--accent);background:var(--surface)}
+.music-choice{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:600px;margin:0 auto}
+.music-choice-card{background:var(--bg);padding:48px 40px;cursor:pointer;transition:background .2s;display:flex;flex-direction:column;gap:14px;border:none;text-align:left;width:100%}
+.music-choice-card:hover{background:var(--surface)}
+.music-choice-title{font-family:var(--font-m);font-size:11px;letter-spacing:.22em;color:var(--text);text-transform:uppercase}
+.music-choice-desc{font-family:var(--font-m);font-size:10px;color:var(--text-dim);line-height:1.7}
+.music-choice-arrow{font-family:var(--font-m);font-size:10px;color:var(--accent);margin-top:8px;letter-spacing:.1em}
+.music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:0 0 28px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
+.music-back:hover{color:var(--accent)}
 .music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px;margin:0 auto}
-.music-split{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;border:1px solid var(--border);background:var(--border);gap:1px;margin:0 auto;align-items:start}
-.music-split-col{display:flex;flex-direction:column;gap:1px;background:var(--border)}
-.music-split-header{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--accent);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);width:100%}
-@media(max-width:700px){.music-split{grid-template-columns:1fr}}
+@media(max-width:500px){.music-choice{grid-template-columns:1fr}}
 .music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
 .music-item.no-video{cursor:default}
@@ -2691,12 +2666,7 @@ function playItem(el, title, ytUrl, spotifyUrl) {
   frame.style.height = isSpotify ? '152px' : '';
   document.getElementById('musicPlayerLabel').textContent = title + ' — ' + t().music.playLabel;
   // both modunda player split'in dışında tam genişlikte açılsın
-  if (musicMode === 'both') {
-    const split = document.querySelector('.music-split');
-    if (split) split.after(player);
-  } else {
-    el.after(player);
-  }
+  el.after(player);
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
@@ -2716,13 +2686,7 @@ function setMusicFilter(cat) {
 function setMusicMode(mode) {
   musicMode = mode;
   closePlayer();
-  // Tab butonlarını güncelle
-  document.querySelectorAll('.music-tab').forEach((b, i) => {
-    const modes = ['streaming', 'live'];
-    b.classList.toggle('active', modes[i] === mode);
-  });
   renderMusicList();
-  // hash güncelle
   const mHash = mode === 'both' ? '#music' : `#music/${mode}`;
   history.replaceState({ page: 'music', mode }, '', mHash);
 }
@@ -2768,7 +2732,9 @@ function musicItemHtml(item, d) {
 function renderMusicList() {
   const d = t();
   const list = document.querySelector('.music-list');
-  // player'ı liste dışına taşı, innerHTML sıfırlanınca yok olmasın
+  const filters = document.querySelector('.music-filters');
+
+  // player'ı section'a geri taşı, innerHTML sıfırlanınca yok olmasın
   const player = document.getElementById('musicPlayer');
   const musicSection = document.getElementById('music');
   if (player && player.parentNode !== musicSection) {
@@ -2776,32 +2742,35 @@ function renderMusicList() {
     musicSection.appendChild(player);
   }
 
-  if (musicMode === 'live') {
-    list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
-      .map(item => musicItemHtml(item, d)).join('');
+  if (musicMode === 'both') {
+    // Seçim ekranı: iki büyük kart
+    filters.innerHTML = `
+      <div class="music-choice">
+        <button class="music-choice-card" onclick="setMusicMode('streaming')">
+          <span class="music-choice-title">Streaming</span>
+          <span class="music-choice-desc">Spotify · Apple Music · YouTube</span>
+          <span class="music-choice-arrow">→</span>
+        </button>
+        <button class="music-choice-card" onclick="setMusicMode('live')">
+          <span class="music-choice-title">${d.music.catLabels.live}</span>
+          <span class="music-choice-desc">Livecoding · Algorave</span>
+          <span class="music-choice-arrow">→</span>
+        </button>
+      </div>`;
+    list.innerHTML = '';
+    list.style.background = 'none';
+    list.style.border = 'none';
     return;
   }
 
-  if (musicMode === 'both') {
-    const order = ['single', 'ep', 'album'];
-    const streamingHtml = order.map(cat => {
-      const catItems = MUSIC_ITEMS.filter(i => i.cat === cat);
-      if (!catItems.length) return '';
-      return `<div class="music-cat-header">${d.music.catLabels[cat]}</div>`
-        + catItems.map(item => musicItemHtml(item, d)).join('');
-    }).join('');
-    const liveHtml = MUSIC_ITEMS.filter(i => i.cat === 'live')
+  // Streaming veya Live: geri butonu + liste
+  filters.innerHTML = `<button class="music-back" onclick="setMusicMode('both')">← ${d.nav[3]}</button>`;
+  list.style.background = '';
+  list.style.border = '';
+
+  if (musicMode === 'live') {
+    list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
       .map(item => musicItemHtml(item, d)).join('');
-    list.innerHTML = `<div class="music-split">
-      <div class="music-split-col">
-        <div class="music-split-header">Streaming</div>
-        ${streamingHtml}
-      </div>
-      <div class="music-split-col">
-        <div class="music-split-header">${d.music.catLabels.live}</div>
-        ${liveHtml}
-      </div>
-    </div>`;
     return;
   }
 
@@ -2973,12 +2942,6 @@ function render() {
   // İşler
   renderWorks();
   // Müzik
-  const liveTabLabel = d.music.catLabels.live;
-  document.querySelector('.music-filters').innerHTML = `
-    <div class="music-tabs">
-      <button class="music-tab${musicMode==='streaming'?' active':''}" onclick="setMusicMode('streaming')">Streaming</button>
-      <button class="music-tab${musicMode==='live'?' active':''}" onclick="setMusicMode('live')">${liveTabLabel}</button>
-    </div>`;
   renderMusicList();
   // Blog
   document.querySelector('.blog-soon').textContent = d.blog;
