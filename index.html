@@ -121,7 +121,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-choice{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:600px;margin:0 auto}
 .music-choice-card{background:var(--bg);padding:48px 40px;cursor:pointer;transition:background .2s;display:flex;flex-direction:column;gap:14px;border:none;text-align:left;width:100%}
 .music-choice-card:hover{background:var(--surface)}
-.music-choice-title{font-family:var(--font-m);font-size:11px;letter-spacing:.22em;color:var(--text);text-transform:uppercase}
+.music-choice-title{font-family:var(--font-m);font-size:11px;letter-spacing:.22em;color:var(--text)}
 .music-choice-desc{font-family:var(--font-m);font-size:10px;color:var(--text-dim);line-height:1.7}
 .music-choice-arrow{font-family:var(--font-m);font-size:10px;color:var(--accent);margin-top:8px;letter-spacing:.1em}
 .music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:0 0 28px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
@@ -131,6 +131,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
 .music-item.no-video{cursor:default}
+.music-item.playing{background:var(--surface)}
+.music-item.playing .music-play{border-color:var(--accent);color:var(--accent)}
 .music-play{width:34px;height:34px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:9px;flex-shrink:0;transition:all .2s}
 .music-item:not(.no-video):hover .music-play{border-color:var(--accent);color:var(--accent)}
 .music-info{min-width:0}
@@ -2665,8 +2667,12 @@ function playItem(el, title, ytUrl, spotifyUrl) {
   frame.style.aspectRatio = isSpotify ? 'unset' : '16/9';
   frame.style.height = isSpotify ? '152px' : '';
   document.getElementById('musicPlayerLabel').textContent = title + ' — ' + t().music.playLabel;
-  // both modunda player split'in dışında tam genişlikte açılsın
-  el.after(player);
+  // Oynatılan öğeyi işaretle
+  document.querySelectorAll('.music-item').forEach(i => i.classList.remove('playing'));
+  el.classList.add('playing');
+  // Player'ı listenin dışına taşı — tam genişlikte açılsın
+  const list = document.querySelector('.music-list');
+  if (list) list.after(player);
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
@@ -2747,12 +2753,12 @@ function renderMusicList() {
     filters.innerHTML = `
       <div class="music-choice">
         <button class="music-choice-card" onclick="setMusicMode('streaming')">
-          <span class="music-choice-title">Streaming</span>
+          <span class="music-choice-title">STREAMING</span>
           <span class="music-choice-desc">Spotify · Apple Music · YouTube</span>
           <span class="music-choice-arrow">→</span>
         </button>
         <button class="music-choice-card" onclick="setMusicMode('live')">
-          <span class="music-choice-title">${d.music.catLabels.live}</span>
+          <span class="music-choice-title">${d.music.catLabels.live.toLocaleUpperCase('en-US')}</span>
           <span class="music-choice-desc">Livecoding · Algorave</span>
           <span class="music-choice-arrow">→</span>
         </button>
