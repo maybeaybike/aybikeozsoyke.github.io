@@ -126,7 +126,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-choice-arrow{font-family:var(--font-m);font-size:10px;color:var(--accent);margin-top:8px;letter-spacing:.1em}
 .music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:0 0 28px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
 .music-back:hover{color:var(--accent)}
-.music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px;margin:0 auto}
+.music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:900px;margin:0 auto}
 @media(max-width:500px){.music-choice{grid-template-columns:1fr}}
 .music-item{background:var(--bg);padding:20px 32px;display:grid;grid-template-columns:36px 1fr auto;gap:18px;align-items:center;transition:background .2s;cursor:pointer}
 .music-item:hover{background:var(--surface)}
@@ -2670,9 +2670,8 @@ function playItem(el, title, ytUrl, spotifyUrl) {
   // Oynatılan öğeyi işaretle
   document.querySelectorAll('.music-item').forEach(i => i.classList.remove('playing'));
   el.classList.add('playing');
-  // Player'ı listenin dışına taşı — tam genişlikte açılsın
-  const list = document.querySelector('.music-list');
-  if (list) list.after(player);
+  // Player'ı tıklanan satırın hemen altına yerleştir
+  el.after(player);
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
