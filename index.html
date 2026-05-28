@@ -149,7 +149,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-mode-btn:hover{color:var(--text);background:var(--surface)}
 .music-mode-btn.active{color:var(--accent);background:var(--surface)}
 .music-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);max-width:860px;margin:0 auto}
-.music-split{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;border:1px solid var(--border);background:var(--border);gap:1px;margin:0 auto}
+.music-split{display:grid;grid-template-columns:1fr 1fr;max-width:1200px;border:1px solid var(--border);background:var(--border);gap:1px;margin:0 auto;align-items:start}
 .music-split-col{display:flex;flex-direction:column;gap:1px;background:var(--border)}
 .music-split-header{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--accent);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);width:100%}
 @media(max-width:700px){.music-split{grid-template-columns:1fr}}
@@ -168,7 +168,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
 .music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0;align-self:start;padding-top:4px}
-.music-player{max-width:860px;background:var(--surface);border:1px solid var(--border);border-top:none;display:none;margin:0 auto}
+.music-player{max-width:1200px;background:var(--surface);border:1px solid var(--border);border-top:none;display:none;margin:0 auto}
 .music-player.open{display:block}
 .music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border)}
 .music-player-label{font-family:var(--font-m);font-size:9px;color:var(--text-muted);letter-spacing:.08em}
@@ -2690,8 +2690,13 @@ function playItem(el, title, ytUrl, spotifyUrl) {
   frame.style.aspectRatio = isSpotify ? 'unset' : '16/9';
   frame.style.height = isSpotify ? '152px' : '';
   document.getElementById('musicPlayerLabel').textContent = title + ' — ' + t().music.playLabel;
-  // tıklanan öğenin hemen altına taşı
-  el.after(player);
+  // both modunda player split'in dışında tam genişlikte açılsın
+  if (musicMode === 'both') {
+    const split = document.querySelector('.music-split');
+    if (split) split.after(player);
+  } else {
+    el.after(player);
+  }
   player.classList.add('open');
   player.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
