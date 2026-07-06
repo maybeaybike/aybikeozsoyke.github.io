@@ -28,6 +28,15 @@
   --nav-h:64px;
 }
 html{scroll-behavior:smooth;scrollbar-gutter:stable}
+/* ─── ERİŞİLEBİLİRLİK ─── */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[role="button"],[role="link"]{cursor:pointer}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--accent);color:var(--bg);padding:10px 16px;font-family:var(--font-m);font-size:11px;letter-spacing:.08em;text-decoration:none}
+.skip-link:focus{left:8px;top:8px}
+main:focus{outline:none}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-weight:300;font-size:13px;line-height:1.7;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.6}
 
@@ -90,7 +99,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .term-viz{width:100%;height:54px;display:block;border-top:1px solid var(--border)}
 .t-kw{color:#00aaff}.t-fn{color:#66d9ff}.t-str{color:#44eeaa}.t-num{color:#ffcc44}.t-cm{color:var(--text-dim)}
 
-.section-label{font-family:var(--font-m);font-size:10px;color:var(--accent);letter-spacing:.2em;margin-bottom:48px;display:flex;align-items:center;gap:16px;max-width:900px;margin-left:auto;margin-right:auto}
+.section-label{font-family:var(--font-m);font-size:10px;font-weight:400;color:var(--accent);letter-spacing:.2em;margin-bottom:48px;display:flex;align-items:center;gap:16px;max-width:900px;margin-left:auto;margin-right:auto}
 .section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--border2)}
 
 /* ─── HAKKIMDA: masaüstünde iki sütun ─── */
@@ -325,7 +334,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 <div class="nav-overlay" id="navOverlay"></div>
 
 <nav id="mainNav">
-  <div class="nav-logo" onclick="showPage('home')">
+  <div class="nav-logo" role="link" tabindex="0" aria-label="Ana Sayfa" onclick="showPage('home')">
     <img class="nav-logo-img" src="logo.png" alt="Aybike Özsöyke Sound Production">
   </div>
   <ul class="nav-links"></ul>
@@ -338,14 +347,15 @@ main{padding-top:var(--nav-h);min-height:100vh}
 </nav>
 
 <canvas id="homeCanvas"></canvas>
-<main>
+<a href="#mainContent" class="skip-link">İçeriğe geç</a>
+<main id="mainContent" tabindex="-1">
   <section class="page" id="home">
     <div class="home-left">
       <div class="home-eyebrow"></div>
       <h1 class="home-name">Aybike<br><em>Özsöyke</em></h1>
       <div class="home-tagline"></div>
     </div>
-    <div class="home-terminal" onclick="advanceTerminal()" title="click for next snippet">
+    <div class="home-terminal" role="button" tabindex="0" aria-label="Sonraki kod parçası" onclick="advanceTerminal()" title="click for next snippet">
       <div class="home-terminal-header">
         <span class="home-terminal-dot"></span>
         <span class="home-terminal-dot"></span>
@@ -359,7 +369,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   </section>
 
   <section class="page" id="about">
-    <div class="section-label" id="lbl-about"></div>
+    <h1 class="section-label" id="lbl-about"></h1>
     <div class="about-layout">
       <p class="about-text"></p>
       <div class="about-right">
@@ -369,14 +379,14 @@ main{padding-top:var(--nav-h);min-height:100vh}
   </section>
 
   <section class="page" id="works">
-    <div class="section-label" id="lbl-works"></div>
+    <h1 class="section-label" id="lbl-works"></h1>
     <div class="works-grid"></div>
-    <div class="section-label" id="lbl-works-exh" style="margin-top:64px"></div>
+    <h2 class="section-label" id="lbl-works-exh" style="margin-top:64px"></h2>
     <div class="exh-list"></div>
   </section>
 
   <section class="page" id="music">
-    <div class="section-label" id="lbl-music"></div>
+    <h1 class="section-label" id="lbl-music"></h1>
     <div class="music-filters"></div>
     <div class="music-list"></div>
     <div class="music-player" id="musicPlayer">
@@ -385,7 +395,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
         <button class="music-player-close" onclick="closePlayer()">✕ kapat</button>
       </div>
       <div class="music-player-frame">
-        <iframe id="musicIframe" src="" allowfullscreen
+        <iframe id="musicIframe" src="" title="Müzik oynatıcı" allowfullscreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
         </iframe>
       </div>
@@ -393,29 +403,29 @@ main{padding-top:var(--nav-h);min-height:100vh}
   </section>
 
   <section class="page" id="blog">
-    <div class="section-label" id="lbl-blog"></div>
+    <h1 class="section-label" id="lbl-blog"></h1>
     <p class="blog-soon"></p>
   </section>
 
   <section class="page" id="contact">
-    <div class="section-label" id="lbl-contact"></div>
+    <h1 class="section-label" id="lbl-contact"></h1>
     <p class="contact-intro"></p>
     <div id="contactEmail"></div>
     <div class="contact-lower" id="contactLower"></div>
   </section>
 
   <section class="page" id="press">
-    <div class="section-label" id="lbl-press"></div>
+    <h1 class="section-label" id="lbl-press"></h1>
     <div class="press-list" id="pressList"></div>
   </section>
 
   <section class="page" id="akademi">
-    <div class="section-label" id="lbl-akademi"></div>
+    <h1 class="section-label" id="lbl-akademi"></h1>
     <div class="press-list" id="akademiList"></div>
   </section>
 
   <section class="page" id="certifications">
-    <div class="section-label" id="lbl-certifications"></div>
+    <h1 class="section-label" id="lbl-certifications"></h1>
     <div class="cert-list" id="certList"></div>
   </section>
 </main>
@@ -2413,6 +2423,7 @@ function advanceTerminal() {
 function initTermViz() {
   const c = document.getElementById('termViz');
   if (!c) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const ctx = c.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   let W = 0, H = 0;
@@ -2517,6 +2528,8 @@ let _mx = 0.5, _my = 0.5;
 function initHomeCanvas() {
   const c = document.getElementById('homeCanvas');
   if (!c) return;
+  // Hareket hassasiyeti olan kullanıcılar için animasyonu çalıştırma
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const ctx = c.getContext('2d');
   function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
   resize();
@@ -2718,14 +2731,14 @@ function musicItemHtml(item, d) {
     ${hasVideo ? `onclick="playItem(this,'${esc(item.title)}','${esc(item.yt||'')}','${esc(item.spotify||'')}')"` : ''}>
     <div class="music-play">${hasVideo ? '▶' : '·'}</div>
     <div class="music-info">
-      <div class="music-title">${item.title}</div>
+      <h3 class="music-title">${item.title}</h3>
       <div class="music-by">${item.by}</div>
       <div class="music-bottom">
         <span class="music-cat-tag">${d.music.catLabels[item.cat] || ''}</span>
         <div class="music-links">
-          ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
-          ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
-          ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
+          ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" rel="noopener" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
+          ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
+          ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
         </div>
       </div>
     </div>
@@ -2771,6 +2784,7 @@ function renderMusicList() {
   if (musicMode === 'live') {
     list.innerHTML = MUSIC_ITEMS.filter(i => i.cat === 'live')
       .map(item => musicItemHtml(item, d)).join('');
+    enhanceClickable();
     return;
   }
 
@@ -2782,6 +2796,7 @@ function renderMusicList() {
     return `<div class="music-cat-header">${d.music.catLabels[cat]}</div>`
       + catItems.map(item => musicItemHtml(item, d)).join('');
   }).join('');
+  enhanceClickable();
 }
 
 // ── Works filter ───────────────────────────────────────────────────────
@@ -2818,11 +2833,11 @@ function renderWorks() {
     const linkLabel = w.cat === 'game' ? '↗ Steam' : '↗ Link';
     return `<div class="work-item">
       <div class="work-type">${w.type}</div>
-      <div class="work-title">${w.title}</div>
+      <h3 class="work-title">${w.title}</h3>
       <div class="work-role">${w.role}</div>
       <div class="work-desc">${w.desc}</div>
       ${w.badge ? `<div class="work-badge">${w.badge}</div>` : ''}
-      ${itemUrl ? `<a class="press-link" href="${itemUrl}" target="_blank">${linkLabel}</a>` : ''}
+      ${itemUrl ? `<a class="press-link" href="${itemUrl}" target="_blank" rel="noopener">${linkLabel}</a>` : ''}
     </div>`;
   }).join('');
 
@@ -2896,13 +2911,13 @@ function render() {
   if (pressLblEl) pressLblEl.textContent = upper(d.pressLabel, lang);
   document.getElementById('pressList').innerHTML = PRESS_ITEMS.map(p => {
     const links = p.urls
-      ? p.urls.map(u => `<a class="press-link" href="${u.href}" target="_blank">↗ ${u.label}</a>`).join('')
-      : p.url ? `<a class="press-link" href="${p.url}" target="_blank">↗ Link</a>` : '';
+      ? p.urls.map(u => `<a class="press-link" href="${u.href}" target="_blank" rel="noopener">↗ ${u.label}</a>`).join('')
+      : p.url ? `<a class="press-link" href="${p.url}" target="_blank" rel="noopener">↗ Link</a>` : '';
     return `
     <div class="press-item">
       <div class="press-year">${p.year}</div>
       <div class="press-source">${p.source}</div>
-      <div class="press-title">${p.title}</div>
+      <h3 class="press-title">${p.title}</h3>
       <div class="press-desc">${p.desc}</div>
       ${links ? `<div class="press-links">${links}</div>` : ''}
     </div>`;
@@ -2915,7 +2930,7 @@ function render() {
     <div class="press-item">
       <div class="press-year">2024</div>
       <div class="press-source">XIV. Uluslararası Hisarlı Ahmet Sempozyumu — Çanakkale Onsekiz Mart Üniversitesi</div>
-      <div class="press-title">Video Oyunlarında Ses Mekânsallaştırma</div>
+      <h3 class="press-title">Video Oyunlarında Ses Mekânsallaştırma</h3>
       <div class="press-desc">'Proto-Turkic Homeland' Projesi Özelinde Video Oyunlarında Ses Mekânsallaştırma. Cihan Işıkhan ile birlikte.</div>
     </div>`;
   const certLblEl = document.getElementById('lbl-certifications');
@@ -2924,10 +2939,10 @@ function render() {
   if (certListEl) certListEl.innerHTML = CERT_ITEMS.map(c => `
     <div class="cert-item">
       <div class="cert-date">${c.date}</div>
-      <div class="cert-title">${c.title}</div>
+      <h3 class="cert-title">${c.title}</h3>
       <div class="cert-org">${c.org}</div>
       ${c.skills ? `<div class="cert-skills">${c.skills}</div>` : ''}
-      ${c.url ? `<a class="press-link" href="${c.url}" target="_blank">↗ Yeterlilik Belgesi</a>` : ''}
+      ${c.url ? `<a class="press-link" href="${c.url}" target="_blank" rel="noopener">↗ Yeterlilik Belgesi</a>` : ''}
     </div>`).join('');
   // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
@@ -2958,14 +2973,35 @@ function render() {
     <div class="contact-group">
       <div class="contact-group-label">${upper(g.label,lang)}</div>
       ${g.links.map(l=>`
-        <a class="contact-link" href="${l.href}" target="_blank">
+        <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
           <span class="contact-link-left">${platformIcon(l.text)}<span>${l.text}</span></span>
           <span class="contact-link-sub">${l.sub}</span>
         </a>`).join('')}
     </div>`).join('');
+  enhanceClickable();
+}
+
+// ── Erişilebilirlik: tıklanabilir öğeleri klavyeyle kullanılabilir yap ──
+function enhanceClickable() {
+  document.querySelectorAll('a[onclick]:not([href])').forEach(a => {
+    if (!a.hasAttribute('tabindex')) a.setAttribute('tabindex', '0');
+    if (!a.hasAttribute('role')) a.setAttribute('role', 'link');
+  });
+  document.querySelectorAll('.music-item[onclick], .lang-modal-item[onclick]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Klavye: role="button"/"link" öğelerini Enter/Space ile tetikle
+  document.addEventListener('keydown', e => {
+    const el = e.target;
+    if (!el || !el.getAttribute) return;
+    const role = el.getAttribute('role');
+    if (role === 'button' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); el.click(); }
+    else if (role === 'link' && e.key === 'Enter') { e.preventDefault(); el.click(); }
+  });
   document.getElementById('langModalGrid').innerHTML = LANGS.map(l =>
     `<div class="lang-modal-item${l.code==='tr'?' active':''}" data-lang="${l.code}" onclick="setLang('${l.code}')">
       <span class="lang-modal-flag">${l.flag}</span>
