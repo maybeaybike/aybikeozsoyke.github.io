@@ -153,7 +153,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.1em}
 .music-cat-header{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);border-top:none;align-self:center;width:100%;max-width:900px}
 .music-links{display:flex;gap:6px;flex-wrap:wrap}
-.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;min-height:24px}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
 .music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0;align-self:start;padding-top:4px}
 /* Player: item'lardan geniş, kendi başına ortalanır */
@@ -299,7 +299,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .nav-item-header>a{flex:1}
   .nav-toggle{
     display:flex;align-items:center;justify-content:center;
-    width:20px;height:20px;flex-shrink:0;
+    width:24px;height:24px;flex-shrink:0;
     background:none;border:1px solid var(--border2);
     color:var(--text-dim);font-size:13px;cursor:pointer;
     transition:all .2s;font-family:var(--font-m);line-height:1;
@@ -328,7 +328,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 </head>
 <body>
 
-<button class="nav-hamburger" id="navToggle" aria-label="Menü">
+<button class="nav-hamburger" id="navToggle" aria-label="Menü" aria-expanded="false">
   <span></span><span></span><span></span>
 </button>
 <div class="nav-overlay" id="navOverlay"></div>
@@ -391,7 +391,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
     <div class="music-list"></div>
     <div class="music-player" id="musicPlayer">
       <div class="music-player-bar">
-        <span class="music-player-label" id="musicPlayerLabel"></span>
+        <span class="music-player-label" id="musicPlayerLabel" aria-live="polite"></span>
         <button class="music-player-close" onclick="closePlayer()">✕ kapat</button>
       </div>
       <div class="music-player-frame">
@@ -431,7 +431,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 </main>
 
 <div class="lang-modal-overlay" id="langModalOverlay" onclick="closeLangModal()"></div>
-<div class="lang-modal" id="langModal">
+<div class="lang-modal" id="langModal" role="dialog" aria-modal="true" aria-label="Dil seçimi">
   <button class="lang-modal-close" onclick="closeLangModal()">✕</button>
   <div class="lang-modal-grid" id="langModalGrid"></div>
 </div>
@@ -2581,6 +2581,10 @@ function showPage(id, push = true) {
   const c = document.getElementById('homeCanvas');
   if (c) c.style.opacity = id === 'home' ? '0.45' : '0.05';
   if (id === 'home' && !_termStarted) { _termStarted = true; typeTerminal(); }
+  // Sayfa başlığını güncelle (WCAG 2.4.2)
+  const d = t();
+  const pageTitles = { about:d.nav[1], works:d.nav[2], music:d.nav[3], blog:d.nav[4], contact:d.nav[5], press:d.pressLabel, akademi:'Akademi', certifications:d.certificationsLabel };
+  document.title = id === 'home' ? 'Aybike Özsöyke' : `${pageTitles[id] || ''} — Aybike Özsöyke`;
   // URL hash güncelle
   const newHash = id === 'home' ? '' : '#' + id;
   const cur = window.location.hash;
@@ -2610,26 +2614,36 @@ function setLang(l) {
   render(); showPage(page);
 }
 
+let _modalPrevFocus = null;
 function openLangModal() {
+  _modalPrevFocus = document.activeElement;
   document.getElementById('langModal').classList.add('open');
   document.getElementById('langModalOverlay').classList.add('open');
+  // Odağı modal içine taşı
+  const first = document.querySelector('#langModal .lang-modal-close');
+  if (first) first.focus();
 }
 function closeLangModal() {
   document.getElementById('langModal').classList.remove('open');
   document.getElementById('langModalOverlay').classList.remove('open');
+  // Odağı açan öğeye geri ver
+  if (_modalPrevFocus && _modalPrevFocus.focus) _modalPrevFocus.focus();
+  _modalPrevFocus = null;
 }
 
 function openNav() {
   document.getElementById('mainNav').classList.add('open');
   document.getElementById('navOverlay').classList.add('open');
+  document.getElementById('navToggle').setAttribute('aria-expanded', 'true');
 }
 function closeNav() {
   document.getElementById('mainNav').classList.remove('open');
   document.getElementById('navOverlay').classList.remove('open');
+  document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
   document.querySelectorAll('.nav-item-wrap.open').forEach(el => {
     el.classList.remove('open');
     const btn = el.querySelector('.nav-toggle');
-    if (btn) btn.textContent = '+';
+    if (btn) { btn.textContent = '+'; btn.setAttribute('aria-expanded', 'false'); }
   });
 }
 
@@ -2637,6 +2651,7 @@ function toggleNavDropdown(btn) {
   const wrap = btn.closest('.nav-item-wrap');
   const isOpen = wrap.classList.toggle('open');
   btn.textContent = isOpen ? '−' : '+';
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
 // ── YouTube embed dönüştürücü ──────────────────────────────────────────
@@ -2866,7 +2881,7 @@ function render() {
       return `<li class="nav-item-wrap">
         <div class="nav-item-header">
           <a onclick="showPage('about')" data-page="about">${d.nav[i]}</a>
-          <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)" aria-expanded="false" aria-label="Alt menü">+</button>
         </div>
         <div class="nav-dropdown">
           <a onclick="showPage('about');closeNav()">${d.nav[i]}</a>
@@ -2884,7 +2899,7 @@ function render() {
       return `<li class="nav-item-wrap">
         <div class="nav-item-header">
           <a onclick="showWorksFilter('all')" data-page="works">${d.nav[i]}</a>
-          <button class="nav-toggle" onclick="toggleNavDropdown(this)">+</button>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)" aria-expanded="false" aria-label="Alt menü">+</button>
         </div>
         <div class="nav-dropdown">${subs}</div>
       </li>`;
@@ -2991,6 +3006,23 @@ function enhanceClickable() {
 document.addEventListener('DOMContentLoaded', () => {
   // Klavye: role="button"/"link" öğelerini Enter/Space ile tetikle
   document.addEventListener('keydown', e => {
+    const modal = document.getElementById('langModal');
+    const modalOpen = modal && modal.classList.contains('open');
+    // Escape: modalı / mobil menüyü kapat
+    if (e.key === 'Escape') {
+      if (modalOpen) { e.preventDefault(); closeLangModal(); }
+      else if (document.getElementById('mainNav').classList.contains('open')) { e.preventDefault(); closeNav(); }
+      return;
+    }
+    // Modal açıkken odak hapsi (focus trap)
+    if (modalOpen && e.key === 'Tab') {
+      const focusables = modal.querySelectorAll('button,[tabindex="0"]');
+      if (focusables.length) {
+        const first = focusables[0], last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
     const el = e.target;
     if (!el || !el.getAttribute) return;
     const role = el.getAttribute('role');
