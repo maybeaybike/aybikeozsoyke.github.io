@@ -2395,7 +2395,6 @@ function typeTerminal() {
   if (!el) return;
   clearTimeout(_termTimer);
   const sn = LIVECODE_SNIPPETS[_termIdx];
-  playTermTone(_termIdx); // sesi hemen başlat, yazma bitimini bekleme
   function tick() {
     if (_termChar <= sn.code.length) {
       el.innerHTML = formatLiveCode(sn.code.slice(0, _termChar), sn.lang);
@@ -2416,6 +2415,7 @@ function advanceTerminal() {
   initTermAudio();
   _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
   _termChar = 0;
+  playTermTone(_termIdx); // ses yalnızca tıklamada çalar
   typeTerminal();
 }
 
