@@ -2400,13 +2400,8 @@ function typeTerminal() {
       el.innerHTML = formatLiveCode(sn.code.slice(0, _termChar), sn.lang);
       _termChar++;
       _termTimer = setTimeout(tick, 24 + Math.random() * 32);
-    } else {
-      _termTimer = setTimeout(() => {
-        _termIdx = (_termIdx + 1) % LIVECODE_SNIPPETS.length;
-        _termChar = 0;
-        typeTerminal();
-      }, 3800);
     }
+    // Yazma bitince dur — sonraki snippet yalnızca tıklamayla gelir
   }
   tick();
 }
