@@ -21,7 +21,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#04040c;--surface:#08081a;--border:#0e1430;--border2:#162040;
-  --text:#d8dde6;--text-muted:#9ac4da;--text-dim:#6a9ab8;
+  --text:#d8dde6;--text-muted:#9ac4da;--text-dim:#78a8c4;
   --accent:#00aaff;--accent-dim:#00335a;
   --font-d:'Cormorant Garamond',Georgia,serif;
   --font-m:'IBM Plex Mono',monospace;
@@ -34,6 +34,9 @@ html{scroll-behavior:smooth;scrollbar-gutter:stable}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--accent);color:var(--bg);padding:10px 16px;font-family:var(--font-m);font-size:11px;letter-spacing:.08em;text-decoration:none}
 .skip-link:focus{left:8px;top:8px}
 main:focus{outline:none}
+.anim-pause{position:fixed;bottom:16px;left:16px;z-index:50;background:var(--bg);border:1px solid var(--border);color:var(--text-dim);font-family:var(--font-m);font-size:9px;letter-spacing:.12em;padding:8px 14px;min-height:44px;min-width:44px;cursor:pointer;transition:all .2s;display:none}
+.anim-pause:hover{color:var(--accent);border-color:var(--accent-dim)}
+#home.active~.anim-pause,body:has(#home.active) .anim-pause{display:inline-flex;align-items:center}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
@@ -46,17 +49,17 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);border-bottom:1px so
 .nav-logo-img{max-width:130px;height:auto;display:block;opacity:.85;transition:opacity .2s}
 .nav-logo-img:hover{opacity:1}
 .nav-links{margin-left:auto;display:flex;flex-direction:row;gap:0;list-style:none}
-.nav-links a{font-family:var(--font-m);font-size:10px;font-weight:400;color:var(--text);text-decoration:none;letter-spacing:.1em;padding:8px 14px;transition:color .2s;cursor:pointer;display:block}
+.nav-links a{font-family:var(--font-m);font-size:10px;font-weight:400;color:var(--text);text-decoration:none;letter-spacing:.1em;padding:15px 14px;transition:color .2s;cursor:pointer;display:block}
 .nav-links a:hover,.nav-links a.active{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
-.lang-trigger{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);padding:5px 10px;cursor:pointer;font-family:var(--font-m);font-size:10px;color:var(--text-muted);letter-spacing:.08em;flex-shrink:0;transition:all .2s}
+.lang-trigger{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);padding:5px 10px;min-height:44px;cursor:pointer;font-family:var(--font-m);font-size:10px;color:var(--text-muted);letter-spacing:.08em;flex-shrink:0;transition:all .2s}
 .lang-trigger:hover{border-color:var(--accent-dim);color:var(--text)}
 .lang-trigger-arrow{font-size:8px;color:var(--text-dim)}
 .lang-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500}
 .lang-modal-overlay.open{display:block}
 .lang-modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:501;background:var(--surface);border:1px solid var(--border);padding:40px 32px 32px;width:min(720px,94vw);max-height:80vh;overflow-y:auto}
 .lang-modal.open{display:block}
-.lang-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:14px;color:var(--text-dim);cursor:pointer;transition:color .2s}
+.lang-modal-close{position:absolute;top:4px;right:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:none;font-size:14px;color:var(--text-dim);cursor:pointer;transition:color .2s}
 .lang-modal-close:hover{color:var(--accent)}
 .lang-modal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .lang-modal-item{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--bg);cursor:pointer;transition:background .2s;font-family:var(--font-m);font-size:11px;color:var(--text-muted);letter-spacing:.05em}
@@ -95,7 +98,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .t-kw{color:var(--accent)}.t-fn{color:#9d85c4}.t-str{color:#7eb89c}.t-num{color:#d4a96a}.t-cm{color:var(--text-dim)}
 .home-terminal-cursor{display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:text-bottom;margin-left:1px;animation:tcblink .7s step-end infinite}
 @keyframes tcblink{0%,100%{opacity:1}50%{opacity:0}}
-.home-terminal-hint{font-size:9px;letter-spacing:.1em;color:var(--text-dim);padding:5px 22px 10px;opacity:.45}
+.home-terminal-hint{font-size:9px;letter-spacing:.1em;color:var(--text-dim);padding:5px 22px 10px}
 .term-viz{width:100%;height:54px;display:block;border-top:1px solid var(--border)}
 .t-kw{color:#00aaff}.t-fn{color:#66d9ff}.t-str{color:#44eeaa}.t-num{color:#ffcc44}.t-cm{color:var(--text-dim)}
 
@@ -104,7 +107,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 
 /* ─── HAKKIMDA: masaüstünde iki sütun ─── */
 .about-layout{display:grid;grid-template-columns:1fr 360px;gap:72px;align-items:start;max-width:1100px;margin:0 auto}
-.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8;text-align:justify}
+.about-text{font-family:var(--font-d);font-size:21px;font-weight:300;color:var(--text);line-height:1.8}
 .about-text strong{font-weight:500;color:var(--accent)}
 .about-text em{font-style:italic;color:var(--text-muted)}
 .about-right{display:flex;flex-direction:column;gap:0}
@@ -133,7 +136,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-choice-title{font-family:var(--font-m);font-size:11px;letter-spacing:.22em;color:var(--text)}
 .music-choice-desc{font-family:var(--font-m);font-size:10px;color:var(--text-dim);line-height:1.7}
 .music-choice-arrow{font-family:var(--font-m);font-size:10px;color:var(--accent);margin-top:8px;letter-spacing:.1em}
-.music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:0 0 28px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
+.music-back{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);background:none;border:none;cursor:pointer;padding:14px 0 28px;min-height:44px;text-align:left;display:block;max-width:860px;margin:0 auto;transition:color .2s;text-transform:uppercase}
 .music-back:hover{color:var(--accent)}
 /* .music-list artık max-width yok — item'lar kendi max-width'ini taşır */
 .music-list{display:flex;flex-direction:column}
@@ -153,15 +156,21 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .music-cat-tag{font-family:var(--font-m);font-size:8px;color:var(--text-dim);letter-spacing:.1em}
 .music-cat-header{font-family:var(--font-m);font-size:9px;letter-spacing:.18em;color:var(--text-dim);padding:14px 20px 10px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);border-top:none;align-self:center;width:100%;max-width:900px}
 .music-links{display:flex;gap:6px;flex-wrap:wrap}
-.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;min-height:24px}
+.music-link-btn{font-family:var(--font-m);font-size:8px;letter-spacing:.08em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 8px;text-decoration:none;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;min-height:24px;position:relative}
 .music-link-btn:hover{background:var(--accent);color:var(--bg)}
+/* 2.5.5 AAA: görünmez vuruş alanı 44px (masaüstü); dokunmatikte gerçek 44px */
+.music-link-btn::after,.press-link::after{content:'';position:absolute;left:0;right:0;top:50%;height:44px;transform:translateY(-50%)}
+@media(pointer:coarse){
+  .music-link-btn,.press-link{min-height:44px}
+  .music-link-btn::after,.press-link::after{display:none}
+}
 .music-year{font-family:var(--font-m);font-size:10px;color:var(--text-dim);text-align:right;white-space:nowrap;flex-shrink:0;align-self:start;padding-top:4px}
 /* Player: item'lardan geniş, kendi başına ortalanır */
 .music-player{width:100%;max-width:1200px;align-self:center;background:var(--surface);border:1px solid var(--border);border-top:none;display:none;margin:0 auto}
 .music-player.open{display:block}
-.music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border)}
+.music-player-bar{display:flex;align-items:center;justify-content:space-between;padding:2px 24px;border-bottom:1px solid var(--border)}
 .music-player-label{font-family:var(--font-m);font-size:9px;color:var(--text-muted);letter-spacing:.08em}
-.music-player-close{font-family:var(--font-m);font-size:9px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .2s;letter-spacing:.1em}
+.music-player-close{font-family:var(--font-m);font-size:9px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .2s;letter-spacing:.1em;min-height:44px;min-width:44px}
 .music-player-close:hover{color:var(--accent)}
 .music-player-frame{position:relative;width:100%;aspect-ratio:16/9}
 .music-player-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
@@ -207,7 +216,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .nav-item-wrap{position:relative}
 .nav-dropdown{position:absolute;top:100%;left:0;min-width:180px;background:var(--bg);border:1px solid var(--border);display:none;z-index:200;flex-direction:column}
 .nav-item-wrap:hover .nav-dropdown{display:flex}
-.nav-dropdown a{font-family:var(--font-m);font-size:10px;color:var(--text);letter-spacing:.08em;padding:12px 18px;cursor:pointer;text-decoration:none;display:block;transition:color .2s;border-bottom:1px solid var(--border);white-space:nowrap}
+.nav-dropdown a{font-family:var(--font-m);font-size:10px;color:var(--text);letter-spacing:.08em;padding:15px 18px;cursor:pointer;text-decoration:none;display:block;transition:color .2s;border-bottom:1px solid var(--border);white-space:nowrap}
 .nav-dropdown a:last-child{border-bottom:none}
 .nav-dropdown a:hover{color:var(--accent)}
 
@@ -220,7 +229,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .press-title{font-family:var(--font-d);font-size:22px;font-weight:400;font-style:italic;color:var(--text);margin-bottom:8px;line-height:1.3}
 .press-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.7}
 .press-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.press-link{font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.press-link{font-family:var(--font-m);font-size:8px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 10px;text-decoration:none;transition:all .2s;white-space:nowrap;display:inline-flex;align-items:center;min-height:24px;position:relative}
 .press-link:hover{background:var(--accent);color:var(--bg)}
 
 /* ─── SERTİFİKALAR ─── */
@@ -243,22 +252,22 @@ main{padding-top:var(--nav-h);min-height:100vh}
   nav.open{left:0}
   .nav-logo{margin-bottom:8px}
   .nav-links{margin-left:0;margin-top:36px;flex-direction:column;gap:2px}
-  .nav-links a{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:11px;font-weight:400;color:var(--text)}
+  .nav-links a{display:flex;align-items:center;gap:10px;padding:13px 0;font-size:11px;font-weight:400;color:var(--text)}
   .nav-links a::before{content:'';width:16px;height:1px;background:var(--text-dim);transition:width .2s,background .2s;flex-shrink:0}
   .nav-links a.active::before,.nav-links a:hover::before{width:28px;background:var(--accent)}
   .lang-trigger{margin-top:28px;font-size:11px;padding:7px 12px}
   .nav-bottom{display:block;margin-top:auto;font-size:10px;color:var(--text-dim);letter-spacing:.08em}
-  .nav-bottom a{color:var(--text-dim);text-decoration:none;transition:color .2s;display:inline-flex;align-items:center;min-height:24px}
+  .nav-bottom a{color:var(--text-dim);text-decoration:none;transition:color .2s;display:inline-flex;align-items:center;min-height:44px}
   .nav-bottom a:hover{color:var(--accent)}
   .nav-hamburger{
     display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
     position:fixed;top:16px;right:16px;z-index:300;
-    width:40px;height:40px;background:var(--bg);border:1px solid var(--border);cursor:pointer;
+    width:44px;height:44px;background:var(--bg);border:1px solid var(--border);cursor:pointer;
   }
   .nav-hamburger span{display:block;width:18px;height:1px;background:var(--text)}
   main{padding-top:0}
   .page{padding:48px 20px 48px}
-  #home.active{flex-direction:column;align-items:flex-start;padding:72px 20px 48px;gap:40px;min-height:100vh}
+  #home.active{flex-direction:column;align-items:flex-start;padding:72px 20px 96px;gap:40px;min-height:100vh}
   .home-name{font-size:clamp(44px,12vw,72px)}
   .home-tagline{gap:14px;flex-direction:column}
   .home-terminal{width:100%;margin-top:0}
@@ -299,7 +308,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   .nav-item-header>a{flex:1}
   .nav-toggle{
     display:flex;align-items:center;justify-content:center;
-    width:24px;height:24px;flex-shrink:0;
+    width:44px;height:44px;flex-shrink:0;
     background:none;border:1px solid var(--border2);
     color:var(--text-dim);font-size:13px;cursor:pointer;
     transition:all .2s;font-family:var(--font-m);line-height:1;
@@ -314,7 +323,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
   }
   .nav-item-wrap.open .nav-dropdown{display:flex!important}
   .nav-dropdown a{
-    padding:7px 0!important;font-size:10px!important;
+    padding:13px 0!important;font-size:10px!important;
     color:var(--text-dim)!important;border-bottom:none!important;
     white-space:normal!important;letter-spacing:.05em!important;
   }
@@ -347,6 +356,7 @@ main{padding-top:var(--nav-h);min-height:100vh}
 </nav>
 
 <canvas id="homeCanvas"></canvas>
+<button class="anim-pause" id="animPause" onclick="toggleAnim()" aria-pressed="false" aria-label="Arka plan animasyonunu durdur">⏸ animasyon</button>
 <a href="#mainContent" class="skip-link">İçeriğe geç</a>
 <main id="mainContent" tabindex="-1">
   <section class="page" id="home">
@@ -2380,9 +2390,11 @@ let _termIdx = 0, _termChar = 0, _termTimer = null, _termStarted = false;
 function formatLiveCode(text, lang) {
   let h = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   if (lang === 'tidal') {
-    h = h.replace(/\b(d1|d2|d3|d4|setcps|every|fast|slow|note|s|gain|room|pan|speed|delay|irand|rand|scale|sound|struct|sine)\b/g,'<span class="t-kw">$1</span>');
-    h = h.replace(/"([^"]*)"/g,'<span class="t-str">"$1"</span>');
-    h = h.replace(/\b(\d+\.?\d*)\b/g,'<span class="t-num">$1</span>');
+    // Tek geçişte renklendir: string regex'i eklenen span etiketlerini bozmasın
+    h = h.replace(/("[^"]*")|\b(d1|d2|d3|d4|setcps|every|fast|slow|note|s|gain|room|pan|speed|delay|irand|rand|scale|sound|struct|sine)\b|\b(\d+\.?\d*)\b/g,
+      (m, str, kw, num) => str ? `<span class="t-str">${str}</span>`
+        : kw ? `<span class="t-kw">${kw}</span>`
+        : `<span class="t-num">${num}</span>`);
   } else if (lang === 'sc') {
     h = h.replace(/\b(SinOsc|LFNoise1|ar|kr|play|range)\b/g,'<span class="t-fn">$1</span>');
     h = h.replace(/\b(\d+\.?\d*)\b/g,'<span class="t-num">$1</span>');
@@ -2432,7 +2444,7 @@ function initTermViz() {
   let _t = 0;
   (function drawViz() {
     requestAnimationFrame(drawViz);
-    if (!W || !H) return;
+    if (!W || !H || _animPaused) return;
     // Hydra-tarzı persistence: önceki kareyi çok az sil (feedback izi)
     ctx.fillStyle = 'rgba(4,4,12,0.09)';
     ctx.fillRect(0, 0, W, H);
@@ -2517,6 +2529,18 @@ function playTermTone(snippetIdx) {
   });
 }
 
+// ── Animasyon durdurma (WCAG 2.2.2) ────────────────────────────────────
+let _animPaused = false;
+function toggleAnim() {
+  _animPaused = !_animPaused;
+  const btn = document.getElementById('animPause');
+  if (btn) {
+    btn.setAttribute('aria-pressed', _animPaused ? 'true' : 'false');
+    btn.setAttribute('aria-label', _animPaused ? 'Arka plan animasyonunu başlat' : 'Arka plan animasyonunu durdur');
+    btn.textContent = _animPaused ? '▶ animasyon' : '⏸ animasyon';
+  }
+}
+
 // ── Canvas dalga animasyonu ────────────────────────────────────────────
 let _mx = 0.5, _my = 0.5;
 
@@ -2541,6 +2565,7 @@ function initHomeCanvas() {
   ];
   let t = 0;
   (function draw() {
+    if (_animPaused) { requestAnimationFrame(draw); return; }
     ctx.clearRect(0, 0, c.width, c.height);
     // Audio-reactive boost
     let audioBoost = 0;
@@ -2572,10 +2597,10 @@ function initHomeCanvas() {
 
 function showPage(id, push = true) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => { a.classList.remove('active'); a.removeAttribute('aria-current'); });
   document.getElementById(id).classList.add('active');
   const el = document.querySelector(`[data-page="${id}"]`);
-  if (el) el.classList.add('active');
+  if (el) { el.classList.add('active'); el.setAttribute('aria-current', 'page'); }
   page = id;
   closeNav();
   const c = document.getElementById('homeCanvas');
@@ -2746,9 +2771,9 @@ function musicItemHtml(item, d) {
       <div class="music-bottom">
         <span class="music-cat-tag">${d.music.catLabels[item.cat] || ''}</span>
         <div class="music-links">
-          ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" rel="noopener" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
-          ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
-          ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
+          ${item.yt ? `<a class="music-link-btn" href="${item.yt}" target="_blank" rel="noopener" aria-label="${item.title} — YouTube" onclick="event.stopPropagation()">YouTube ↗</a>` : ''}
+          ${item.spotify ? `<a class="music-link-btn" href="${item.spotify}" target="_blank" rel="noopener" aria-label="${item.title} — Spotify" onclick="event.stopPropagation()">Spotify ↗</a>` : ''}
+          ${item.apple ? `<a class="music-link-btn" href="${item.apple}" target="_blank" rel="noopener" aria-label="${item.title} — Apple Music" onclick="event.stopPropagation()">Apple Music ↗</a>` : ''}
         </div>
       </div>
     </div>
@@ -2847,7 +2872,7 @@ function renderWorks() {
       <div class="work-role">${w.role}</div>
       <div class="work-desc">${w.desc}</div>
       ${w.badge ? `<div class="work-badge">${w.badge}</div>` : ''}
-      ${itemUrl ? `<a class="press-link" href="${itemUrl}" target="_blank" rel="noopener">${linkLabel}</a>` : ''}
+      ${itemUrl ? `<a class="press-link" href="${itemUrl}" target="_blank" rel="noopener" aria-label="${w.title} — ${w.cat === 'game' ? 'Steam' : 'bağlantı'}">${linkLabel}</a>` : ''}
     </div>`;
   }).join('');
 
@@ -2921,8 +2946,8 @@ function render() {
   if (pressLblEl) pressLblEl.textContent = upper(d.pressLabel, lang);
   document.getElementById('pressList').innerHTML = PRESS_ITEMS.map(p => {
     const links = p.urls
-      ? p.urls.map(u => `<a class="press-link" href="${u.href}" target="_blank" rel="noopener">↗ ${u.label}</a>`).join('')
-      : p.url ? `<a class="press-link" href="${p.url}" target="_blank" rel="noopener">↗ Link</a>` : '';
+      ? p.urls.map(u => `<a class="press-link" href="${u.href}" target="_blank" rel="noopener" aria-label="${p.title} — ${u.label}">↗ ${u.label}</a>`).join('')
+      : p.url ? `<a class="press-link" href="${p.url}" target="_blank" rel="noopener" aria-label="${p.title}">↗ Link</a>` : '';
     return `
     <div class="press-item">
       <div class="press-year">${p.year}</div>
@@ -2952,7 +2977,7 @@ function render() {
       <h3 class="cert-title">${c.title}</h3>
       <div class="cert-org">${c.org}</div>
       ${c.skills ? `<div class="cert-skills">${c.skills}</div>` : ''}
-      ${c.url ? `<a class="press-link" href="${c.url}" target="_blank" rel="noopener">↗ Yeterlilik Belgesi</a>` : ''}
+      ${c.url ? `<a class="press-link" href="${c.url}" target="_blank" rel="noopener" aria-label="${c.title} — Yeterlilik Belgesi">↗ Yeterlilik Belgesi</a>` : ''}
     </div>`).join('');
   // Ana sayfa
   document.querySelector('.home-eyebrow').textContent = d.home.location;
