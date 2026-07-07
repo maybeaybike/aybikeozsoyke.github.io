@@ -216,6 +216,8 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .nav-item-wrap{position:relative}
 .nav-dropdown{position:absolute;top:100%;left:0;min-width:180px;background:var(--bg);border:1px solid var(--border);display:none;z-index:200;flex-direction:column}
 .nav-item-wrap:hover .nav-dropdown,.nav-item-wrap:focus-within .nav-dropdown{display:flex}
+/* Müzik: masaüstünde dropdown yok (seçim ekranı var), yalnız mobil toggle */
+.music-nav-wrap:hover .nav-dropdown,.music-nav-wrap:focus-within .nav-dropdown{display:none}
 .nav-dropdown a{font-family:var(--font-m);font-size:10px;color:var(--text);letter-spacing:.08em;padding:15px 18px;cursor:pointer;text-decoration:none;display:block;transition:color .2s;border-bottom:1px solid var(--border);white-space:nowrap}
 .nav-dropdown a:last-child{border-bottom:none}
 .nav-dropdown a:hover{color:var(--accent)}
@@ -2941,9 +2943,14 @@ function render() {
       </li>`;
     }
     if (p === 'music') {
-      return `<li class="nav-item-wrap">
+      return `<li class="nav-item-wrap music-nav-wrap">
         <div class="nav-item-header">
           <a onclick="setMusicMode('both');showPage('music');closeNav()" data-page="music">${d.nav[i]}</a>
+          <button class="nav-toggle" onclick="toggleNavDropdown(this)" aria-expanded="false" aria-label="Alt menü">+</button>
+        </div>
+        <div class="nav-dropdown">
+          <a onclick="showPage('music');setMusicMode('streaming');closeNav()">Streaming</a>
+          <a onclick="showPage('music');setMusicMode('live');closeNav()">${d.music.catLabels.live}</a>
         </div>
       </li>`;
     }
