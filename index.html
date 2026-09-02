@@ -129,8 +129,15 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .work-desc{font-family:var(--font-m);font-size:11px;color:var(--text-dim);line-height:1.6}
 .work-badge{display:inline-block;margin-top:16px;font-family:var(--font-m);font-size:9px;letter-spacing:.15em;color:var(--accent);border:1px solid var(--accent-dim);padding:4px 10px;text-transform:uppercase}
 .work-poster{background:var(--surface);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:20px;min-height:260px}
-.work-poster img{max-width:100%;max-height:340px;object-fit:contain;display:block;transition:transform .4s ease,opacity .2s;opacity:.92}
+.work-poster img{max-width:100%;max-height:420px;object-fit:contain;display:block;transition:transform .4s ease,opacity .2s;opacity:.92}
 .work-poster:hover img{transform:scale(1.03);opacity:1}
+/* Afişli filtrede sol kutu dikeyde dolsun, orantılı görünsün */
+.work-item.work-featured{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:44px 48px}
+.work-featured .work-type{margin-bottom:0}
+.work-featured .work-title{font-size:38px;margin-bottom:0;line-height:1.15}
+.work-featured .work-role{font-size:13px;margin-bottom:0}
+.work-featured .work-desc{font-size:13px;line-height:1.8}
+.work-featured .press-link{align-self:flex-start;margin-top:8px}
 
 /* ─── MÜZİK ─── */
 .music-choice{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);max-width:600px;margin:0 auto}
@@ -2853,13 +2860,14 @@ function renderWorks() {
     ? allItems
     : allItems.filter(w => w.cat === worksFilter);
 
+  const hasPoster = !!WORK_POSTERS[worksFilter];
   let _bookIdx = 0;
   let itemsHtml = filteredWorks.map(w => {
     let itemUrl = null;
     if (w.cat === 'book') itemUrl = BOOK_URLS[_bookIdx++];
     else if (WORK_URLS[w.title]) itemUrl = WORK_URLS[w.title];
     const linkLabel = w.cat === 'game' ? '↗ Steam' : '↗ Link';
-    return `<div class="work-item">
+    return `<div class="work-item${hasPoster ? ' work-featured' : ''}">
       <div class="work-type">${w.type}</div>
       <h3 class="work-title">${w.title}</h3>
       <div class="work-role">${w.role}</div>
