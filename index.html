@@ -220,7 +220,9 @@ main{padding-top:var(--nav-h);min-height:100vh}
 .contact-link-left{display:flex;align-items:center;gap:9px}
 .contact-link-icon{width:16px;height:16px;flex-shrink:0;fill:currentColor;opacity:.65;transition:opacity .2s}
 .contact-link:hover .contact-link-icon{opacity:1}
-.contact-link-logo{width:16px;height:16px;flex-shrink:0;border-radius:2px;opacity:.8;transition:opacity .2s}
+/* Algorave İzmir işareti: maske ile currentColor — diğer ikonlarla aynı renk */
+.contact-link-logo{width:16px;height:16px;flex-shrink:0;background-color:currentColor;opacity:.65;transition:opacity .2s;
+  -webkit-mask:url(algorave-icon.png) center/contain no-repeat;mask:url(algorave-icon.png) center/contain no-repeat}
 .contact-link:hover .contact-link-logo{opacity:1}
 .contact-link:last-child{border-bottom:none}
 .contact-link:hover{color:var(--accent)}
@@ -3066,7 +3068,7 @@ function render() {
         </a>`).join('')}
       ${gi===0 ? `
         <a class="contact-link" href="https://algoraveizmir.org" target="_blank" rel="noopener">
-          <span class="contact-link-left"><img class="contact-link-logo" src="algorave-icon.png" alt="" loading="lazy"><span>Algorave İzmir</span></span>
+          <span class="contact-link-left"><span class="contact-link-logo" aria-hidden="true"></span><span>Algorave İzmir</span></span>
           <span class="contact-link-sub">algoraveizmir.org</span>
         </a>` : ''}
     </div>`).join('');
