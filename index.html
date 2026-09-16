@@ -2350,9 +2350,17 @@ const WORK_POSTERS = {
 };
 
 // ── Başlığa göre afişler (sergi vb. çok öğeli filtreler için)
-const WORK_POSTERS_BY_TITLE = {
-  'American Traces in Ankara 1950–69': 'poster-exh-american.jpg',
-};
+// Başlık dile göre değiştiğinden eşleme kuralla yapılır
+const WORK_POSTER_RULES = [
+  { match: t => t === 'American Traces in Ankara 1950–69',
+    poster: 'poster-exh-american.jpg',
+    url: 'https://www.ankaraaks.com/american-traces-in-ankara' },
+  { match: t => t.startsWith('Arkhe'),
+    poster: 'poster-exh-arkhe.jpg',
+    url: 'https://www.izmir.art/tr/arkhe-ai-veriler-uzerine-bir-sergi?seans=6492c0caee940af3ec8b40b4' },
+];
+const ruleForTitle = title => WORK_POSTER_RULES.find(r => r.match(title)) || {};
+const posterForTitle = title => ruleForTitle(title).poster;
 
 // ── Durum ──────────────────────────────────────────────────────────────
 let lang = 'tr', page = 'home', musicFilter = 'all', worksFilter = 'all', musicMode = 'both';
@@ -2379,7 +2387,6 @@ const PRESS_ITEMS = [
   { year:"2023", source:"izmir.art / Arkhe", title:"Arkhe: AI Veriler Üzerine Bir Sergi", desc:"Sergi küratörü, yapımcısı ve ses tasarımcısı olarak yer almıştır. Ahmed Adnan Saygun Sanat Merkezi, İzmir.", urls:[
     { label:"izmir.art — Açılış", href:"https://www.izmir.art/tr/arkhe-ai-veriler-uzerine-bir-sergi-ahmet-adnan-saygun-sanat-merkezi-nde-acildi-jy34lu0h_" },
     { label:"izmir.art — Yapay Zeka ve Sanat", href:"https://www.izmir.art/tr/yapay-zeka-sanatin-yeni-arkhesi" },
-    { label:"izmir.art — Sergi", href:"https://www.izmir.art/tr/arkhe-ai-veriler-uzerine-bir-sergi?seans=6492c0caee940af3ec8b40b4" },
   ]},
 ];
 
@@ -2902,8 +2909,8 @@ function renderWorks() {
   if (rowView) {
     itemsHtml = filteredWorks.map((w, i) => {
       const isBook = worksFilter === 'book';
-      const url = (isBook ? BOOK_URLS[i] : WORK_URLS[w.title]) || '';
-      const cover = isBook ? BOOK_POSTERS[i] : WORK_POSTERS_BY_TITLE[w.title];
+      const url = (isBook ? BOOK_URLS[i] : (WORK_URLS[w.title] || ruleForTitle(w.title).url)) || '';
+      const cover = isBook ? BOOK_POSTERS[i] : posterForTitle(w.title);
       const coverLabel = isBook ? 'kapağı' : 'afişi';
       return `<div class="work-book-row${cover ? '' : ' no-poster'}">
         <div class="work-item work-featured">
@@ -2913,9 +2920,13 @@ function renderWorks() {
           <div class="work-desc">${w.desc}</div>
           ${url ? `<a class="press-link" href="${url}" target="_blank" rel="noopener" aria-label="${w.title} — bağlantı">↗ Link</a>` : ''}
         </div>
-        ${cover ? `<a class="work-poster" href="${url || '#'}" target="_blank" rel="noopener" aria-label="${w.title} — ${coverLabel}">
-          <img src="${cover}" alt="${w.title} ${coverLabel}" loading="lazy">
-        </a>` : ''}
+        ${cover ? (url
+          ? `<a class="work-poster" href="${url}" target="_blank" rel="noopener" aria-label="${w.title} — ${coverLabel}">
+              <img src="${cover}" alt="${w.title} ${coverLabel}" loading="lazy">
+            </a>`
+          : `<div class="work-poster">
+              <img src="${cover}" alt="${w.title} ${coverLabel}" loading="lazy">
+            </div>`) : ''}
       </div>`;
     }).join('');
     grid.innerHTML = itemsHtml;
