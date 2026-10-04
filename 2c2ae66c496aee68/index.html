@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Günaydın</title>
+<meta name="description" content="Her sabah bir not, bir sebep ve günün kendi sesi.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0612">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Günaydın">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  /* gece varsayılanı — JS saate göre günceller */
+  --sky-1:#0b0612; --sky-2:#1a0d22; --sky-3:#2a1430;
+  --orb:#f3e3d0; --orb-glow:rgba(243,227,208,.35);
+  --rose:#ff7fa3; --rose-soft:#ffb3c8; --gold:#ffd4a3;
+  --text:#f8f0ec; --muted:#ded0d6; --dim:#b5a2ac;
+  --line:rgba(255,255,255,.12); --card:rgba(255,255,255,.055);
+  --font-d:'Cormorant Garamond',Georgia,serif;
+  --font-m:'IBM Plex Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+html{-webkit-text-size-adjust:100%}
+body{
+  min-height:100svh; background:var(--sky-1); color:var(--text);
+  font-family:var(--font-m); font-weight:300; font-size:13px; line-height:1.75;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:1.5px solid var(--rose); outline-offset:3px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+/* ─── GÖKYÜZÜ ─── */
+.sky{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 48%,var(--sky-3) 100%);transition:background 1.6s var(--ease)}
+.haze{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(130% 70% at 50% 108%, var(--orb-glow) 0%, transparent 62%);
+  transition:background 1.6s var(--ease)}
+.grain{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E")}
+
+.orb{position:fixed;left:50%;width:168px;height:168px;border-radius:50%;z-index:-1;
+  transform:translate(-50%,-50%);opacity:.4;filter:blur(20px);
+  background:radial-gradient(circle, var(--orb) 0%, var(--orb) 24%, transparent 62%);
+  box-shadow:0 0 70px 18px var(--orb-glow);
+  transition:top 2s var(--ease), background 1.6s var(--ease), box-shadow 1.6s var(--ease), opacity 1.2s linear;
+  will-change:top}
+.orb.moon{width:74px;height:74px;opacity:.82;filter:blur(1.5px);
+  background:radial-gradient(circle at 60% 40%, #fffaf2 0%, #f0e3d2 44%, #d9c9bb 58%, transparent 72%)}
+
+/* metnin her zaman okunması için yumuşak perde */
+.scrim{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(9,5,14,.55) 0%,rgba(9,5,14,.14) 34%,rgba(9,5,14,.27) 66%,rgba(9,5,14,.62) 100%)}
+
+.stars{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 2s linear}
+.stars.on{opacity:1}
+.stars i{position:absolute;display:block;width:2px;height:2px;border-radius:50%;background:#fff;
+  animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.18;transform:scale(.8)}50%{opacity:.9;transform:scale(1.15)}}
+
+[hidden]{display:none!important}
+.lock{position:relative;z-index:1;min-height:100svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:9px;padding:24px;text-align:center}
+.lock-t{font-family:var(--font-d);font-size:27px;font-weight:300;color:var(--muted)}
+.lock-s{font-size:10.5px;letter-spacing:.16em;color:var(--dim)}
+
+/* ─── DÜZEN ─── */
+.wrap{position:relative;z-index:1;max-width:620px;margin:0 auto;
+  padding:calc(34px + env(safe-area-inset-top)) 22px calc(40px + env(safe-area-inset-bottom));
+  min-height:100svh;display:flex;flex-direction:column;gap:30px}
+
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.clock{font-size:11px;letter-spacing:.16em;color:var(--muted)}
+.clock b{display:block;font-weight:400;font-size:26px;letter-spacing:.04em;color:var(--text);
+  font-variant-numeric:tabular-nums;line-height:1.25}
+.date{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:5px}
+.gear{min-width:44px;min-height:44px;display:grid;place-items:center;color:var(--dim);
+  border:1px solid var(--line);border-radius:50%;transition:.25s var(--ease)}
+.gear:hover,.gear:focus-visible{color:var(--rose);border-color:var(--rose)}
+.gear svg{width:17px;height:17px}
+
+.hero{margin-top:auto;padding-top:14px}
+.kicker{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose-soft);opacity:.85}
+h1{font-family:var(--font-d);font-weight:300;font-size:clamp(40px,12.5vw,66px);line-height:1.02;
+  letter-spacing:-.015em;margin:12px 0 0;text-wrap:balance}
+h1 em{font-style:italic;color:var(--rose-soft)}
+
+/* günün notu */
+.note{position:relative;border:1px solid var(--line);border-radius:3px;background:var(--card);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:26px 24px 22px}
+.note::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.5px;
+  background:linear-gradient(180deg,var(--rose),transparent)}
+.note h2{font-size:9.5px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:14px}
+#note-text{font-family:var(--font-d);font-size:clamp(20px,5.6vw,27px);line-height:1.42;
+  font-weight:300;color:var(--text);text-wrap:pretty;min-height:2.84em;
+  transition:opacity .45s var(--ease),transform .45s var(--ease)}
+#note-text.swap{opacity:0;transform:translateY(8px)}
+
+/* butonlar */
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 17px;
+  border:1px solid var(--line);border-radius:999px;font-size:11px;letter-spacing:.1em;
+  color:var(--muted);background:rgba(255,255,255,.03);transition:.25s var(--ease)}
+.btn:hover,.btn:focus-visible{color:var(--text);border-color:var(--rose);background:rgba(255,127,163,.1)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:15px;height:15px;flex:none}
+.btn.primary{color:var(--text);border-color:rgba(255,127,163,.45);background:rgba(255,127,163,.11)}
+.btn[aria-pressed="true"]{color:var(--rose-soft);border-color:var(--rose);background:rgba(255,127,163,.14)}
+.eq{display:inline-flex;align-items:flex-end;gap:2px;height:13px;margin-left:1px}
+.eq i{display:block;width:2px;background:var(--rose-soft);border-radius:1px;height:4px;
+  animation:eq .9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.18s}
+.eq i:nth-child(3){animation-delay:.36s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media (prefers-reduced-motion:reduce){.eq i{animation:none;height:8px}}
+
+/* sebep */
+.reason{border-top:1px solid var(--line);padding-top:20px}
+.reason h2{font-size:9.5px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:12px}
+#reason-text{font-family:var(--font-d);font-style:italic;font-size:clamp(17px,4.6vw,21px);
+  line-height:1.5;color:var(--muted);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#reason-text.swap{opacity:0;transform:translateY(6px)}
+.counter-n{font-variant-numeric:tabular-nums;color:var(--rose-soft)}
+
+/* alt bilgi */
+.foot{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;
+  border-top:1px solid var(--line);padding-top:18px;font-size:10.5px;letter-spacing:.1em;color:var(--dim)}
+.foot b{font-weight:400;color:var(--muted);font-variant-numeric:tabular-nums}
+.foot .sep{opacity:.4}
+
+/* uçan kalpler */
+.hearts{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+.hearts span{position:absolute;bottom:-40px;font-size:20px;line-height:1;will-change:transform,opacity;
+  animation:fly var(--dur,4.6s) var(--ease) forwards}
+@keyframes fly{
+  0%{opacity:0;transform:translate(0,0) scale(.5) rotate(0deg)}
+  12%{opacity:1}
+  100%{opacity:0;transform:translate(var(--dx,0),calc(-1 * var(--vh,80svh))) scale(1.15) rotate(var(--rot,20deg))}
+}
+
+/* ayarlar */
+dialog{border:none;padding:0;background:transparent;color:var(--text);
+  width:min(430px,calc(100vw - 32px));max-width:none;margin:auto;
+  max-height:calc(100svh - 40px);overflow:auto;overscroll-behavior:contain}
+dialog::backdrop{background:rgba(6,3,10,.72);backdrop-filter:blur(5px)}
+.panel{background:#120a18;border:1px solid var(--line);border-radius:4px;padding:26px 24px 22px;
+  color:var(--text)}
+.panel h2{font-family:var(--font-d);font-weight:300;font-size:25px;margin-bottom:4px}
+.panel p.hint{font-size:11px;color:var(--dim);line-height:1.6;margin-bottom:20px}
+label{display:block;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+  margin:16px 0 7px}
+input{width:100%;min-height:46px;padding:0 13px;background:rgba(255,255,255,.05);
+  border:1px solid var(--line);border-radius:3px;color:var(--text);font-family:var(--font-m);font-size:13px}
+input:focus{outline:none;border-color:var(--rose)}
+input::placeholder{color:var(--dim);opacity:.7}
+.panel .row{display:flex;gap:10px;margin-top:24px}
+.panel .row .btn{flex:1;justify-content:center}
+.link{display:inline-block;margin-top:16px;font-size:10.5px;letter-spacing:.1em;color:var(--dim);
+  text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.link:hover{color:var(--rose-soft);border-color:var(--rose)}
+
+/* bildirim */
+.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translate(-50%,16px);
+  z-index:50;background:#190e20;border:1px solid var(--line);border-radius:999px;
+  padding:11px 20px;font-size:11px;letter-spacing:.09em;color:var(--muted);
+  opacity:0;pointer-events:none;transition:.35s var(--ease);max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:420px){
+  .wrap{gap:24px;padding-left:18px;padding-right:18px}
+  .note{padding:22px 19px 19px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+  .stars i{animation:none;opacity:.55}
+}
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="haze"></div>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div class="orb" id="orb" aria-hidden="true"></div>
+<div class="scrim" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+
+<div class="lock" id="lock">
+  <p class="lock-t">Bu sayfa özel.</p>
+  <p class="lock-s">Doğru bağlantıyla açılır.</p>
+</div>
+
+<div class="wrap" id="app" hidden>
+
+  <header class="top">
+    <div class="clock">
+      <b id="clock">--:--</b>
+      <span class="date" id="date">&nbsp;</span>
+    </div>
+    <button class="gear" id="open-settings" aria-label="Ayarlar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.2"/>
+        <path d="M12 2.6v2.3M12 19.1v2.3M4.4 4.4l1.6 1.6M18 18l1.6 1.6M2.6 12h2.3M19.1 12h2.3M4.4 19.6 6 18M18 6l1.6-1.6"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="hero">
+    <p class="kicker" id="kicker">bugün · 1. gün</p>
+    <h1 id="greeting">Günaydın<em>.</em></h1>
+  </div>
+
+  <section class="note" aria-labelledby="note-h">
+    <h2 id="note-h">günün notu</h2>
+    <p id="note-text">&nbsp;</p>
+  </section>
+
+  <div class="acts">
+    <button class="btn primary" id="heart-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.7s-7.9-4.9-9.3-9.2C1.5 8 3.4 5 6.4 4.6c2-.3 3.7.7 4.6 2.2.1.2.4.2.5 0 .9-1.5 2.6-2.5 4.6-2.2 3 .4 4.9 3.4 3.7 6.9-1.4 4.3-9.3 9.2-9.3 9.2z"/></svg>
+      Sarıl bana
+    </button>
+    <button class="btn" id="sound-btn" aria-pressed="false">
+      <svg id="ico-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M4 15V9h3l4.5-3.6v13.2L7 15H4z"/><path d="M15.8 8.6a4.6 4.6 0 0 1 0 6.8M18.6 6a8 8 0 0 1 0 12"/>
+      </svg>
+      <svg id="ico-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" hidden>
+        <path d="M4 15V9h3l4.5-3.6v13.2L7 15H4z"/><path d="m16 9.4 4.4 5.2M20.4 9.4 16 14.6"/>
+      </svg>
+      <span id="sound-label">Günün sesi</span>
+      <span class="eq" id="eq" hidden aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <button class="btn" id="share-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M12 15.5V3.8M8.2 7.3 12 3.5l3.8 3.8M5 13.5v5.8a1.2 1.2 0 0 0 1.2 1.2h11.6a1.2 1.2 0 0 0 1.2-1.2v-5.8"/>
+      </svg>
+      Gönder
+    </button>
+  </div>
+
+  <section class="reason" aria-labelledby="reason-h">
+    <h2 id="reason-h">seni sevme sebeplerimden biri</h2>
+    <p id="reason-text">&nbsp;</p>
+    <div class="acts" style="margin-top:16px">
+      <button class="btn" id="reason-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M20 11.5A8 8 0 1 0 12 20M20 4.5v4.2h-4.2"/>
+        </svg>
+        Bir sebep daha
+      </button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span id="together">&nbsp;</span>
+    <span class="sep" id="foot-sep" hidden>·</span>
+    <span id="streak">&nbsp;</span>
+  </footer>
+
+</div>
+
+<dialog id="settings" aria-labelledby="settings-h">
+  <form class="panel" method="dialog" id="settings-form">
+    <h2 id="settings-h">Bize göre ayarla</h2>
+    <p class="hint">Bu bilgiler yalnızca bu cihazda, tarayıcının hafızasında kalır. Hiçbir yere gönderilmez.</p>
+
+    <label for="f-name">Ona nasıl sesleniyorsun</label>
+    <input id="f-name" name="name" type="text" autocomplete="off" maxlength="28">
+
+    <label for="f-from">Senin adın (imza)</label>
+    <input id="f-from" name="from" type="text" placeholder="boş bırakabilirsin" autocomplete="off" maxlength="28">
+
+    <label for="f-since">Birlikte olduğunuz tarih</label>
+    <input id="f-since" name="since" type="date">
+
+    <div class="row">
+      <button class="btn primary" id="save-btn" type="submit" value="save">Kaydet</button>
+      <button class="btn" type="submit" value="cancel" formnovalidate>Kapat</button>
+    </div>
+    <a class="link" id="copy-link" href="#">Hazır bağlantıyı kopyala →</a>
+    <p class="hint" style="margin:14px 0 0">Telefonda uygulama gibi dursun: tarayıcı menüsünden <b>Ana Ekrana Ekle</b>. Çevrimdışıyken de açılır.</p>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+'use strict';
+
+/* İçerik burada şifreli duruyor. Çözen anahtar yalnızca bağlantının
+   # kısmında; o kısım sunucuya gönderilmez ve bu dosyada yazmaz. */
+const ENC = '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';
+let CONTENT = null;
+
+function b64(str) {
+  const bin = atob(str);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+async function unlock(keyStr) {
+  const raw = b64(keyStr.replace(/-/g, '+').replace(/_/g, '/'));
+  const key = await crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']);
+  const blob = b64(ENC);
+  const plain = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: blob.slice(0, 12) }, key, blob.slice(12)
+  );
+  const data = JSON.parse(new TextDecoder().decode(plain));
+  if (!data || !Array.isArray(data.notes) || !Array.isArray(data.reasons)) throw new Error('bozuk');
+  return data;
+}
+
+/* ─────────── YARDIMCILAR ─────────── */
+const $ = (id) => document.getElementById(id);
+const LS = 'gunaydin:v1';
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+/* Havuzu adım adım gezer. Adım, havuz boyuyla aralarında asal seçildiği için
+   herhangi bir ardışık n günde aynı not iki kez çıkmaz. */
+function coprimeStep(n) {
+  for (const a of [17, 13, 11, 7, 23, 19, 29, 31, 37, 41, 43, 47, 53]) {
+    if (a < n && gcd(a, n) === 1) return a;
+  }
+  return 1;
+}
+function gcd(a, b) { while (b) { [a, b] = [b, a % b]; } return a; }
+function pickDaily(pool, dayNo) {
+  const n = pool.length;
+  const idx = (((dayNo * coprimeStep(n) + 29) % n) + n) % n;
+  return pool[idx];
+}
+const dayNumber = (d) => Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const trNum = (n) => n.toLocaleString('tr-TR');
+const lower = (s) => s.toLocaleLowerCase('tr-TR');
+
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), 3200);
+}
+
+/* ─────────── AYARLAR ─────────── */
+function loadCfg() {
+  let cfg = { name: '', from: '', since: '' };
+  try { Object.assign(cfg, JSON.parse(localStorage.getItem(LS) || '{}')); } catch (e) { /* yok sayılır */ }
+  const q = new URLSearchParams(location.search);
+  const take = (...keys) => { for (const k of keys) { const v = q.get(k); if (v) return v.slice(0, 28); } return null; };
+  const n = take('ad', 'name'), f = take('ben', 'from'), s = take('tarih', 'since');
+  let fromUrl = false;
+  if (n) { cfg.name = n; fromUrl = true; }
+  if (f) { cfg.from = f; fromUrl = true; }
+  if (s && /^\d{4}-\d{2}-\d{2}$/.test(s)) { cfg.since = s; fromUrl = true; }
+  if (fromUrl) saveCfg(cfg);
+  return cfg;
+}
+function saveCfg(cfg) {
+  try { localStorage.setItem(LS, JSON.stringify(cfg)); } catch (e) { /* özel sekme */ }
+}
+let cfg = loadCfg();
+const sweetheart = () => cfg.name.trim() || CONTENT.name;
+
+/* ─────────── GÖKYÜZÜ ─────────── */
+const PHASES = [
+  { k: 'gece',      s: ['#090513', '#150c20', '#2f1740'], orb: '#efe6f2', glow: 'rgba(176,164,216,.20)' },
+  { k: 'şafak',     s: ['#150c20', '#3f1d3a', '#8e3f54'], orb: '#ffc4a0', glow: 'rgba(255,146,118,.30)' },
+  { k: 'sabah',     s: ['#1a1230', '#53304c', '#b06a66'], orb: '#ffeedb', glow: 'rgba(255,180,146,.32)' },
+  { k: 'gündüz',    s: ['#1f1838', '#55415f', '#a2737a'], orb: '#fff8ee', glow: 'rgba(255,206,180,.26)' },
+  { k: 'günbatımı', s: ['#17091f', '#531e38', '#b04a3c'], orb: '#ff9a66', glow: 'rgba(255,118,74,.32)' },
+  { k: 'akşam',     s: ['#0e0716', '#261129', '#4b2239'], orb: '#f6d9cf', glow: 'rgba(216,152,164,.24)' }
+];
+function phaseFor(h) {
+  if (h < 5) return PHASES[0];
+  if (h < 8) return PHASES[1];
+  if (h < 11) return PHASES[2];
+  if (h < 17) return PHASES[3];
+  if (h < 20) return PHASES[4];
+  if (h < 22) return PHASES[5];
+  return PHASES[0];
+}
+function paintSky(now) {
+  const hf = now.getHours() + now.getMinutes() / 60;
+  const p = phaseFor(hf);
+  const r = document.documentElement.style;
+  r.setProperty('--sky-1', p.s[0]);
+  r.setProperty('--sky-2', p.s[1]);
+  r.setProperty('--sky-3', p.s[2]);
+  r.setProperty('--orb', p.orb);
+  r.setProperty('--orb-glow', p.glow);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', p.s[0]);
+
+  const SR = 5.5, SS = 19.5, night = 24 - SS + SR;
+  const orb = $('orb');
+  let top, isMoon;
+  if (hf >= SR && hf <= SS) {
+    isMoon = false;
+    top = 47 - Math.sin(((hf - SR) / (SS - SR)) * Math.PI) * 35;
+  } else {
+    isMoon = true;
+    const t = hf > SS ? (hf - SS) / night : (hf + 24 - SS) / night;
+    top = 47 - Math.sin(t * Math.PI) * 33;
+  }
+  orb.classList.toggle('moon', isMoon);
+  orb.style.top = clamp(top, 8, 48) + '%';
+  $('stars').classList.toggle('on', isMoon);
+}
+function makeStars() {
+  const box = $('stars');
+  if (box.childElementCount) return;
+  const rnd = mulberry32(20261004);
+  let html = '';
+  for (let i = 0; i < 46; i++) {
+    const x = (rnd() * 100).toFixed(2), y = (rnd() * 72).toFixed(2);
+    const s = (rnd() * 1.6 + .9).toFixed(2), d = (rnd() * 4).toFixed(2), o = (rnd() * .5 + .45).toFixed(2);
+    html += `<i style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;animation-delay:-${d}s;opacity:${o}"></i>`;
+  }
+  box.innerHTML = html;
+}
+
+/* ─────────── SELAM + TARİH ─────────── */
+function greetWord(h) {
+  if (h < 5) return 'İyi geceler';
+  if (h < 11) return 'Günaydın';
+  if (h < 17) return 'İyi günler';
+  if (h < 21) return 'İyi akşamlar';
+  return 'İyi geceler';
+}
+function kickerText(now) {
+  const h = now.getHours();
+  const gun = lower(now.toLocaleDateString('tr-TR', { weekday: 'long' }));
+  if (h < 5) return 'gecenin bir yarısı';
+  if (h < 11) return gun + ' sabahı';
+  if (h < 17) return gun + ' günü';
+  if (h < 21) return gun + ' akşamı';
+  return gun + ' gecesi';
+}
+function renderHeader(now) {
+  $('clock').textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+  $('date').textContent = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  $('kicker').textContent = kickerText(now);
+  const h1 = $('greeting');
+  h1.textContent = '';
+  h1.append(document.createTextNode(greetWord(now.getHours()) + ', '));
+  const em = document.createElement('em');
+  em.textContent = sweetheart() + '.';
+  h1.append(em);
+}
+
+/* ─────────── NOT + SEBEP ─────────── */
+let todaysNote = '';
+function notePool() {
+  const hers = lower(sweetheart()) === lower(CONTENT.name);
+  return hers && CONTENT.rain ? CONTENT.notes.concat(CONTENT.rain) : CONTENT.notes;
+}
+function renderNote(now) {
+  todaysNote = pickDaily(notePool(), dayNumber(now));
+  $('note-text').textContent = todaysNote;
+}
+let lastReason = -1;
+function renderReason(animate) {
+  let i;
+  do { i = Math.floor(Math.random() * CONTENT.reasons.length); } while (CONTENT.reasons.length > 1 && i === lastReason);
+  lastReason = i;
+  const el = $('reason-text');
+  const set = () => { el.textContent = CONTENT.reasons[i]; el.classList.remove('swap'); };
+  if (!animate) return set();
+  el.classList.add('swap');
+  setTimeout(set, 320);
+}
+
+/* ─────────── BİRLİKTE + SERİ ─────────── */
+function renderFooter(now) {
+  const parts = [];
+  const tog = $('together'), st = $('streak');
+  if (cfg.since && /^\d{4}-\d{2}-\d{2}$/.test(cfg.since)) {
+    const [y, m, d] = cfg.since.split('-').map(Number);
+    const start = new Date(y, m - 1, d);
+    const days = Math.max(0, dayNumber(now) - dayNumber(start));
+    tog.innerHTML = 'birlikte <b>' + trNum(days) + '</b> gün';
+    const anniv = now.getDate() === d && now.getMonth() === m - 1 && days > 0;
+    if (anniv) setTimeout(() => toast('Bugün yıl dönümümüz. ' + trNum(Math.round(days / 365.25)) + '. yıl.'), 900);
+    else if (days > 0 && days % 100 === 0) setTimeout(() => toast('Bugün ' + trNum(days) + '. günümüz.'), 900);
+  } else {
+    tog.textContent = '';
+  }
+
+  // üst üste kaç sabah açıldı
+  let n = 1;
+  try {
+    const raw = JSON.parse(localStorage.getItem(LS + ':streak') || '{}');
+    const today = ymd(now);
+    if (raw.last === today) n = raw.n || 1;
+    else {
+      const diff = dayNumber(now) - (raw.day || 0);
+      n = diff === 1 ? (raw.n || 0) + 1 : 1;
+      localStorage.setItem(LS + ':streak', JSON.stringify({ last: today, day: dayNumber(now), n }));
+    }
+  } catch (e) { n = 0; }
+  st.textContent = n > 1 ? 'üst üste ' + trNum(n) + ' gün buradasın' : '';
+  $('foot-sep').hidden = !(tog.textContent && st.textContent);
+}
+
+/* ─────────── SES ─────────── */
+let AC = null, pad = null;
+function audio() {
+  if (!AC) {
+    const C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return null;
+    AC = new C();
+  }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+/* Günün akoru: tarihe göre kök ses + renk. Her gün başka. */
+function todaysChord(dayNo) {
+  const rnd = mulberry32(dayNo * 2654435761 % 2147483647);
+  const roots = [-5, -3, 0, 2, 4, 7, 9];
+  const root = 220 * Math.pow(2, roots[Math.floor(rnd() * roots.length)] / 12);
+  const shapes = [[0, 4, 7, 11, 14], [0, 3, 7, 10, 14], [0, 5, 7, 12, 17], [0, 4, 9, 14], [0, 3, 8, 12, 15]];
+  return { root, semis: shapes[Math.floor(rnd() * shapes.length)] };
+}
+function startPad() {
+  const ctx = audio(); if (!ctx) { toast('Bu tarayıcı sesi çalamıyor.'); return null; }
+  const { root, semis } = todaysChord(dayNumber(new Date()));
+  const out = ctx.createGain(); out.gain.value = 0;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1750; lp.Q.value = .4;
+  const dly = ctx.createDelay(1.2); dly.delayTime.value = .42;
+  const fb = ctx.createGain(); fb.gain.value = .3;
+  const wet = ctx.createGain(); wet.gain.value = .32;
+  lp.connect(out); out.connect(ctx.destination);
+  lp.connect(dly); dly.connect(fb); fb.connect(dly); dly.connect(wet); wet.connect(ctx.destination);
+
+  const nodes = [];
+  semis.forEach((s, i) => {
+    [0, 1].forEach((layer) => {
+      const o = ctx.createOscillator();
+      o.type = layer ? 'sine' : 'triangle';
+      o.frequency.value = root * Math.pow(2, (s + (layer ? 12 : 0)) / 12);
+      o.detune.value = (i - 2) * 3 + (layer ? 4 : -4);
+      const g = ctx.createGain();
+      g.gain.value = (layer ? .022 : .038) / (1 + i * .35);
+      // hafif nefes
+      const lfo = ctx.createOscillator(); lfo.frequency.value = .07 + i * .017;
+      const lg = ctx.createGain(); lg.gain.value = g.gain.value * .45;
+      lfo.connect(lg); lg.connect(g.gain);
+      o.connect(g); g.connect(lp);
+      o.start(); lfo.start();
+      nodes.push(o, lfo);
+    });
+  });
+  const t = ctx.currentTime;
+  out.gain.setValueAtTime(0, t);
+  out.gain.linearRampToValueAtTime(.85, t + 2.6);
+  return {
+    stop() {
+      const n = ctx.currentTime;
+      out.gain.cancelScheduledValues(n);
+      out.gain.setValueAtTime(out.gain.value, n);
+      out.gain.linearRampToValueAtTime(0, n + 1.6);
+      setTimeout(() => nodes.forEach((o) => { try { o.stop(); } catch (e) {} }), 1900);
+    }
+  };
+}
+function chime() {
+  const ctx = audio(); if (!ctx) return;
+  const { root, semis } = todaysChord(dayNumber(new Date()));
+  const notes = [semis[2] + 12, semis[semis.length - 1] + 12];
+  notes.forEach((s, i) => {
+    const t = ctx.currentTime + i * .13;
+    const o = ctx.createOscillator(); o.type = 'sine';
+    o.frequency.value = root * Math.pow(2, s / 12);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(.12, t + .02);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 1.5);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t + 1.6);
+  });
+}
+
+/* ─────────── KALPLER ─────────── */
+const GLYPHS = ['♥', '♥', '♥', '❤', '🤍', '💗'];
+const COLORS = ['var(--rose)', 'var(--rose-soft)', 'var(--gold)', '#fff'];
+function rain(n) {
+  const box = $('hearts');
+  const vh = window.innerHeight;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span');
+    s.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    s.style.left = (6 + Math.random() * 88) + '%';
+    s.style.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    s.style.fontSize = (14 + Math.random() * 22).toFixed(0) + 'px';
+    s.style.setProperty('--dx', ((Math.random() - .5) * 150).toFixed(0) + 'px');
+    s.style.setProperty('--rot', ((Math.random() - .5) * 90).toFixed(0) + 'deg');
+    s.style.setProperty('--vh', (vh * (.7 + Math.random() * .45)).toFixed(0) + 'px');
+    const dur = 3.6 + Math.random() * 2.4;
+    s.style.setProperty('--dur', dur.toFixed(2) + 's');
+    s.style.animationDelay = (Math.random() * .5).toFixed(2) + 's';
+    box.appendChild(s);
+    setTimeout(() => s.remove(), (dur + 1) * 1000);
+  }
+}
+
+/* ─────────── PAYLAŞ ─────────── */
+function shareText() {
+  const now = new Date();
+  let t = greetWord(now.getHours()) + ', ' + sweetheart() + '.\n\n' + todaysNote;
+  if (cfg.from.trim()) t += '\n\n— ' + cfg.from.trim();
+  return t;
+}
+function prettyLink() {
+  const u = new URL(location.origin + location.pathname);
+  if (cfg.name.trim()) u.searchParams.set('ad', cfg.name.trim());
+  if (cfg.from.trim()) u.searchParams.set('ben', cfg.from.trim());
+  if (cfg.since) u.searchParams.set('tarih', cfg.since);
+  return u.toString();
+}
+async function copy(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+    ta.remove();
+    return ok;
+  }
+}
+
+/* ─────────── BAĞLAMA ─────────── */
+function renderAll() {
+  const now = new Date();
+  paintSky(now);
+  renderHeader(now);
+  renderNote(now);
+  renderFooter(now);
+}
+
+const KEYLS = LS + ':k';
+function storedKey() { try { return localStorage.getItem(KEYLS) || ''; } catch (e) { return ''; } }
+function keepKey(k) { try { localStorage.setItem(KEYLS, k); } catch (e) { /* özel sekme */ } }
+
+let lastDay = 0;
+async function boot() {
+  const fromLink = (location.hash || '').replace(/^#/, '').trim();
+  const k = fromLink || storedKey();
+  if (!k || !window.crypto || !crypto.subtle) return;   // kilitli kalır
+  let data;
+  try { data = await unlock(k); } catch (e) { return; } // yanlış anahtar: kilitli kalır
+  CONTENT = data;
+  keepKey(k);
+  $('f-name').placeholder = CONTENT.name;
+  $('lock').hidden = true;
+  $('app').hidden = false;
+  makeStars();
+  renderAll();
+  renderReason(false);
+  lastDay = dayNumber(new Date());
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => rain(7), 700);
+}
+boot();
+
+setInterval(() => {
+  if (!CONTENT) return;
+  const now = new Date();
+  $('clock').textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+  paintSky(now);
+  $('kicker').textContent = kickerText(now);
+  if (dayNumber(now) !== lastDay) { lastDay = dayNumber(now); renderAll(); renderReason(true); }
+}, 20000);
+
+$('heart-btn').addEventListener('click', () => {
+  rain(16);
+  chime();
+});
+
+$('reason-btn').addEventListener('click', () => renderReason(true));
+
+function soundUI(on) {
+  $('sound-btn').setAttribute('aria-pressed', on ? 'true' : 'false');
+  $('sound-label').textContent = on ? 'Sesi durdur' : 'Günün sesi';
+  $('ico-play').hidden = on;
+  $('ico-stop').hidden = !on;
+  $('eq').hidden = !on;
+}
+function stopSound() {
+  if (!pad) return;
+  pad.stop();
+  pad = null;
+  soundUI(false);
+}
+$('sound-btn').addEventListener('click', () => {
+  if (pad) { stopSound(); toast('Susturuldu.'); return; }
+  pad = startPad();
+  if (pad) { soundUI(true); toast('Bugünün akoru. Tekrar basınca susar.'); }
+});
+// kaçış tuşu da sussun
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pad) stopSound(); });
+
+$('share-btn').addEventListener('click', async () => {
+  const text = shareText();
+  if (navigator.share) {
+    try { await navigator.share({ title: 'Günaydın', text: text + '\n\n' + prettyLink() }); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  toast(await copy(text) ? 'Not kopyalandı, gönderebilirsin.' : 'Kopyalanamadı, elle seçmen gerekebilir.');
+});
+
+const dlg = $('settings');
+$('open-settings').addEventListener('click', () => {
+  $('f-name').value = cfg.name;
+  $('f-from').value = cfg.from;
+  $('f-since').value = cfg.since;
+  if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+});
+$('settings-form').addEventListener('submit', (e) => {
+  if (e.submitter && e.submitter.value === 'save') {
+    cfg = {
+      name: $('f-name').value.trim().slice(0, 28),
+      from: $('f-from').value.trim().slice(0, 28),
+      since: $('f-since').value || ''
+    };
+    saveCfg(cfg);
+    renderAll();
+    toast('Kaydedildi.');
+  }
+});
+$('copy-link').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const tmp = {
+    name: $('f-name').value.trim().slice(0, 28),
+    from: $('f-from').value.trim().slice(0, 28),
+    since: $('f-since').value || ''
+  };
+  const keep = cfg; cfg = tmp;
+  const link = prettyLink();
+  cfg = keep;
+  toast(await copy(link) ? 'Bağlantı kopyalandı.' : 'Kopyalanamadı: ' + link);
+});
+
+// sayfa arkaya atılınca sesi kapat
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopSound(); });
+
+
+// çevrimdışı da açılsın
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => { /* önemsiz */ });
+  });
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Kalp">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#130a1c"/>
+      <stop offset="1" stop-color="#451634"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="104%" r="72%">
+      <stop offset="0" stop-color="#8a2b4e" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#8a2b4e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="h" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd4a3"/>
+      <stop offset="1" stop-color="#ff6f96"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <rect width="512" height="512" fill="url(#glow)"/>
+  <path fill="url(#h)" d="M256 404c-10-7-128-80-145-152-13-56 18-104 66-110 32-4 60 12 75 38 2 3 6 3 8 0 15-26 43-42 75-38 48 6 79 54 66 110-17 72-135 145-145 152z"/>
+</svg>
