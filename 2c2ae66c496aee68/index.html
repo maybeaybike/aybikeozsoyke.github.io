@@ -171,6 +171,16 @@ input::placeholder{color:var(--dim);opacity:.7}
   text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
 .link:hover{color:var(--rose-soft);border-color:var(--rose)}
 
+/* görsel önizleme */
+.shot{position:fixed;inset:0;z-index:60;background:rgba(6,3,10,.86);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.shot-in{display:flex;flex-direction:column;gap:14px;align-items:center;max-width:380px;width:100%}
+.shot img{width:100%;height:auto;border-radius:4px;border:1px solid var(--line);display:block}
+.shot-hint{font-size:10.5px;letter-spacing:.1em;color:var(--dim);text-align:center}
+.shot .acts{justify-content:center}
+.shot .btn{text-decoration:none}
+
 /* bildirim */
 .toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translate(-50%,16px);
   z-index:50;background:#190e20;border:1px solid var(--line);border-radius:999px;
@@ -246,9 +256,10 @@ input::placeholder{color:var(--dim);opacity:.7}
     </button>
     <button class="btn" id="share-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-        <path d="M12 15.5V3.8M8.2 7.3 12 3.5l3.8 3.8M5 13.5v5.8a1.2 1.2 0 0 0 1.2 1.2h11.6a1.2 1.2 0 0 0 1.2-1.2v-5.8"/>
+        <rect x="3.2" y="4.6" width="17.6" height="14.8" rx="1.6"/>
+        <circle cx="8.6" cy="9.6" r="1.5"/><path d="m4.2 16.8 4.6-4.2 3.3 3 3-2.4 4.7 4.2"/>
       </svg>
-      Gönder
+      Görseli gönder
     </button>
   </div>
 
@@ -291,10 +302,21 @@ input::placeholder{color:var(--dim);opacity:.7}
       <button class="btn primary" id="save-btn" type="submit" value="save">Kaydet</button>
       <button class="btn" type="submit" value="cancel" formnovalidate>Kapat</button>
     </div>
-    <a class="link" id="copy-link" href="#">Hazır bağlantıyı kopyala →</a>
     <p class="hint" style="margin:14px 0 0">Telefonda uygulama gibi dursun: tarayıcı menüsünden <b>Ana Ekrana Ekle</b>. Çevrimdışıyken de açılır.</p>
   </form>
 </dialog>
+
+<div class="shot" id="shot" hidden>
+  <div class="shot-in">
+    <img id="shot-img" alt="Günün notundan üretilen görsel">
+    <p class="shot-hint" id="shot-hint">Kaydetmek için görsele uzun bas.</p>
+    <div class="acts">
+      <a class="btn primary" id="shot-dl" download="gunaydin.png" href="#">Kaydet</a>
+      <button class="btn" id="shot-copy" type="button">Metni kopyala</button>
+      <button class="btn" id="shot-close" type="button">Kapat</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
@@ -627,19 +649,136 @@ function rain(n) {
   }
 }
 
+/* ─────────── GÖRSEL ─────────── */
+/* Günün notunu, o anki gökyüzünün renkleriyle bir karta çizer. */
+const CARD_W = 1080, CARD_H = 1350;
+
+function wrapText(x, text, maxW) {
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    const test = line ? line + ' ' + w : w;
+    if (x.measureText(test).width > maxW && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+async function buildCard() {
+  const c = document.createElement('canvas');
+  c.width = CARD_W; c.height = CARD_H;
+  const x = c.getContext('2d');
+  const now = new Date();
+  const p = phaseFor(now.getHours() + now.getMinutes() / 60);
+
+  // gökyüzü
+  const g = x.createLinearGradient(0, 0, 0, CARD_H);
+  g.addColorStop(0, p.s[0]); g.addColorStop(.52, p.s[1]); g.addColorStop(1, p.s[2]);
+  x.fillStyle = g; x.fillRect(0, 0, CARD_W, CARD_H);
+  // alttan ışık
+  const rg = x.createRadialGradient(CARD_W / 2, CARD_H * 1.04, 0, CARD_W / 2, CARD_H * 1.04, CARD_W);
+  rg.addColorStop(0, p.glow); rg.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = rg; x.fillRect(0, 0, CARD_W, CARD_H);
+  // okunurluk perdesi
+  const sc = x.createLinearGradient(0, 0, 0, CARD_H);
+  sc.addColorStop(0, 'rgba(9,5,14,.5)'); sc.addColorStop(.42, 'rgba(9,5,14,.12)');
+  sc.addColorStop(1, 'rgba(9,5,14,.58)');
+  x.fillStyle = sc; x.fillRect(0, 0, CARD_W, CARD_H);
+
+  try {
+    await document.fonts.load('300 78px "Cormorant Garamond"');
+    await document.fonts.load('300 30px "IBM Plex Mono"');
+    await document.fonts.ready;
+  } catch (e) { /* yedek yazı tipiyle devam */ }
+
+  const pad = 96, maxW = CARD_W - pad * 2;
+  x.textBaseline = 'alphabetic';
+
+  // uygulamadaki gibi yumuşak bir ışık
+  const ob = x.createRadialGradient(CARD_W * .58, CARD_H * .26, 0, CARD_W * .58, CARD_H * .26, 330);
+  ob.addColorStop(0, p.orb + 'cc'); ob.addColorStop(.35, p.orb + '44'); ob.addColorStop(1, 'rgba(0,0,0,0)');
+  x.globalAlpha = .32; x.fillStyle = ob; x.fillRect(0, 0, CARD_W, CARD_H); x.globalAlpha = 1;
+
+  const GREET_F = '300 86px "Cormorant Garamond", Georgia, serif';
+  const NOTE_F  = '300 54px "Cormorant Garamond", Georgia, serif';
+  const GL = 100, NL = 78, GAP = 46;
+
+  // önce ölç, sonra dikeyde ortala
+  const greet = greetWord(now.getHours()) + ', ' + sweetheart() + '.';
+  x.font = GREET_F; const gLines = wrapText(x, greet, maxW);
+  x.font = NOTE_F;  const nLines = wrapText(x, todaysNote, maxW);
+  const sig = cfg.from.trim();
+  const blockH = gLines.length * GL + GAP + nLines.length * NL + (sig ? 86 : 0);
+  const top = Math.max(250, Math.min((CARD_H - blockH) / 2, CARD_H - blockH - 210));
+
+  let y = top + 74;
+  x.font = GREET_F; x.fillStyle = '#f8f0ec';
+  for (const line of gLines) { x.fillText(line, pad, y); y += GL; }
+
+  y += GAP - 20;
+  x.font = NOTE_F; x.fillStyle = 'rgba(248,240,236,.95)';
+  for (const line of nLines) { x.fillText(line, pad, y); y += NL; }
+
+  if (sig) {
+    x.font = '300 30px "IBM Plex Mono", monospace';
+    x.fillStyle = 'rgba(222,208,214,.85)';
+    x.fillText('— ' + sig, pad, y + 54);
+  }
+
+  // tarih üstte, kalp altta: çerçeve
+  x.font = '300 28px "IBM Plex Mono", monospace';
+  x.fillStyle = 'rgba(181,162,172,.85)';
+  if ('letterSpacing' in x) x.letterSpacing = '5px';
+  x.fillText(now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }).toLocaleUpperCase('tr-TR'), pad, 170);
+  if ('letterSpacing' in x) x.letterSpacing = '0px';
+
+  x.fillStyle = 'rgba(255,127,163,.9)';
+  x.font = '300 46px "Cormorant Garamond", Georgia, serif';
+  x.fillText('♥', pad, CARD_H - 96);
+
+  return c;
+}
+
+function closeShot() {
+  const sh = $('shot');
+  sh.hidden = true;
+  const img = $('shot-img');
+  if (img.dataset.url) { URL.revokeObjectURL(img.dataset.url); delete img.dataset.url; }
+  img.removeAttribute('src');
+}
+
+function showShot(blob) {
+  const url = URL.createObjectURL(blob);
+  const img = $('shot-img');
+  img.src = url; img.dataset.url = url;
+  $('shot-dl').href = url;
+  $('shot').hidden = false;
+  $('shot-close').focus();
+}
+
+async function sendCard() {
+  let canvas;
+  try { canvas = await buildCard(); }
+  catch (e) { toast('Görsel oluşturulamadı.'); return; }
+  const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
+  if (!blob) { toast('Görsel oluşturulamadı.'); return; }
+
+  const file = new File([blob], 'gunaydin.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  showShot(blob);
+}
+
 /* ─────────── PAYLAŞ ─────────── */
 function shareText() {
   const now = new Date();
   let t = greetWord(now.getHours()) + ', ' + sweetheart() + '.\n\n' + todaysNote;
   if (cfg.from.trim()) t += '\n\n— ' + cfg.from.trim();
   return t;
-}
-function prettyLink() {
-  const u = new URL(location.origin + location.pathname);
-  if (cfg.name.trim()) u.searchParams.set('ad', cfg.name.trim());
-  if (cfg.from.trim()) u.searchParams.set('ben', cfg.from.trim());
-  if (cfg.since) u.searchParams.set('tarih', cfg.since);
-  return u.toString();
 }
 async function copy(text) {
   try {
@@ -673,9 +812,9 @@ let lastDay = 0;
 async function boot() {
   const fromLink = (location.hash || '').replace(/^#/, '').trim();
   const k = fromLink || storedKey();
-  if (!k || !window.crypto || !crypto.subtle) return;   // kilitli kalır
+  if (!k || !window.crypto || !crypto.subtle) return;
   let data;
-  try { data = await unlock(k); } catch (e) { return; } // yanlış anahtar: kilitli kalır
+  try { data = await unlock(k); } catch (e) { return; }
   CONTENT = data;
   keepKey(k);
   $('f-name').placeholder = CONTENT.name;
@@ -724,15 +863,17 @@ $('sound-btn').addEventListener('click', () => {
   if (pad) { soundUI(true); toast('Bugünün akoru. Tekrar basınca susar.'); }
 });
 // kaçış tuşu da sussun
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pad) stopSound(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!$('shot').hidden) { closeShot(); return; }
+  if (pad) stopSound();
+});
 
-$('share-btn').addEventListener('click', async () => {
-  const text = shareText();
-  if (navigator.share) {
-    try { await navigator.share({ title: 'Günaydın', text: text + '\n\n' + prettyLink() }); return; }
-    catch (e) { if (e && e.name === 'AbortError') return; }
-  }
-  toast(await copy(text) ? 'Not kopyalandı, gönderebilirsin.' : 'Kopyalanamadı, elle seçmen gerekebilir.');
+$('share-btn').addEventListener('click', sendCard);
+$('shot-close').addEventListener('click', closeShot);
+$('shot').addEventListener('click', (e) => { if (e.target === $('shot')) closeShot(); });
+$('shot-copy').addEventListener('click', async () => {
+  toast(await copy(shareText()) ? 'Metin kopyalandı.' : 'Kopyalanamadı, elle seçmen gerekebilir.');
 });
 
 const dlg = $('settings');
@@ -754,19 +895,6 @@ $('settings-form').addEventListener('submit', (e) => {
     toast('Kaydedildi.');
   }
 });
-$('copy-link').addEventListener('click', async (e) => {
-  e.preventDefault();
-  const tmp = {
-    name: $('f-name').value.trim().slice(0, 28),
-    from: $('f-from').value.trim().slice(0, 28),
-    since: $('f-since').value || ''
-  };
-  const keep = cfg; cfg = tmp;
-  const link = prettyLink();
-  cfg = keep;
-  toast(await copy(link) ? 'Bağlantı kopyalandı.' : 'Kopyalanamadı: ' + link);
-});
-
 // sayfa arkaya atılınca sesi kapat
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopSound(); });
 
