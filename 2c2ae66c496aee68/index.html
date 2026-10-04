@@ -913,8 +913,19 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) stopS
 
 // çevrimdışı da açılsın
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  // Zaten bir sürüm devredeyse, yenisi devralınca sayfayı bir kez tazele:
+  // böylece güncelleme eski kopyanın arkasında takılı kalmaz.
+  const vardi = !!navigator.serviceWorker.controller;
+  let tazeleniyor = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!vardi || tazeleniyor) return;   // ilk kurulumda tazeleme yok
+    tazeleniyor = true;
+    location.reload();
+  });
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => { /* önemsiz */ });
+    navigator.serviceWorker.register('sw.js')
+      .then((reg) => { reg.update().catch(() => {}); })
+      .catch(() => { /* önemsiz */ });
   });
 }
 })();
